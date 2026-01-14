@@ -1,0 +1,104 @@
+---
+description: VAN QA 环境验证的流程图
+globs: van-qa-checks/environment-check.mdc
+alwaysApply: false
+---
+# VAN QA：环境验证
+
+> **简述：** 此组件验证构建环境是否已正确设置，包括所需的工具和权限。
+
+## 3️⃣ 环境验证流程
+
+```mermaid
+graph TD
+    Start["环境验证"] --> CheckEnv["检查构建环境"]
+    CheckEnv --> VerifyBuildTools["验证构建工具"]
+    VerifyBuildTools --> ToolsStatus{"构建工具<br>可用？"}
+
+    ToolsStatus -->|"是"| CheckPerms["检查权限<br>和访问"]
+    ToolsStatus -->|"否"| InstallTools["安装所需的<br>构建工具"]
+    InstallTools --> RetryTools["重试验证"]
+    RetryTools --> ToolsStatus
+
+    CheckPerms --> PermsStatus{"权限<br>足够？"}
+    PermsStatus -->|"是"| EnvSuccess["环境已验证<br>✅ 通过"]
+    PermsStatus -->|"否"| FixPerms["修复权限<br>问题"]
+    FixPerms --> RetryPerms["重试权限<br>检查"]
+    RetryPerms --> PermsStatus
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style EnvSuccess fill:#10b981,stroke:#059669,color:white
+    style ToolsStatus fill:#f6546a,stroke:#c30052,color:white
+    style PermsStatus fill:#f6546a,stroke:#c30052,color:white
+```
+
+### 环境验证实现：
+```powershell
+# 示例：为 Web 项目验证环境
+function Validate-Environment {
+    $requiredTools = @(
+        @{Name = "git"; Command = "git --version"},
+        @{Name = "node"; Command = "node --version"},
+        @{Name = "npm"; Command = "npm --version"}
+    )
+
+    $missingTools = @()
+    $permissionIssues = @()
+
+    # 检查构建工具
+    foreach ($tool in $requiredTools) {
+        try {
+            Invoke-Expression $tool.Command | Out-Null
+        } catch {
+            $missingTools += $tool.Name
+        }
+    }
+
+    # 检查项目目录的写权限
+    try {
+        $testFile = ".__permission_test"
+        New-Item -Path $testFile -ItemType File -Force | Out-Null
+        Remove-Item -Path $testFile -Force
+    } catch {
+        $permissionIssues += "当前目录（写权限被拒绝）"
+    }
+
+    # 检查端口 3000 是否可用（开发服务器常用）
+    try {
+        $listener = New-Object System.Net.Sockets.TcpListener([System.Net.IPAddress]::Loopback, 3000)
+        $listener.Start()
+        $listener.Stop()
+    } catch {
+        $permissionIssues += "端口 3000（已被占用或访问被拒绝）"
+    }
+
+    # 显示结果
+    if ($missingTools.Count -eq 0 -and $permissionIssues.Count -eq 0) {
+        Write-Output "✅ 环境验证成功"
+        return $true
+    } else {
+        if ($missingTools.Count -gt 0) {
+            Write-Output "❌ 缺失工具：$($missingTools -join ', ')"
+        }
+        if ($permissionIssues.Count -gt 0) {
+            Write-Output "❌ 权限问题：$($permissionIssues -join ', ')"
+        }
+        return $false
+    }
+}
+```
+
+## 📋 环境验证检查点
+
+```
+✓ 检查点：环境验证
+- 所有必需的构建工具已安装？[是/否]
+- 项目目录权限足够？[是/否]
+- 所需端口可用？[是/否]
+
+→ 如果全部为是：继续最小构建测试。
+→ 如果有否：继续前请修复环境问题。
+```
+
+**下一步（通过时）：** 加载 `van-qa-checks/build-test.mdc`。
+**下一步（失败时）：** 查看 `van-qa-utils/common-fixes.mdc` 获取环境修复方法。

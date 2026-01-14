@@ -1,0 +1,321 @@
+---
+description: BUILD 模式（代码实现）的可视化流程图
+globs: implementation-mode-map.mdc
+alwaysApply: false
+---
+
+# BUILD 模式：代码执行流程图
+
+> **简述：** 此可视化流程图指导 BUILD 模式流程，专注于基于规划和创意阶段的高效代码实现，包括正确的命令执行和进度跟踪。
+
+## 🧭 BUILD 模式流程
+
+```mermaid
+graph TD
+    Start["开始 BUILD 模式"] --> ReadDocs["读取参考文档<br>Core/command-execution.md"]
+
+    %% 初始化
+    ReadDocs --> CheckLevel{"从 tasks.md<br>确定<br>复杂度级别"}
+
+    %% 级别 1 实现
+    CheckLevel -->|"级别 1<br>快速 Bug 修复"| L1Process["级别 1 流程<br>Level1/quick-bug-workflow.md"]
+    L1Process --> L1Review["审查 Bug<br>报告"]
+    L1Review --> L1Examine["检查<br>相关代码"]
+    L1Examine --> L1Fix["实现<br>针对性修复"]
+    L1Fix --> L1Test["测试<br>修复"]
+    L1Test --> L1Update["更新<br>tasks.md"]
+
+    %% 级别 2 实现
+    CheckLevel -->|"级别 2<br>简单增强"| L2Process["级别 2 流程<br>Level2/enhancement-workflow.md"]
+    L2Process --> L2Review["审查构建<br>计划"]
+    L2Review --> L2Examine["检查相关<br>代码区域"]
+    L2Examine --> L2Implement["按顺序<br>实现更改"]
+    L2Implement --> L2Test["测试<br>更改"]
+    L2Test --> L2Update["更新<br>tasks.md"]
+
+    %% 级别 3-4 实现
+    CheckLevel -->|"级别 3-4<br>功能/系统"| L34Process["级别 3-4 流程<br>Level3/feature-workflow.md<br>Level4/system-workflow.md"]
+    L34Process --> L34Review["审查计划和<br>创意决策"]
+    L34Review --> L34Phase{"创意阶段<br>文档<br>完成？"}
+
+    L34Phase -->|"否"| L34Error["错误：<br>返回 CREATIVE 模式"]
+    L34Phase -->|"是"| L34DirSetup["创建目录<br>结构"]
+    L34DirSetup --> L34VerifyDirs["验证目录<br>创建成功"]
+    L34VerifyDirs --> L34Implementation["构建<br>阶段"]
+
+    %% 实现阶段
+    L34Implementation --> L34Phase1["阶段 1<br>构建"]
+    L34Phase1 --> L34VerifyFiles["验证文件<br>创建成功"]
+    L34VerifyFiles --> L34Test1["测试<br>阶段 1"]
+    L34Test1 --> L34Document1["记录<br>阶段 1"]
+    L34Document1 --> L34Next1{"下一个<br>阶段？"}
+    L34Next1 -->|"是"| L34Implementation
+
+    L34Next1 -->|"否"| L34Integration["集成<br>测试"]
+    L34Integration --> L34Document["记录<br>集成点"]
+    L34Document --> L34Update["更新<br>tasks.md"]
+
+    %% 命令执行
+    L1Fix & L2Implement & L34Phase1 --> CommandExec["命令执行<br>Core/command-execution.md"]
+    CommandExec --> DocCommands["记录命令<br>和结果"]
+
+    %% 完成和转换
+    L1Update & L2Update & L34Update --> VerifyComplete["验证构建<br>完成"]
+    VerifyComplete --> UpdateProgress["使用状态更新<br>progress.md"]
+    UpdateProgress --> Transition["下一模式：<br>REFLECT 模式"]
+```
+
+## 📋 必需的文件状态验证
+
+在实现开始前，验证文件状态：
+
+```mermaid
+graph TD
+    Start["文件状态<br>验证"] --> CheckTasks{"tasks.md 有<br>规划完成？"}
+
+    CheckTasks -->|"否"| ErrorPlan["错误：<br>返回 PLAN 模式"]
+    CheckTasks -->|"是"| CheckLevel{"任务<br>复杂度？"}
+
+    CheckLevel -->|"级别 1"| L1Ready["准备好<br>实现"]
+
+    CheckLevel -->|"级别 2"| L2Ready["准备好<br>实现"]
+
+    CheckLevel -->|"级别 3-4"| CheckCreative{"需要<br>创意阶段？"}
+
+    CheckCreative -->|"否"| L34Ready["准备好<br>实现"]
+    CheckCreative -->|"是"| VerifyCreative{"创意阶段<br>已完成？"}
+
+    VerifyCreative -->|"否"| ErrorCreative["错误：<br>返回 CREATIVE 模式"]
+    VerifyCreative -->|"是"| L34Ready
+```
+
+## 🔄 文件系统验证流程
+
+```mermaid
+graph TD
+    Start["开始文件<br>验证"] --> CheckDir["检查目录<br>结构"]
+    CheckDir --> DirResult{"目录<br>存在？"}
+
+    DirResult -->|"否"| ErrorDir["❌ 错误：<br>缺少目录"]
+    DirResult -->|"是"| CheckFiles["检查每个<br>创建的文件"]
+
+    ErrorDir --> FixDir["修复目录<br>结构"]
+    FixDir --> CheckDir
+
+    CheckFiles --> FileResult{"所有文件<br>存在？"}
+    FileResult -->|"否"| ErrorFile["❌ 错误：<br>文件缺失/路径错误"]
+    FileResult -->|"是"| Complete["✅ 验证<br>完成"]
+
+    ErrorFile --> FixFile["修复文件路径<br>或重新创建文件"]
+    FixFile --> CheckFiles
+```
+
+## 📋 目录验证步骤
+
+在开始任何文件创建之前：
+
+```
+✓ 目录验证程序
+1. 在创建任何文件之前先创建所有目录
+2. 使用绝对路径：/full/path/to/directory
+3. 创建后验证每个目录：
+   ls -la /full/path/to/directory     # Linux/Mac
+   dir "C:\full\path\to\directory"    # Windows
+4. 在 progress.md 中记录目录结构
+5. 只有在验证所有目录存在后才继续创建文件
+```
+
+## 📋 文件创建验证
+
+创建文件后：
+
+```
+✓ 文件验证程序
+1. 所有文件操作使用绝对路径：/full/path/to/file.ext
+2. 验证每个文件创建是否成功：
+   ls -la /full/path/to/file.ext     # Linux/Mac
+   dir "C:\full\path\to\file.ext"    # Windows
+3. 如果验证失败：
+   a. 检查路径解析问题
+   b. 验证目录是否存在
+   c. 尝试使用更正后的路径创建
+   d. 更正后重新检查文件是否存在
+4. 在 progress.md 中记录所有文件路径
+```
+
+## 🔄 命令执行工作流程
+
+```mermaid
+graph TD
+    Start["命令<br>执行"] --> Analyze["分析命令<br>需求"]
+    Analyze --> Complexity{"命令<br>复杂度？"}
+
+    Complexity -->|"简单"| Simple["执行<br>单个命令"]
+    Complexity -->|"中等"| Chain["使用高效的<br>命令链"]
+    Complexity -->|"复杂"| Break["拆分为<br>逻辑步骤"]
+
+    Simple & Chain & Break --> Verify["验证<br>结果"]
+    Verify --> Document["记录<br>命令和结果"]
+    Document --> Next["下一个<br>命令"]
+```
+
+## 📋 基于级别的构建方法
+
+```mermaid
+graph TD
+    subgraph "级别 1：快速 Bug 修复"
+        L1A["针对性代码<br>检查"]
+        L1B["最小<br>更改范围"]
+        L1C["直接<br>修复"]
+        L1D["验证<br>修复"]
+    end
+
+    subgraph "级别 2：增强"
+        L2A["顺序<br>构建"]
+        L2B["受限的<br>更改"]
+        L2C["标准<br>测试"]
+        L2D["组件<br>文档"]
+    end
+
+    subgraph "级别 3-4：功能/系统"
+        L3A["目录<br>结构优先"]
+        L3B["文件前<br>验证目录"]
+        L3C["分阶段<br>构建"]
+        L3D["创建后<br>验证文件"]
+        L3E["集成<br>测试"]
+        L3F["详细<br>文档"]
+    end
+
+    L1A --> L1B --> L1C --> L1D
+    L2A --> L2B --> L2C --> L2D
+    L3A --> L3B --> L3C --> L3D --> L3E --> L3F
+```
+
+## 📝 构建文档格式
+
+记录构建时使用：
+
+```
+## 构建：[组件/功能]
+
+### 方法
+[构建方法简要描述]
+
+### 目录结构
+- [/absolute/path/to/dir1/]：[用途]
+- [/absolute/path/to/dir2/]：[用途]
+
+### 代码更改
+- [/absolute/path/to/file1.ext]：[更改描述]
+- [/absolute/path/to/file2.ext]：[更改描述]
+
+### 验证步骤
+- [✓] 目录结构已创建并验证
+- [✓] 所有文件在正确位置创建
+- [✓] 文件内容已验证
+
+### 执行的命令
+```
+[命令 1]
+[结果]
+```
+
+```
+[命令 2]
+[结果]
+```
+
+### 测试
+- [测试 1]：[结果]
+- [测试 2]：[结果]
+
+### 状态
+- [x] 构建完成
+- [x] 测试已执行
+- [x] 文件验证完成
+- [ ] 文档已更新
+```
+
+## 📊 TASKS.MD 更新格式
+
+在构建过程中，使用进度更新 tasks.md：
+
+```
+## 状态
+- [x] 初始化完成
+- [x] 规划完成
+[对于级别 3-4：]
+- [x] 创意阶段完成
+- [x] 目录结构已创建并验证
+- [x] [已构建组件 1]
+- [x] [已构建组件 2]
+- [ ] [剩余组件]
+
+## 构建进度
+- [组件 1]：完成
+  - 文件：[/absolute/path/to/files]
+  - [实现细节]
+- [组件 2]：完成
+  - 文件：[/absolute/path/to/files]
+  - [实现细节]
+- [组件 3]：进行中
+  - [当前状态]
+```
+
+## 📋 PROGRESS.MD 更新格式
+
+使用以下内容更新 progress.md：
+
+```
+# 构建进度
+
+## 目录结构
+- [/absolute/path/to/dir1/]：已创建并验证
+- [/absolute/path/to/dir2/]：已创建并验证
+
+## [日期]：[组件/功能] 已构建
+- **创建的文件**：
+  - [/absolute/path/to/file1.ext]：已验证
+  - [/absolute/path/to/file2.ext]：已验证
+- **关键更改**：
+  - [更改 1]
+  - [更改 2]
+- **测试**：[测试结果]
+- **下一步**：[接下来要做什么]
+```
+
+## 📊 构建验证清单
+
+```
+✓ 构建验证
+- 目录结构正确创建？[是/否]
+- 所有文件在正确位置创建？[是/否]
+- 所有文件路径使用绝对路径验证？[是/否]
+- 所有计划的更改已实现？[是/否]
+- 所有更改已测试？[是/否]
+- 代码符合项目标准？[是/否]
+- 边缘情况处理得当？[是/否]
+- 构建文档使用绝对路径？[是/否]
+- tasks.md 已更新进度？[是/否]
+- progress.md 已更新详情？[是/否]
+
+→ 如果全部为是：构建完成 - 准备进入 REFLECT 模式
+→ 如果有否：完成缺失的构建元素
+```
+
+## 🔄 模式转换通知
+
+构建完成时，通知用户：
+
+```
+## 构建完成
+
+✅ 目录结构已验证
+✅ 所有文件在正确位置创建
+✅ 所有计划的更改已实现
+✅ 测试成功执行
+✅ tasks.md 已更新状态
+✅ progress.md 已更新详情
+
+→ 下一推荐模式：REFLECT 模式
+```

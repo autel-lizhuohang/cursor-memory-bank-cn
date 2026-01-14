@@ -1,0 +1,195 @@
+---
+description: 创意阶段指标
+globs: creative-phase-metrics.md
+alwaysApply: false
+---
+
+
+
+# 创意阶段指标
+
+> **摘要:** 本文档定义了创意阶段的全面质量指标和测量标准，确保设计决策符合所需标准并得到正确记录。
+
+## 指标概述
+
+```mermaid
+graph TD
+    subgraph "创意阶段指标"
+    M1["文档<br>质量"]
+    M2["决策<br>覆盖率"]
+    M3["选项<br>分析"]
+    M4["影响<br>评估"]
+    M5["验证<br>得分"]
+    end
+
+    M1 --> Score["质量<br>得分"]
+    M2 --> Score
+    M3 --> Score
+    M4 --> Score
+    M5 --> Score
+
+    style M1 fill:#4dbb5f,stroke:#36873f,color:white
+    style M2 fill:#ffa64d,stroke:#cc7a30,color:white
+    style M3 fill:#d94dbb,stroke:#a3378a,color:white
+    style M4 fill:#4dbbbb,stroke:#368787,color:white
+    style M5 fill:#d971ff,stroke:#a33bc2,color:white
+    style Score fill:#ff71c2,stroke:#c23b8a,color:white
+```
+
+## 质量指标记分卡
+
+```markdown
+# 创意阶段质量评估
+
+## 1. 文档质量 [0-10]
+- [ ] 清晰的问题陈述 (2 分)
+- [ ] 明确定义的目标 (2 分)
+- [ ] 全面的需求列表 (2 分)
+- [ ] 正确的格式和结构 (2 分)
+- [ ] 相关文档的交叉引用 (2 分)
+
+## 2. 决策覆盖率 [0-10]
+- [ ] 所有必需决策已识别 (2 分)
+- [ ] 每个决策点已记录 (2 分)
+- [ ] 依赖关系已映射 (2 分)
+- [ ] 包含影响分析 (2 分)
+- [ ] 未来考虑已记录 (2 分)
+
+## 3. 选项分析 [0-10]
+- [ ] 考虑了多个选项 (2 分)
+- [ ] 优缺点已记录 (2 分)
+- [ ] 技术可行性已评估 (2 分)
+- [ ] 资源需求已估算 (2 分)
+- [ ] 风险因素已识别 (2 分)
+
+## 4. 影响评估 [0-10]
+- [ ] 系统影响已记录 (2 分)
+- [ ] 性能影响已评估 (2 分)
+- [ ] 安全考虑已处理 (2 分)
+- [ ] 维护影响已评估 (2 分)
+- [ ] 成本影响已分析 (2 分)
+
+## 5. 验证得分 [0-10]
+- [ ] 需求已追溯 (2 分)
+- [ ] 约束已验证 (2 分)
+- [ ] 测试场景已定义 (2 分)
+- [ ] 审查反馈已纳入 (2 分)
+- [ ] 最终验证已完成 (2 分)
+
+总分: [所有类别总和] / 50
+最低要求分数: 40/50 (80%)
+```
+
+## 质量阈值
+
+```mermaid
+graph TD
+    subgraph "质量门禁"
+    T1["最低<br>40/50 (80%)"]
+    T2["目标<br>45/50 (90%)"]
+    T3["优秀<br>48/50 (96%)"]
+    end
+
+    Score["质量<br>得分"] --> Check{"达到<br>阈值?"}
+    Check -->|"< 80%"| Block["⛔ 已阻止<br>需要改进"]
+    Check -->|"≥ 80%"| Pass["✓ 通过<br>可以继续"]
+
+    style T1 fill:#4dbb5f,stroke:#36873f,color:white
+    style T2 fill:#ffa64d,stroke:#cc7a30,color:white
+    style T3 fill:#d94dbb,stroke:#a3378a,color:white
+    style Score fill:#4dbbbb,stroke:#368787,color:white
+    style Check fill:#d971ff,stroke:#a33bc2,color:white
+```
+
+## 指标评估过程
+
+```mermaid
+graph TD
+    Start["开始<br>评估"] --> Doc["1. 评分<br>文档"]
+    Doc --> Dec["2. 评估<br>决策"]
+    Dec --> Opt["3. 审查<br>选项"]
+    Opt --> Imp["4. 评估<br>影响"]
+    Imp --> Ver["5. 验证<br>完整性"]
+    Ver --> Total["计算<br>总分"]
+    Total --> Check{"达到<br>阈值?"}
+    Check -->|否| Return["返回<br>改进"]
+    Check -->|是| Proceed["进入<br>下一阶段"]
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style Doc fill:#ffa64d,stroke:#cc7a30,color:white
+    style Dec fill:#4dbb5f,stroke:#36873f,color:white
+    style Opt fill:#d94dbb,stroke:#a3378a,color:white
+    style Imp fill:#4dbbbb,stroke:#368787,color:white
+    style Ver fill:#d971ff,stroke:#a33bc2,color:white
+```
+
+## 改进建议
+
+对于低于阈值的分数:
+
+```markdown
+## 文档质量改进
+- 添加清晰的问题陈述
+- 包含具体目标
+- 列出所有需求
+- 改进格式
+- 添加交叉引用
+
+## 决策覆盖率改进
+- 识别缺失的决策
+- 记录所有决策点
+- 映射依赖关系
+- 添加影响分析
+- 考虑未来影响
+
+## 选项分析改进
+- 考虑更多替代方案
+- 详细说明优缺点
+- 评估技术可行性
+- 估算资源需求
+- 识别风险
+
+## 影响评估改进
+- 记录系统影响
+- 评估性能
+- 处理安全问题
+- 评估维护
+- 分析成本
+
+## 验证改进
+- 追溯需求
+- 验证约束
+- 定义测试场景
+- 纳入反馈
+- 完成验证
+```
+
+## 指标验证检查清单
+
+```markdown
+## 审查前验证
+- [ ] 所有部分已评分
+- [ ] 计算已验证
+- [ ] 支持证据已附上
+- [ ] 改进区域已识别
+- [ ] 审查反馈已纳入
+
+## 最终指标验证
+- [ ] 达到最低分数
+- [ ] 所有类别通过
+- [ ] 文档完整
+- [ ] 改进已处理
+- [ ] 最终批准已获得
+```
+
+## 文档管理
+
+```mermaid
+graph TD
+    Current["当前文档"] --> Active["活动:<br>- creative-phase-metrics.md"]
+    Current --> Related["相关:<br>- creative-phase-enforcement.md<br>- creative-phase-architecture.md"]
+
+    style Current fill:#4da6ff,stroke:#0066cc,color:white
+    style Active fill:#4dbb5f,stroke:#36873f,color:white
+    style Related fill:#ffa64d,stroke:#cc7a30,color:white
+```

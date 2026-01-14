@@ -1,0 +1,117 @@
+---
+description: VAN QA 最小构建测试的流程图
+globs: van-qa-checks/build-test.mdc
+alwaysApply: false
+---
+# VAN QA：最小构建测试
+
+> **简述：** 此组件执行最小构建测试，以确保核心构建功能正常工作。
+
+## 4️⃣ 最小构建测试流程
+
+```mermaid
+graph TD
+    Start["最小构建测试"] --> CreateTest["创建最小<br>测试项目"]
+    CreateTest --> BuildTest["尝试<br>构建"]
+    BuildTest --> BuildStatus{"构建<br>成功？"}
+
+    BuildStatus -->|"是"| RunTest["运行基本<br>功能测试"]
+    BuildStatus -->|"否"| FixBuild["修复构建<br>问题"]
+    FixBuild --> RetryBuild["重试构建"]
+    RetryBuild --> BuildStatus
+
+    RunTest --> TestStatus{"测试<br>通过？"}
+    TestStatus -->|"是"| TestSuccess["最小构建测试<br>✅ 通过"]
+    TestStatus -->|"否"| FixTest["修复测试<br>问题"]
+    FixTest --> RetryTest["重试测试"]
+    RetryTest --> TestStatus
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style TestSuccess fill:#10b981,stroke:#059669,color:white
+    style BuildStatus fill:#f6546a,stroke:#c30052,color:white
+    style TestStatus fill:#f6546a,stroke:#c30052,color:white
+```
+
+### 最小构建测试实现：
+```powershell
+# 示例：为 React 项目执行最小构建测试
+function Perform-MinimalBuildTest {
+    $buildSuccess = $false
+    $testSuccess = $false
+
+    # 创建最小测试项目
+    $testDir = ".__build_test"
+    if (Test-Path $testDir) {
+        Remove-Item -Path $testDir -Recurse -Force
+    }
+
+    try {
+        # 创建最小测试目录
+        New-Item -Path $testDir -ItemType Directory | Out-Null
+        Push-Location $testDir
+
+        # 初始化最小 package.json
+        @"
+{
+  "name": "build-test",
+  "version": "1.0.0",
+  "description": "最小构建测试",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 构建测试成功"
+  }
+}
+"@ | Set-Content -Path "package.json"
+
+        # 尝试构建
+        npm run build | Out-Null
+        $buildSuccess = $true
+
+        # 创建最小测试文件
+        @"
+console.log('测试成功');
+"@ | Set-Content -Path "index.js"
+
+        # 运行基本测试
+        node index.js | Out-Null
+        $testSuccess = $true
+
+    } catch {
+        Write-Output "❌ 构建测试失败：$($_.Exception.Message)"
+    } finally {
+        Pop-Location
+        if (Test-Path $testDir) {
+            Remove-Item -Path $testDir -Recurse -Force
+        }
+    }
+
+    # 显示结果
+    if ($buildSuccess -and $testSuccess) {
+        Write-Output "✅ 最小构建测试成功通过"
+        return $true
+    } else {
+        if (-not $buildSuccess) {
+            Write-Output "❌ 构建过程失败"
+        }
+        if (-not $testSuccess) {
+            Write-Output "❌ 基本功能测试失败"
+        }
+        return $false
+    }
+}
+```
+
+## 📋 最小构建测试检查点
+
+```
+✓ 检查点：最小构建测试
+- 测试项目创建成功？[是/否]
+- 构建过程成功完成？[是/否]
+- 基本功能测试通过？[是/否]
+
+→ 如果全部为是：QA 验证完成，继续生成成功报告。
+→ 如果有否：继续前请修复构建问题。
+```
+
+**下一步（通过时）：** 加载 `van-qa-utils/reports.mdc` 生成成功报告。
+**下一步（失败时）：** 查看 `van-qa-utils/common-fixes.mdc` 获取构建测试修复方法。

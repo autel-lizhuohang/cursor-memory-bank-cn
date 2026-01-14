@@ -1,0 +1,101 @@
+---
+description: VAN QA 模式转换的工具文件
+globs: van-qa-utils/mode-transitions.mdc
+alwaysApply: false
+---
+# VAN QA：模式转换
+
+> **简述：** 此组件处理模式之间的转换，特别是 QA 验证到 BUILD 模式的转换，并防止在未成功通过 QA 验证的情况下访问 BUILD 模式。
+
+## 🔒 BUILD 模式阻止机制
+
+系统在未通过 QA 验证的情况下阻止进入 BUILD 模式：
+
+```mermaid
+graph TD
+    Start["用户输入：BUILD"] --> CheckQA{"QA 验证<br>已完成？"}
+    CheckQA -->|"是且通过"| AllowBuild["允许进入 BUILD 模式"]
+    CheckQA -->|"否或失败"| BlockBuild["阻止 BUILD 模式"]
+    BlockBuild --> Message["显示：<br>⚠️ 需要 QA 验证"]
+    Message --> ReturnToVANQA["提示：输入 VAN QA"]
+
+    style CheckQA fill:#f6546a,stroke:#c30052,color:white
+    style BlockBuild fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style Message fill:#ff5555,stroke:#dd3333,color:white
+    style ReturnToVANQA fill:#4da6ff,stroke:#0066cc,color:white
+```
+
+### 实现示例（PowerShell）：
+```powershell
+# 在允许 BUILD 模式之前检查 QA 状态
+function Check-QAValidationStatus {
+    $qaStatusFile = "memory-bank\.qa_validation_status" # 假设状态由 reports.mdc 写入
+
+    if (Test-Path $qaStatusFile) {
+        $status = Get-Content $qaStatusFile -Raw
+        if ($status -match "PASS") {
+            return $true
+        }
+    }
+
+    # 显示阻止消息
+    Write-Output "`n`n"
+    Write-Output "🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫"
+    Write-Output "⛔️ BUILD 模式已阻止：需要 QA 验证"
+    Write-Output "⛔️ 您必须完成 QA 验证才能进入 BUILD 模式"
+    Write-Output "`n"
+    Write-Output "输入 'VAN QA' 执行技术验证"
+    Write-Output "`n"
+    Write-Output "🚫 未经验证不能进行任何实现 🚫"
+    Write-Output "🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫"
+
+    return $false
+}
+```
+
+## 🚨 模式转换触发器
+
+### CREATIVE 到 VAN QA 转换：
+完成 CREATIVE 阶段后，触发此消息提示 QA 验证：
+
+```
+⏭️ 下一模式：VAN QA
+要在实现前验证技术要求，请输入 'VAN QA'
+```
+
+### VAN QA 到 BUILD 转换（成功时）：
+QA 验证成功后，触发此消息允许进入 BUILD 模式：
+
+```
+✅ 技术验证完成
+所有先决条件已成功验证
+您现在可以进入 BUILD 模式
+输入 'BUILD' 开始实现
+```
+
+### 手动访问 BUILD 模式（QA 已通过时）：
+当用户手动输入 'BUILD' 时，在允许访问前检查 QA 状态：
+
+```powershell
+# 处理 BUILD 模式请求
+function Handle-BuildModeRequest {
+    if (Check-QAValidationStatus) {
+        # 允许转换到 BUILD 模式
+        Write-Output "`n"
+        Write-Output "✅ QA 验证检查：通过"
+        Write-Output "正在加载 BUILD 模式..."
+        Write-Output "`n"
+
+        # 这里将加载 BUILD 模式流程图
+        # [加载 BUILD 模式流程图的代码]
+
+        return $true
+    }
+
+    # QA 验证失败或未完成，BUILD 模式被阻止
+    return $false
+}
+```
+
+**下一步（QA 成功时）：** 继续进入 BUILD 模式。
+**下一步（QA 失败时）：** 返回 QA 验证流程。

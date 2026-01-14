@@ -1,0 +1,276 @@
+---
+description: PLAN 模式（代码实现）的可视化流程图
+globs: plan-mode-map.mdc
+alwaysApply: false
+---
+
+# PLAN 模式：任务规划流程图
+
+> **简述：** 此可视化流程图指导 PLAN 模式流程，专注于根据初始化期间确定的复杂度级别创建详细的实施计划，并在实施前进行强制性技术验证。
+
+## 🧭 PLAN 模式流程
+
+```mermaid
+graph TD
+    Start["开始规划"] --> ReadTasks["读取 tasks.md<br>Core/task-tracking.md"]
+
+    %% 复杂度级别确定
+    ReadTasks --> CheckLevel{"确定<br>复杂度级别"}
+    CheckLevel -->|"级别 2"| Level2["级别 2 规划<br>Level2/enhancement-planning.md"]
+    CheckLevel -->|"级别 3"| Level3["级别 3 规划<br>Level3/feature-planning.md"]
+    CheckLevel -->|"级别 4"| Level4["级别 4 规划<br>Level4/system-planning.md"]
+
+    %% 级别 2 规划
+    Level2 --> L2Review["审查代码<br>结构"]
+    L2Review --> L2Document["记录<br>计划变更"]
+    L2Document --> L2Challenges["识别<br>挑战"]
+    L2Challenges --> L2Checklist["创建任务<br>清单"]
+    L2Checklist --> L2Update["使用计划更新<br>tasks.md"]
+    L2Update --> L2Tech["技术<br>验证"]
+    L2Tech --> L2Verify["验证计划<br>完整性"]
+
+    %% 级别 3 规划
+    Level3 --> L3Review["审查代码库<br>结构"]
+    L3Review --> L3Requirements["记录详细<br>需求"]
+    L3Requirements --> L3Components["识别受影响的<br>组件"]
+    L3Components --> L3Plan["创建综合<br>实施计划"]
+    L3Plan --> L3Challenges["记录挑战<br>和解决方案"]
+    L3Challenges --> L3Update["使用计划更新<br>tasks.md"]
+    L3Update --> L3Tech["技术<br>验证"]
+    L3Tech --> L3Flag["标记需要创意阶段<br>的组件"]
+    L3Flag --> L3Verify["验证计划<br>完整性"]
+
+    %% 级别 4 规划
+    Level4 --> L4Analysis["代码库结构<br>分析"]
+    L4Analysis --> L4Requirements["记录综合<br>需求"]
+    L4Requirements --> L4Diagrams["创建架构<br>图"]
+    L4Diagrams --> L4Subsystems["识别受影响的<br>子系统"]
+    L4Subsystems --> L4Dependencies["记录依赖关系<br>和集成点"]
+    L4Dependencies --> L4Plan["创建分阶段<br>实施计划"]
+    L4Plan --> L4Update["使用计划更新<br>tasks.md"]
+    L4Update --> L4Tech["技术<br>验证"]
+    L4Tech --> L4Flag["标记需要创意阶段<br>的组件"]
+    L4Flag --> L4Verify["验证计划<br>完整性"]
+
+    %% 技术验证关卡 - 新增
+    L2Tech & L3Tech & L4Tech --> TechGate["⛔ 技术<br>验证关卡"]
+    TechGate --> TechSelection["记录技术<br>栈选择"]
+    TechSelection --> TechHelloWorld["创建 Hello World<br>概念验证"]
+    TechHelloWorld --> TechDependencies["验证所需<br>依赖"]
+    TechDependencies --> TechConfig["验证构建<br>配置"]
+    TechConfig --> TechBuild["完成测试<br>构建"]
+    TechBuild --> TechVerify["⛔ 技术<br>检查点"]
+
+    %% 验证和完成
+    L2Verify & L3Verify & L4Verify & TechVerify --> CheckCreative{"需要<br>创意<br>阶段？"}
+
+    %% 模式转换
+    CheckCreative -->|"是"| RecCreative["下一模式：<br>CREATIVE 模式"]
+    CheckCreative -->|"否"| RecBuild["下一模式：<br>BUILD 模式"]
+
+    %% 技术关卡样式
+    style TechGate fill:#ff5555,stroke:#dd3333,color:white,stroke-width:3px
+    style TechVerify fill:#ff5555,stroke:#dd3333,color:white,stroke-width:3px
+    style TechSelection fill:#4da6ff,stroke:#0066cc,color:white
+    style TechHelloWorld fill:#4da6ff,stroke:#0066cc,color:white
+    style TechDependencies fill:#4da6ff,stroke:#0066cc,color:white
+    style TechConfig fill:#4da6ff,stroke:#0066cc,color:white
+    style TechBuild fill:#4da6ff,stroke:#0066cc,color:white
+```
+
+## 📋 基于级别的规划方法
+
+```mermaid
+graph TD
+    subgraph "级别 2：增强"
+        L2A["基本需求<br>分析"]
+        L2B["简单组件<br>识别"]
+        L2C["线性实施<br>计划"]
+        L2D["基本清单<br>创建"]
+    end
+
+    subgraph "级别 3：功能"
+        L3A["详细需求<br>分析"]
+        L3B["带依赖关系的<br>组件映射"]
+        L3C["多阶段<br>实施计划"]
+        L3D["综合<br>清单"]
+        L3E["创意阶段<br>识别"]
+    end
+
+    subgraph "级别 4：系统"
+        L4A["架构<br>需求分析"]
+        L4B["系统组件<br>映射"]
+        L4C["子系统<br>集成计划"]
+        L4D["分阶段实施<br>策略"]
+        L4E["风险评估<br>和缓解"]
+        L4F["多个创意<br>阶段需求"]
+    end
+
+    L2A --> L2B --> L2C --> L2D
+    L3A --> L3B --> L3C --> L3D --> L3E
+    L4A --> L4B --> L4C --> L4D --> L4E --> L4F
+```
+
+## 🔧 技术验证工作流程
+
+```mermaid
+graph TD
+    Start["技术<br>验证开始"] --> Select["技术<br>栈选择"]
+    Select --> Document["记录选择的<br>技术"]
+    Document --> POC["创建最小化<br>概念验证"]
+    POC --> Build["验证构建<br>流程有效"]
+    Build --> Dependencies["验证所有<br>依赖"]
+    Dependencies --> Config["确认配置<br>文件正确"]
+    Config --> Test["完成测试<br>构建/运行"]
+    Test --> Success{"所有检查<br>通过？"}
+
+    Success -->|"是"| Ready["准备好<br>实施"]
+    Success -->|"否"| Fix["修复技术<br>问题"]
+    Fix --> Document
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style POC fill:#4da6ff,stroke:#0066cc,color:white
+    style Success fill:#ff5555,stroke:#dd3333,color:white
+    style Fix fill:#ff5555,stroke:#dd3333,color:white
+    style Ready fill:#10b981,stroke:#059669,color:white
+```
+
+## 📊 必需的文件状态验证
+
+在规划开始前，验证文件状态：
+
+```mermaid
+graph TD
+    Start["文件状态<br>验证"] --> CheckTasks{"tasks.md<br>已初始化？"}
+
+    CheckTasks -->|"否"| ErrorTasks["错误：<br>返回 VAN 模式"]
+    CheckTasks -->|"是"| CheckActive{"activeContext.md<br>存在？"}
+
+    CheckActive -->|"否"| ErrorActive["错误：<br>返回 VAN 模式"]
+    CheckActive -->|"是"| ReadyPlan["准备好<br>规划"]
+```
+
+## 📝 TASKS.MD 更新格式
+
+在规划期间，使用此结构更新 tasks.md：
+
+```
+# 任务：[任务名称]
+
+## 描述
+[详细描述]
+
+## 复杂度
+级别：[2/3/4]
+类型：[增强/功能/复杂系统]
+
+## 技术栈
+- 框架：[选择的框架]
+- 构建工具：[选择的构建工具]
+- 语言：[选择的语言]
+- 存储：[选择的存储机制]
+
+## 技术验证检查点
+- [ ] 项目初始化命令已验证
+- [ ] 所需依赖已识别并安装
+- [ ] 构建配置已验证
+- [ ] Hello world 验证已完成
+- [ ] 测试构建成功通过
+
+## 状态
+- [x] 初始化完成
+- [x] 规划完成
+- [ ] 技术验证完成
+- [ ] [实施步骤]
+
+## 实施计划
+1. [步骤 1]
+   - [子任务 1.1]
+   - [子任务 1.2]
+2. [步骤 2]
+   - [子任务 2.1]
+   - [子任务 2.2]
+
+## 所需创意阶段
+- [ ] [组件 1] 设计
+- [ ] [组件 2] 架构
+- [ ] [组件 3] 数据模型
+
+## 依赖
+- [依赖 1]
+- [依赖 2]
+
+## 挑战和缓解措施
+- [挑战 1]：[缓解策略]
+- [挑战 2]：[缓解策略]
+```
+
+## 📋 创意阶段识别
+
+对于级别 3-4 任务，识别需要创意阶段的组件：
+
+```mermaid
+graph TD
+    Start["创意阶段<br>识别"] --> CheckComp{"组件<br>分析"}
+
+    CheckComp --> UI["UI/UX<br>组件"]
+    CheckComp --> Data["数据模型<br>组件"]
+    CheckComp --> Arch["架构<br>组件"]
+    CheckComp --> Algo["算法<br>组件"]
+
+    UI & Data & Arch & Algo --> Decision{"需要设计<br>决策？"}
+
+    Decision -->|"是"| Flag["标记为<br>创意阶段"]
+    Decision -->|"否"| Skip["标准<br>实施"]
+
+    Flag --> Document["在<br>tasks.md 中记录"]
+```
+
+## 📊 技术验证清单
+
+```
+✓ 技术验证清单
+- 技术栈已清晰定义？[是/否]
+- 项目初始化命令已记录？[是/否]
+- 所需依赖已识别？[是/否]
+- 最小化概念验证已创建？[是/否]
+- Hello world 构建/运行成功？[是/否]
+- 配置文件已验证？[是/否]
+- 测试构建成功完成？[是/否]
+
+→ 如果全部为是：技术验证完成 - 准备进入下一阶段
+→ 如果有否：在继续前解决技术问题
+```
+
+## 📊 计划验证清单
+
+```
+✓ 计划验证清单
+- 需求已清晰记录？[是/否]
+- 技术栈已验证？[是/否]
+- 受影响组件已识别？[是/否]
+- 实施步骤已详细说明？[是/否]
+- 依赖已记录？[是/否]
+- 挑战和缓解措施已解决？[是/否]
+- 创意阶段已识别（级别 3-4）？[是/否/不适用]
+- tasks.md 已更新计划？[是/否]
+
+→ 如果全部为是：规划完成 - 准备进入下一模式
+→ 如果有否：完成缺失的计划元素
+```
+
+## 🔄 模式转换通知
+
+规划完成时，通知用户：
+
+```
+## 规划完成
+
+✅ 实施计划已创建
+✅ 技术栈已验证
+✅ tasks.md 已更新计划
+✅ 挑战和缓解措施已记录
+[✅ 创意阶段已识别（对于级别 3-4）]
+
+→ 下一推荐模式：[CREATIVE/BUILD] 模式
+```

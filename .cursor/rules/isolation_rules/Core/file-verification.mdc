@@ -1,0 +1,198 @@
+---
+description: 优化的文件验证
+globs: file-verification.mdc
+alwaysApply: false
+---
+# 优化文件验证系统
+
+> **摘要:** 本系统使用批量操作和平台优化命令高效验证和创建所需的记忆库文件结构。
+
+## 优化文件验证工作流程
+
+```mermaid
+graph TD
+    Start["开始文件<br>验证"] --> VerifyAll["验证所有<br>必需组件"]
+    VerifyAll --> MissingCheck{"缺少<br>组件?"}
+    MissingCheck -->|"是"| BatchCreate["批量创建<br>所有缺失项"]
+    MissingCheck -->|"否"| Complete["验证<br>完成"]
+    BatchCreate --> Report["生成<br>验证报告"]
+    Report --> Complete
+```
+
+## 优化目录创建
+
+```mermaid
+graph TD
+    Start["目录<br>创建"] --> DetectOS["检测操作<br>系统"]
+    DetectOS -->|"Windows"| WinCmd["批量创建<br>Windows 命令"]
+    DetectOS -->|"Mac/Linux"| UnixCmd["批量创建<br>Unix 命令"]
+    WinCmd & UnixCmd --> Verify["验证<br>创建成功"]
+    Verify --> Complete["目录设置<br>完成"]
+```
+
+### 平台特定命令
+
+#### Windows (PowerShell)
+```powershell
+# 一条命令创建所有目录
+mkdir memory-bank, docs, docs\archive -ErrorAction SilentlyContinue
+
+# 创建所有必需文件
+$files = @(".cursorrules", "tasks.md",
+           "memory-bank\projectbrief.md",
+           "memory-bank\productContext.md",
+           "memory-bank\systemPatterns.md",
+           "memory-bank\techContext.md",
+           "memory-bank\activeContext.md",
+           "memory-bank\progress.md")
+
+foreach ($file in $files) {
+    if (-not (Test-Path $file)) {
+        New-Item -Path $file -ItemType File -Force
+    }
+}
+```
+
+#### Mac/Linux (Bash)
+```bash
+# 一条命令创建所有目录
+mkdir -p memory-bank docs/archive
+
+# 创建所有必需文件
+touch .cursorrules tasks.md \
+      memory-bank/projectbrief.md \
+      memory-bank/productContext.md \
+      memory-bank/systemPatterns.md \
+      memory-bank/techContext.md \
+      memory-bank/activeContext.md \
+      memory-bank/progress.md
+```
+
+## 简化验证过程
+
+不要单独检查每个组件，而是执行批量验证:
+
+```powershell
+# Windows - PowerShell
+$requiredDirs = @("memory-bank", "docs", "docs\archive")
+$requiredFiles = @(".cursorrules", "tasks.md")
+$mbFiles = @("projectbrief.md", "productContext.md", "systemPatterns.md",
+             "techContext.md", "activeContext.md", "progress.md")
+
+$missingDirs = $requiredDirs | Where-Object { -not (Test-Path $_) -or -not (Test-Path $_ -PathType Container) }
+$missingFiles = $requiredFiles | Where-Object { -not (Test-Path $_) -or (Test-Path $_ -PathType Container) }
+$missingMBFiles = $mbFiles | ForEach-Object { "memory-bank\$_" } |
+                  Where-Object { -not (Test-Path $_) -or (Test-Path $_ -PathType Container) }
+
+if ($missingDirs.Count -eq 0 -and $missingFiles.Count -eq 0 -and $missingMBFiles.Count -eq 0) {
+    Write-Output "✓ 所有必需组件已验证"
+} else {
+    # 一次创建所有缺失项
+    if ($missingDirs.Count -gt 0) {
+        $missingDirs | ForEach-Object { mkdir $_ -Force }
+    }
+    if ($missingFiles.Count -gt 0 -or $missingMBFiles.Count -gt 0) {
+        $allMissingFiles = $missingFiles + $missingMBFiles
+        $allMissingFiles | ForEach-Object { New-Item -Path $_ -ItemType File -Force }
+    }
+}
+```
+
+## 模板初始化
+
+使用单个脚本优化模板创建:
+
+```powershell
+# Windows - PowerShell
+$templates = @{
+    "tasks.md" = @"
+# 记忆库: 任务
+
+## 当前任务
+[任务尚未定义]
+
+## 状态
+- [ ] 任务定义
+- [ ] 实施计划
+- [ ] 执行
+- [ ] 文档
+
+## 需求
+[尚未定义需求]
+"@
+
+    "memory-bank\activeContext.md" = @"
+# 记忆库: 活动上下文
+
+## 当前焦点
+[未定义活动焦点]
+
+## 状态
+[未定义状态]
+
+## 最新更改
+[未记录更改]
+"@
+
+    # 在此添加其他模板
+}
+
+foreach ($file in $templates.Keys) {
+    if (Test-Path $file) {
+        Set-Content -Path $file -Value $templates[$file]
+    }
+}
+```
+
+## 性能优化最佳实践
+
+1. **批量操作**: 始终使用批量操作而不是单个命令
+   ```
+   # 好: 一次创建所有目录
+   mkdir memory-bank docs docs\archive
+
+   # 差: 一次创建一个目录
+   mkdir memory-bank
+   mkdir docs
+   mkdir docs\archive
+   ```
+
+2. **预检查优化**: 先检查所有需求，然后只创建缺失的
+   ```
+   # 首先检查缺失的
+   $missingItems = ...
+
+   # 然后只创建缺失的
+   if ($missingItems) { ... }
+   ```
+
+3. **错误处理**: 在所有命令中包含错误处理
+   ```
+   mkdir memory-bank, docs, docs\archive -ErrorAction SilentlyContinue
+   ```
+
+4. **平台适配**: 自动检测平台并使用适当的命令
+   ```
+   if ($IsWindows) {
+       # Windows 命令
+   } else {
+       # Unix 命令
+   }
+   ```
+
+5. **一次性验证**: 在单次遍历中验证目录结构
+   ```
+   $requiredPaths = @("memory-bank", "docs", "docs\archive", ".cursorrules", "tasks.md")
+   $missingPaths = $requiredPaths | Where-Object { -not (Test-Path $_) }
+   ```
+
+## 验证报告格式
+
+```
+✅ 验证完成
+- 创建的目录: [列表]
+- 创建的文件: [列表]
+- 所有组件已验证
+
+记忆库系统已准备就绪。
+```

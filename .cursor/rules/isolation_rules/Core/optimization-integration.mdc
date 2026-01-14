@@ -1,0 +1,321 @@
+---
+description: 记忆库优化的集成中心
+globs: "**/optimization*/**", "**/integration*/**"
+alwaysApply: false
+---
+
+# 记忆库优化集成
+
+> **摘要:** 本文件作为所有记忆库优化的集成点，协调各种优化组件无缝协作。
+
+## 优化集成流程
+
+```mermaid
+graph TD
+    Start["记忆库<br>初始化"] --> HRL["分层<br>规则加载"]
+    HRL --> ACM["自适应<br>复杂度模型"]
+    ACM --> DCM["动态<br>上下文管理"]
+    DCM --> TMO["转换<br>优化"]
+
+    subgraph "级别特定优化"
+        L1["级别 1<br>优化"]
+        L2["级别 2<br>优化"]
+        L3["级别 3<br>优化"]
+        L4["级别 4<br>优化"]
+    end
+
+    ACM --> L1 & L2 & L3 & L4
+
+    L1 & L2 & L3 & L4 --> CPO["创意阶段<br>优化"]
+
+    CPO --> PDO["渐进式<br>文档"]
+    TMO --> PDO
+
+    PDO --> MBO["记忆库<br>优化"]
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style HRL fill:#ffa64d,stroke:#cc7a30,color:white
+    style ACM fill:#4dbb5f,stroke:#36873f,color:white
+    style DCM fill:#d94dbb,stroke:#a3378a,color:white
+    style TMO fill:#4dbbbb,stroke:#368787,color:white
+    style CPO fill:#e699d9,stroke:#d94dbb,color:white
+    style PDO fill:#d971ff,stroke:#a33bc2,color:white
+    style MBO fill:#ff71c2,stroke:#c23b8a,color:white
+```
+
+## 优化组件注册表
+
+```javascript
+// 优化组件注册表伪代码
+const optimizationRegistry = {
+  // 核心优化
+  hierarchicalRuleLoading: {
+    file: "Core/hierarchical-rule-loading.mdc",
+    dependencies: [],
+    priority: 1
+  },
+  adaptiveComplexityModel: {
+    file: "main.mdc",
+    dependencies: ["hierarchicalRuleLoading"],
+    priority: 2
+  },
+  modeTransitionOptimization: {
+    file: "Core/mode-transition-optimization.mdc",
+    dependencies: ["hierarchicalRuleLoading", "adaptiveComplexityModel"],
+    priority: 3
+  },
+
+  // 级别特定优化
+  level1Optimization: {
+    file: "Level1/optimized-workflow-level1.mdc",
+    dependencies: ["adaptiveComplexityModel"],
+    priority: 4
+  },
+
+  // 功能特定优化
+  creativePhaseOptimization: {
+    file: "Phases/CreativePhase/optimized-creative-template.mdc",
+    dependencies: ["hierarchicalRuleLoading", "adaptiveComplexityModel"],
+    priority: 5
+  }
+};
+```
+
+## 优化初始化序列
+
+```mermaid
+sequenceDiagram
+    participant MB as 记忆库
+    participant Reg as 优化注册表
+    participant HRL as 分层规则加载
+    participant ACM as 自适应复杂度
+    participant TMO as 转换优化
+    participant CPO as 创意阶段优化
+
+    MB->>Reg: 请求优化初始化
+    Reg->>Reg: 按优先级和依赖项排序优化
+    Reg->>HRL: 初始化 (优先级 1)
+    HRL-->>Reg: 初始化完成
+    Reg->>ACM: 初始化 (优先级 2)
+    ACM->>HRL: 请求规则加载服务
+    HRL-->>ACM: 提供规则加载
+    ACM-->>Reg: 初始化完成
+    Reg->>TMO: 初始化 (优先级 3)
+    TMO->>HRL: 请求规则加载服务
+    TMO->>ACM: 请求复杂度模型
+    HRL-->>TMO: 提供规则加载
+    ACM-->>TMO: 提供复杂度模型
+    TMO-->>Reg: 初始化完成
+    Reg->>CPO: 初始化 (最终)
+    CPO->>HRL: 请求规则加载服务
+    CPO->>ACM: 请求复杂度模型
+    CPO->>TMO: 请求转换服务
+    HRL-->>CPO: 提供规则加载
+    ACM-->>CPO: 提供复杂度模型
+    TMO-->>CPO: 提供转换服务
+    CPO-->>Reg: 初始化完成
+    Reg-->>MB: 所有优化已初始化
+```
+
+## 优化配置
+
+```javascript
+// 优化配置伪代码
+const optimizationConfig = {
+  // 令牌优化设置
+  tokenOptimization: {
+    enableHierarchicalLoading: true,
+    enableProgressiveDocumentation: true,
+    enableLazyRuleLoading: true,
+    enableContextPruning: true
+  },
+
+  // 上下文保留设置
+  contextPreservation: {
+    preserveDesignDecisions: true,
+    preserveImplementationContext: true,
+    preserveUserPreferences: true,
+    contextCompressionLevel: "high" // none, low, medium, high
+  },
+
+  // 文档优化
+  documentationOptimization: {
+    level1DocumentationLevel: "minimal", // minimal, standard, comprehensive
+    level2DocumentationLevel: "standard",
+    level3DocumentationLevel: "comprehensive",
+    level4DocumentationLevel: "comprehensive",
+    enableProgressiveDisclosure: true,
+    enableTemplateCaching: true
+  }
+};
+```
+
+## 优化监控
+
+```mermaid
+graph TD
+    Monitor["优化<br>监控器"] --> TokenUsage["令牌使用<br>跟踪"]
+    Monitor --> ContextEfficiency["上下文<br>效率"]
+    Monitor --> RuleLoadingStats["规则加载<br>统计"]
+    Monitor --> DocumentationSize["文档<br>大小"]
+
+    TokenUsage --> Dashboard["优化<br>仪表板"]
+    ContextEfficiency --> Dashboard
+    RuleLoadingStats --> Dashboard
+    DocumentationSize --> Dashboard
+
+    Dashboard --> Feedback["优化<br>反馈循环"]
+    Feedback --> Config["优化<br>配置"]
+    Config --> Monitor
+
+    style Monitor fill:#4da6ff,stroke:#0066cc,color:white
+    style Dashboard fill:#ffa64d,stroke:#cc7a30,color:white
+    style Feedback fill:#4dbb5f,stroke:#36873f,color:white
+    style Config fill:#d94dbb,stroke:#a3378a,color:white
+```
+
+## 优化指标
+
+```markdown
+# 优化指标
+
+## 令牌使用
+- 核心规则加载: [X] 令牌
+- 模式特定规则: [Y] 令牌
+- 创意阶段文档: [Z] 令牌
+- 总体令牌减少: [P]%
+
+## 上下文效率
+- 上下文利用率: [Q]%
+- 上下文浪费: [R]%
+- 有效令牌容量: [S] 令牌
+
+## 规则加载
+- 已加载规则: [T] / [U] (总计)
+- 延迟加载规则: [V]
+- 缓存规则: [W]
+
+## 文档
+- 级别 1 文档大小: [X] 令牌
+- 级别 2 文档大小: [Y] 令牌
+- 级别 3 文档大小: [Z] 令牌
+- 级别 4 文档大小: [AA] 令牌
+```
+
+## 集成使用示例
+
+### 初始化所有优化
+
+```javascript
+// 初始化所有优化的伪代码
+function initializeMemoryBankOptimizations() {
+  // 加载优化注册表
+  const registry = loadOptimizationRegistry();
+
+  // 按优先级和依赖项排序
+  const sortedOptimizations = sortOptimizations(registry);
+
+  // 按顺序初始化每个优化
+  for (const opt of sortedOptimizations) {
+    initializeOptimization(opt);
+  }
+
+  // 配置优化参数
+  configureOptimizations(loadOptimizationConfig());
+
+  // 开始监控
+  initializeOptimizationMonitoring();
+
+  return "记忆库优化已初始化";
+}
+```
+
+### 使用优化的创意阶段
+
+```markdown
+// 使用带渐进式文档的优化创意阶段
+
+// 以最小文档初始化
+📌 创意阶段开始: 认证系统
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣ 问题
+   描述: 为应用程序设计认证系统
+   需求: 安全、可扩展、支持 SSO、易于维护
+   约束: 必须与现有用户数据库配合使用，响应时间 <100ms
+
+2️⃣ 选项
+   选项 A: 基于 JWT 的无状态认证
+   选项 B: 使用 Redis 的会话认证
+   选项 C: OAuth2 实现
+
+// 根据需要渐进添加细节
+3️⃣ 分析
+   | 标准 | JWT | Sessions | OAuth2 |
+   |-----------|-----|----------|--------|
+   | 安全性 | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+   | 可扩展性 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
+   | 复杂度 | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
+
+// 专注于决策和实施
+4️⃣ 决策
+   选择: 选项 A: 带刷新令牌的 JWT 认证
+   理由: 性能和可扩展性的最佳平衡
+
+5️⃣ 实施笔记
+   - 使用 HS256 算法进行令牌签名
+   - 实现短期访问令牌 (15分钟)
+   - 在 Redis 中存储令牌黑名单以进行撤销
+```
+
+## 模式转换示例
+
+```markdown
+// 从 CREATIVE 到 BUILD 的优化模式转换
+
+# 模式转换: CREATIVE → BUILD
+
+## 上下文摘要
+- 任务: 认证系统实施
+- 复杂度: 级别 3
+- 决策: 带刷新令牌的 JWT 认证
+
+## 关键上下文
+- 安全需求已验证
+- 算法选择: HS256
+- 令牌生命周期: 15分钟访问 / 7天刷新
+
+## 后续步骤
+1. 实现 JWT 生成模块
+2. 创建令牌验证中间件
+3. 构建刷新令牌处理
+
+// 转换时保留上下文
+// BUILD 模式继续使用此上下文
+```
+
+## 分层规则加载示例
+
+```javascript
+// 分层规则加载的伪代码示例
+
+// 初始加载 - 仅核心规则
+loadCoreRules();
+
+// 确定复杂度
+const complexity = determineComplexity();
+
+// 加载模式特定的必要规则
+loadModeEssentialRules("CREATIVE");
+
+// 为专业规则注册延迟加载器
+registerLazyLoader("architecture", () => loadRule("creative-phase-architecture.mdc"));
+registerLazyLoader("algorithm", () => loadRule("creative-phase-algorithm.mdc"));
+registerLazyLoader("uiux", () => loadRule("creative-phase-uiux.mdc"));
+
+// 稍后，当需要架构设计时:
+const architectureRule = loadSpecializedRule("architecture");
+// 架构规则现在仅在需要时加载
+```
+
+这些集成的优化无缝协作，提供显著更高效的记忆库系统，同时保持所有功能。

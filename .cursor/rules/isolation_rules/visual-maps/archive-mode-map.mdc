@@ -1,0 +1,272 @@
+---
+description: ARCHIVE 模式（任务文档化）的可视化流程图
+globs: "**/archive*/**", "**/document*/**", "**/complete*/**"
+alwaysApply: false
+---
+
+# ARCHIVE 模式：任务文档化流程图
+
+> **简述：** 此可视化流程图指导 ARCHIVE 模式流程，专注于创建已完成任务的综合文档、归档相关文件，并更新记忆库以供将来参考。
+
+## 🧭 ARCHIVE 模式流程
+
+```mermaid
+graph TD
+    Start["开始 ARCHIVE 模式"] --> ReadTasks["读取 tasks.md<br>reflection.md 和<br>progress.md"]
+
+    %% 初始评估
+    ReadTasks --> VerifyReflect{"反思<br>完成？"}
+    VerifyReflect -->|"否"| ReturnReflect["返回<br>REFLECT 模式"]
+    VerifyReflect -->|"是"| AssessLevel{"确定<br>复杂度级别"}
+
+    %% 基于级别的归档
+    AssessLevel -->|"级别 1"| L1Archive["级别 1 归档"]
+    AssessLevel -->|"级别 2"| L2Archive["级别 2 归档<br>Level2/archive-basic.mdc"]
+    AssessLevel -->|"级别 3"| L3Archive["级别 3 归档<br>Level3/archive-intermediate.mdc"]
+    AssessLevel -->|"级别 4"| L4Archive["级别 4 归档<br>Level4/archive-comprehensive.mdc"]
+
+    %% 级别 1 归档（最小化）
+    L1Archive --> L1Summary["创建快速<br>摘要"]
+    L1Summary --> L1Task["更新<br>tasks.md"]
+    L1Task --> L1Complete["标记任务<br>完成"]
+
+    %% 级别 2 归档（基本）
+    L2Archive --> L2Summary["创建基本<br>归档文档"]
+    L2Summary --> L2Doc["记录<br>变更"]
+    L2Doc --> L2Task["更新<br>tasks.md"]
+    L2Task --> L2Progress["更新<br>progress.md"]
+    L2Progress --> L2Complete["标记任务<br>完成"]
+
+    %% 级别 3-4 归档（综合）
+    L3Archive & L4Archive --> L34Summary["创建综合<br>归档文档"]
+    L34Summary --> L34Doc["记录<br>实现过程"]
+    L34Doc --> L34Creative["归档创意<br>阶段文档"]
+    L34Creative --> L34Code["记录代码<br>变更"]
+    L34Code --> L34Test["记录<br>测试"]
+    L34Test --> L34Lessons["总结<br>经验教训"]
+    L34Lessons --> L34Task["更新<br>tasks.md"]
+    L34Task --> L34Progress["更新<br>progress.md"]
+    L34Progress --> L34System["更新系统<br>文档"]
+    L34System --> L34Complete["标记任务<br>完成"]
+
+    %% 完成
+    L1Complete & L2Complete & L34Complete --> CreateArchive["在<br>docs/archive/<br>创建归档文档"]
+    CreateArchive --> UpdateActive["更新<br>activeContext.md"]
+    UpdateActive --> Reset["重置以准备<br>下一个任务"]
+```
+
+## 📋 归档文档结构
+
+归档文档应遵循以下结构化格式：
+
+```mermaid
+graph TD
+    subgraph "归档文档结构"
+        Header["# 任务归档：[任务名称]"]
+        Meta["## 元数据<br>任务信息、日期、复杂度"]
+        Summary["## 摘要<br>任务简要概述"]
+        Requirements["## 需求<br>任务需要完成的内容"]
+        Implementation["## 实现<br>任务如何实现"]
+        Testing["## 测试<br>如何验证解决方案"]
+        Lessons["## 经验教训<br>任务的关键收获"]
+        Refs["## 参考<br>相关文档链接"]
+    end
+
+    Header --> Meta --> Summary --> Requirements --> Implementation --> Testing --> Lessons --> Refs
+```
+
+## 📊 必需的文件状态验证
+
+在归档开始前，验证文件状态：
+
+```mermaid
+graph TD
+    Start["文件状态<br>验证"] --> CheckTasks{"tasks.md 有<br>反思完成<br>标记？"}
+
+    CheckTasks -->|"否"| ErrorReflect["错误：<br>返回 REFLECT 模式"]
+    CheckTasks -->|"是"| CheckReflection{"reflection.md<br>存在？"}
+
+    CheckReflection -->|"否"| ErrorCreate["错误：<br>先创建 reflection.md"]
+    CheckReflection -->|"是"| CheckProgress{"progress.md<br>已更新？"}
+
+    CheckProgress -->|"否"| ErrorProgress["错误：<br>先更新 progress.md"]
+    CheckProgress -->|"是"| ReadyArchive["准备好<br>进行归档"]
+```
+
+## 🔍 按复杂度分类的归档类型
+
+```mermaid
+graph TD
+    subgraph "级别 1：最小化归档"
+        L1A["基本 Bug<br>描述"]
+        L1B["解决方案<br>摘要"]
+        L1C["影响的<br>文件"]
+    end
+
+    subgraph "级别 2：基本归档"
+        L2A["增强功能<br>描述"]
+        L2B["实现<br>摘要"]
+        L2C["测试<br>结果"]
+        L2D["经验<br>教训"]
+    end
+
+    subgraph "级别 3-4：综合归档"
+        L3A["详细<br>需求"]
+        L3B["架构/<br>设计决策"]
+        L3C["实现<br>细节"]
+        L3D["测试<br>策略"]
+        L3E["性能<br>考虑"]
+        L3F["未来<br>增强"]
+        L3G["与其他系统的<br>交叉引用"]
+    end
+
+    L1A --> L1B --> L1C
+
+    L2A --> L2B --> L2C --> L2D
+
+    L3A --> L3B --> L3C --> L3D --> L3E --> L3F --> L3G
+```
+
+## 📝 归档文档模板
+
+### 级别 1（最小化）归档
+```
+# Bug 修复归档：[Bug 名称]
+
+## 日期
+[修复日期]
+
+## 摘要
+[Bug 和解决方案的简要描述]
+
+## 实现
+[实现的修复描述]
+
+## 更改的文件
+- [文件 1]
+- [文件 2]
+```
+
+### 级别 2-4（综合）归档
+```
+# 任务归档：[任务名称]
+
+## 元数据
+- **复杂度**：级别 [2/3/4]
+- **类型**：[增强/功能/系统]
+- **完成日期**：[日期]
+- **相关任务**：[相关任务引用]
+
+## 摘要
+[任务的综合摘要]
+
+## 需求
+- [需求 1]
+- [需求 2]
+- [需求 3]
+
+## 实现
+### 方法
+[实现方法描述]
+
+### 关键组件
+- [组件 1]：[描述]
+- [组件 2]：[描述]
+
+### 更改的文件
+- [文件 1]：[更改描述]
+- [文件 2]：[更改描述]
+
+## 测试
+- [测试 1]：[结果]
+- [测试 2]：[结果]
+
+## 经验教训
+- [教训 1]
+- [教训 2]
+- [教训 3]
+
+## 未来考虑
+- [未来增强 1]
+- [未来增强 2]
+
+## 参考
+- [反思文档链接]
+- [创意阶段文档链接]
+- [其他相关参考]
+```
+
+## 📋 归档位置和命名
+
+归档文档应按以下模式组织：
+
+```mermaid
+graph TD
+    subgraph "归档结构"
+        Root["docs/archive/"]
+        Tasks["tasks/"]
+        Features["features/"]
+        Systems["systems/"]
+
+        Root --> Tasks
+        Root --> Features
+        Root --> Systems
+
+        Tasks --> Bug["bug-fix-name-YYYYMMDD.md"]
+        Tasks --> Enhancement["enhancement-name-YYYYMMDD.md"]
+        Features --> Feature["feature-name-YYYYMMDD.md"]
+        Systems --> System["system-name-YYYYMMDD.md"]
+    end
+```
+
+## 📊 TASKS.MD 最终更新
+
+归档完成时，使用以下内容更新 tasks.md：
+
+```
+## 状态
+- [x] 初始化完成
+- [x] 规划完成
+[对于级别 3-4：]
+- [x] 创意阶段完成
+- [x] 实现完成
+- [x] 反思完成
+- [x] 归档完成
+
+## 归档
+- **日期**：[完成日期]
+- **归档文档**：[归档文档链接]
+- **状态**：已完成
+```
+
+## 📋 归档验证清单
+
+```
+✓ 归档验证
+- 反思文档已审查？[是/否]
+- 归档文档已创建并包含所有部分？[是/否]
+- 归档文档放置在正确位置？[是/否]
+- tasks.md 已标记为完成？[是/否]
+- progress.md 已更新归档引用？[是/否]
+- activeContext.md 已为下一个任务更新？[是/否]
+- 创意阶段文档已归档（级别 3-4）？[是/否/不适用]
+
+→ 如果全部为是：归档完成 - 记忆库已重置以准备下一个任务
+→ 如果有否：完成缺失的归档元素
+```
+
+## 🔄 任务完成通知
+
+归档完成时，通知用户：
+
+```
+## 任务已归档
+
+✅ 归档文档已在 docs/archive/ 创建
+✅ 所有任务文档已保存
+✅ 记忆库已更新引用
+✅ 任务已标记为已完成
+
+→ 记忆库已准备好进行下一个任务
+→ 要开始新任务，请使用 VAN 模式
+```

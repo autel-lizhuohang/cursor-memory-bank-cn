@@ -1,0 +1,135 @@
+---
+description: Level 3（中级功能）任务的结构化任务跟踪指南，使用可视化跟踪元素和清晰的检查点
+globs: task-tracking-intermediate.mdc
+alwaysApply: false
+---
+# 第3级中级任务跟踪
+
+> **简要说明：** 本文档为 Level 3（中级功能）任务提供结构化的任务跟踪指南，使用可视化跟踪元素和清晰的检查点。
+
+## 任务跟踪工作流程
+
+```mermaid
+graph TD
+    Start["Task Start"] --> Init["📋 Initialize<br>Task Entry"]
+    Init --> Struct["🏗️ Create Task<br>Structure"]
+    Struct --> Track["📊 Progress<br>Tracking"]
+    Track --> Update["🔄 Regular<br>Updates"]
+    Update --> Complete["✅ Task<br>Completion"]
+
+    Struct --> Components["Components:"]
+    Components --> Req["Requirements"]
+    Components --> Steps["Implementation<br>Steps"]
+    Components --> Creative["Creative Phase<br>Markers"]
+    Components --> Check["Checkpoints"]
+
+    Track --> Status["Track Status:"]
+    Status --> InProg["🔄 In Progress"]
+    Status --> Block["⛔ Blocked"]
+    Status --> Done["✅ Complete"]
+    Status --> Skip["⏭️ Skipped"]
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style Init fill:#ffa64d,stroke:#cc7a30,color:white
+    style Struct fill:#4dbb5f,stroke:#36873f,color:white
+    style Track fill:#d94dbb,stroke:#a3378a,color:white
+    style Update fill:#4dbbbb,stroke:#368787,color:white
+    style Complete fill:#d971ff,stroke:#a33bc2,color:white
+```
+
+## 任务条目模板
+
+```markdown
+# [Task Title]
+
+## Requirements
+- [ ] Requirement 1
+- [ ] Requirement 2
+- [ ] Requirement 3
+
+## Components Affected
+- Component 1
+- Component 2
+- Component 3
+
+## Implementation Steps
+1. [ ] Step 1
+2. [ ] Step 2
+3. [ ] Step 3
+
+## Creative Phases Required
+- [ ] 🎨 UI/UX Design
+- [ ] 🏗️ Architecture Design
+- [ ] ⚙️ Algorithm Design
+
+## Checkpoints
+- [ ] Requirements verified
+- [ ] Creative phases completed
+- [ ] Implementation tested
+- [ ] Documentation updated
+
+## Current Status
+- Phase: [Current Phase]
+- Status: [In Progress/Blocked/Complete]
+- Blockers: [If any]
+```
+
+## 进度跟踪可视化
+
+```mermaid
+graph TD
+    subgraph "TASK PROGRESS"
+    P1["✓ Requirements<br>Defined"]
+    P2["✓ Components<br>Identified"]
+    P3["→ Creative Phase<br>In Progress"]
+    P4["□ Implementation"]
+    P5["□ Testing"]
+    P6["□ Documentation"]
+    end
+
+    style P1 fill:#4dbb5f,stroke:#36873f,color:white
+    style P2 fill:#4dbb5f,stroke:#36873f,color:white
+    style P3 fill:#ffa64d,stroke:#cc7a30,color:white
+    style P4 fill:#d94dbb,stroke:#a3378a,color:white
+    style P5 fill:#4dbbbb,stroke:#368787,color:white
+    style P6 fill:#d971ff,stroke:#a33bc2,color:white
+```
+
+## 更新协议
+
+```mermaid
+sequenceDiagram
+    participant Task as Task Entry
+    participant Status as Status Update
+    participant Creative as Creative Phase
+    participant Implementation as Implementation
+
+    Task->>Status: Update Progress
+    Status->>Creative: Flag for Creative Phase
+    Creative->>Implementation: Complete Design
+    Implementation->>Status: Update Status
+    Status->>Task: Mark Complete
+```
+
+## 检查点验证
+
+| 阶段 | 验证项目 | 状态 |
+|-------|-------------------|--------|
+| 需求 | 所有需求已记录 | [ ] |
+| 组件 | 受影响组件已列出 | [ ] |
+| 创意 | 设计决策已记录 | [ ] |
+| 实现 | 代码变更已跟踪 | [ ] |
+| 测试 | 测试结果已记录 | [ ] |
+| 文档 | 更新已完成 | [ ] |
+
+## 文档管理
+
+```mermaid
+graph TD
+    Current["Current Documents"] --> Active["Active:<br>- task-tracking-intermediate.md<br>- planning-comprehensive.md"]
+    Current --> Required["Required Next:<br>- creative-phase-enforcement.md<br>- implementation-phase-reference.md"]
+
+    style Current fill:#4da6ff,stroke:#0066cc,color:white
+    style Active fill:#4dbb5f,stroke:#36873f,color:white
+    style Required fill:#ffa64d,stroke:#cc7a30,color:white
+```

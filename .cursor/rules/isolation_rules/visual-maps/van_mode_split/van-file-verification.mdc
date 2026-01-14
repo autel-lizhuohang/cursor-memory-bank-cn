@@ -1,0 +1,302 @@
+---
+description: VAN 模式文件验证的可视化流程图
+globs: van-file-verification.mdc
+alwaysApply: false
+---
+# 优化的文件验证系统
+
+🚨 关键：必须进行记忆库验证 🚨
+在任何文件操作之前，记忆库结构必须存在
+此检查必须在所有验证过程中首先执行
+
+> **简述：** 此系统提供了一种结构化方法，用于在任务实施之前验证文件结构完整性，重点关注高效检查和清晰的状态报告。
+
+## 🔍 文件验证工作流程
+
+```mermaid
+graph TD
+    %% 关键记忆库验证 - 必须首先执行
+    Start["开始文件验证"] --> MemBankCheck{"记忆库<br>存在？"}
+    MemBankCheck -->|"否"| CreateMemBank["创建记忆库<br>[关键]"]
+    MemBankCheck -->|"是"| VerifyMemBankComplete["验证记忆库<br>结构完整"]
+    CreateMemBank --> VerifyMemBankComplete
+
+    VerifyMemBankComplete --> PassCheck{"所有关键<br>检查通过？"}
+    PassCheck -->|"否"| AbortAll["⛔ 中止所有操作<br>先修复记忆库"]
+    PassCheck -->|"是"| MainVerification
+
+    %% 常规验证流程从这里继续
+    MainVerification["开始完整<br>文件验证"] --> BatchVerify["使用模式<br>批量验证"]
+    BatchVerify --> BrokenLinks["检查<br>损坏的引用"]
+    BrokenLinks --> DirectoryStructure["验证目录<br>结构"]
+    DirectoryStructure --> Status{"所有验证<br>成功？"}
+
+    Status -->|"是"| Complete["验证<br>完成 ✓"]
+    Status -->|"否"| Diagnose["诊断<br>问题"]
+    Diagnose --> Attempt{"尝试自动<br>修复？"}
+
+    Attempt -->|"是"| AutoFix["自动修复<br>问题"]
+    Attempt -->|"否"| ReportIssue["向用户报告<br>问题"]
+
+    AutoFix --> Recheck{"问题<br>已解决？"}
+    Recheck -->|"是"| ReportSuccess["向用户报告<br>成功"]
+    Recheck -->|"否"| ReportIssue
+
+    ReportSuccess --> Complete
+    ReportIssue --> UserAction["等待<br>用户操作"]
+    UserAction --> ReVerify["用户操作后<br>重新验证"]
+    ReVerify --> Status
+
+    style MemBankCheck fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style CreateMemBank fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style VerifyMemBankComplete fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style PassCheck fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style AbortAll fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style Status fill:#f6546a,stroke:#c30052,color:white
+    style Complete fill:#10b981,stroke:#059669,color:white
+```
+
+## 🧩 记忆库验证 - 关键组件
+
+记忆库验证必须在任何文件验证过程中首先执行：
+
+```javascript
+function verifyMemoryBank() {
+  // 检查记忆库是否存在
+  const memoryBankExists = checkDirectoryExists("memory-bank");
+  if (!memoryBankExists) {
+    console.error("⛔ 关键错误：记忆库不存在");
+    createMemoryBankStructure();
+    return verifyMemoryBankCreation();
+  }
+
+  // 检查必需的子目录
+  const requiredDirs = [
+    "memory-bank/active-context",
+    "memory-bank/system-patterns",
+    "memory-bank/creative-phase",
+    "memory-bank/implementation"
+  ];
+
+  const missingDirs = requiredDirs.filter(dir => !checkDirectoryExists(dir));
+  if (missingDirs.length > 0) {
+    console.error(`⛔ 关键错误：缺少记忆库目录：${missingDirs.join(", ")}`);
+    createMissingDirectories(missingDirs);
+    return verifyMemoryBankCreation();
+  }
+
+  // 检查关键文件
+  const criticalFiles = [
+    "memory-bank/active-context/activeContext.md",
+    "memory-bank/system-patterns/systemPatterns.md"
+  ];
+
+  const missingFiles = criticalFiles.filter(file => !checkFileExists(file));
+  if (missingFiles.length > 0) {
+    console.error(`⛔ 关键错误：缺少关键文件：${missingFiles.join(", ")}`);
+    createMissingFiles(missingFiles);
+    return verifyMemoryBankCreation();
+  }
+
+  return true; // 记忆库验证成功
+}
+
+// 强制：必须在任何其他验证之前调用此函数
+const memoryBankVerified = verifyMemoryBank();
+if (!memoryBankVerified) {
+  throw new Error("⛔ 记忆库验证失败 - 无法继续");
+}
+```
+
+## 📋 记忆库验证检查清单
+
+```
+✓ 记忆库验证检查清单
+- 记忆库目录存在？[是/否]
+- 必需的子目录存在？[是/否]
+- 关键文件存在？[是/否]
+- 文件内容有效？[是/否]
+
+→ 如果全部为是：记忆库验证通过 - 继续文件验证
+→ 如果有否：停止所有处理并修复记忆库
+```
+
+## 🔍 批量验证工作流程
+
+## 📋 优化的目录创建
+
+```mermaid
+graph TD
+    Start["目录<br>创建"] --> DetectOS["检测操作<br>系统"]
+    DetectOS -->|"Windows"| WinCmd["批量创建<br>Windows 命令"]
+    DetectOS -->|"Mac/Linux"| UnixCmd["批量创建<br>Unix 命令"]
+    WinCmd & UnixCmd --> Verify["验证<br>创建成功"]
+    Verify --> Complete["目录设置<br>完成"]
+```
+
+### 平台特定命令
+
+#### Windows (PowerShell)
+```powershell
+# 一次命令创建所有目录
+mkdir memory-bank, docs, docs\archive -ErrorAction SilentlyContinue
+
+# 创建所有必需文件
+$files = @(".cursorrules", "tasks.md",
+           "memory-bank\projectbrief.md",
+           "memory-bank\productContext.md",
+           "memory-bank\systemPatterns.md",
+           "memory-bank\techContext.md",
+           "memory-bank\activeContext.md",
+           "memory-bank\progress.md")
+
+foreach ($file in $files) {
+    if (-not (Test-Path $file)) {
+        New-Item -Path $file -ItemType File -Force
+    }
+}
+```
+
+#### Mac/Linux (Bash)
+```bash
+# 一次命令创建所有目录
+mkdir -p memory-bank docs/archive
+
+# 创建所有必需文件
+touch .cursorrules tasks.md \
+      memory-bank/projectbrief.md \
+      memory-bank/productContext.md \
+      memory-bank/systemPatterns.md \
+      memory-bank/techContext.md \
+      memory-bank/activeContext.md \
+      memory-bank/progress.md
+```
+
+## 📝 精简的验证流程
+
+不要单独检查每个组件，而是执行批量验证：
+
+```powershell
+# Windows - PowerShell
+$requiredDirs = @("memory-bank", "docs", "docs\archive")
+$requiredFiles = @(".cursorrules", "tasks.md")
+$mbFiles = @("projectbrief.md", "productContext.md", "systemPatterns.md",
+             "techContext.md", "activeContext.md", "progress.md")
+
+$missingDirs = $requiredDirs | Where-Object { -not (Test-Path $_) -or -not (Test-Path $_ -PathType Container) }
+$missingFiles = $requiredFiles | Where-Object { -not (Test-Path $_) -or (Test-Path $_ -PathType Container) }
+$missingMBFiles = $mbFiles | ForEach-Object { "memory-bank\$_" } |
+                  Where-Object { -not (Test-Path $_) -or (Test-Path $_ -PathType Container) }
+
+if ($missingDirs.Count -eq 0 -and $missingFiles.Count -eq 0 -and $missingMBFiles.Count -eq 0) {
+    Write-Output "✓ 所有必需组件已验证"
+} else {
+    # 一次创建所有缺失项
+    if ($missingDirs.Count -gt 0) {
+        $missingDirs | ForEach-Object { mkdir $_ -Force }
+    }
+    if ($missingFiles.Count -gt 0 -or $missingMBFiles.Count -gt 0) {
+        $allMissingFiles = $missingFiles + $missingMBFiles
+        $allMissingFiles | ForEach-Object { New-Item -Path $_ -ItemType File -Force }
+    }
+}
+```
+
+## 📝 模板初始化
+
+使用单个脚本优化模板创建：
+
+```powershell
+# Windows - PowerShell
+$templates = @{
+    "tasks.md" = @"
+# 记忆库：任务
+
+## 当前任务
+[任务尚未定义]
+
+## 状态
+- [ ] 任务定义
+- [ ] 实施计划
+- [ ] 执行
+- [ ] 文档
+
+## 需求
+[尚未定义需求]
+"@
+
+    "memory-bank\activeContext.md" = @"
+# 记忆库：活动上下文
+
+## 当前焦点
+[未定义活动焦点]
+
+## 状态
+[未定义状态]
+
+## 最新更改
+[未记录更改]
+"@
+
+    # 在此添加其他模板
+}
+
+foreach ($file in $templates.Keys) {
+    if (Test-Path $file) {
+        Set-Content -Path $file -Value $templates[$file]
+    }
+}
+```
+
+## 🔍 性能优化最佳实践
+
+1. **批量操作**：始终使用批量操作而不是单个命令
+   ```
+   # 好：一次创建所有目录
+   mkdir memory-bank docs docs\archive
+
+   # 差：一次创建一个目录
+   mkdir memory-bank
+   mkdir docs
+   mkdir docs\archive
+   ```
+
+2. **预检查优化**：先检查所有需求，然后只创建缺失的内容
+   ```
+   # 首先检查缺失的内容
+   $missingItems = ...
+
+   # 然后只创建缺失的内容
+   if ($missingItems) { ... }
+   ```
+
+3. **错误处理**：在所有命令中包含错误处理
+   ```
+   mkdir memory-bank, docs, docs\archive -ErrorAction SilentlyContinue
+   ```
+
+4. **平台适配**：自动检测平台并使用适当的命令
+   ```
+   if ($IsWindows) {
+       # Windows 命令
+   } else {
+       # Unix 命令
+   }
+   ```
+
+5. **单次验证**：在单次遍历中验证目录结构
+   ```
+   $requiredPaths = @("memory-bank", "docs", "docs\archive", ".cursorrules", "tasks.md")
+   $missingPaths = $requiredPaths | Where-Object { -not (Test-Path $_) }
+   ```
+
+## 📝 验证报告格式
+
+```
+✅ 验证完成
+- 已创建目录：[列表]
+- 已创建文件：[列表]
+- 所有组件已验证
+
+记忆库系统已准备就绪。
+```

@@ -1,0 +1,78 @@
+---
+description: 定义已完成 Level 3 中级功能的归档流程，创建自包含、易于访问的功能开发生命周期记录
+globs: archive-intermediate.mdc
+alwaysApply: false
+---
+
+# 第3级归档：中级功能文档
+
+> **简要说明：** 本指南概述了已完成 Level 3 中级功能的归档流程。目标是创建一个自包含、易于访问的功能开发生命周期记录，包括规划、设计决策、实现摘要和反思。
+
+## 开始归档前（L3 归档前检查清单）
+
+1.  **确认反思已完成：** 在 `memory-bank/tasks.md` 中验证此功能的反思阶段已标记为完成，且 `memory-bank/reflection-[feature_id].md` 已存在并已定稿。
+2.  **收集所有功能相关文档：**
+    * `memory-bank/tasks.md` 中的功能计划部分（或其副本）。
+    * 与此功能相关的所有 `memory-bank/creative/creative-[aspect_name].md` 文档。
+    * `memory-bank/reflection/reflection-[feature_id].md` 文档。
+    * `memory-bank/progress.md` 中的关键图表或架构说明（如果未在其他地方记录）。
+    * 已实现代码的主要提交或功能分支合并链接。
+
+## Level 3 归档工作流程
+
+```mermaid
+graph TD
+    StartArchive["Start L3 Archiving"] -->
+    VerifyReflect["1. Verify Reflection Complete<br>Check `tasks.md` & `reflection-[feature_id].md`"] -->
+    GatherDocs["2. Gather All Feature Documents<br>(Plan, Creative outputs, Reflection, Code links)"] -->
+    CreateArchiveFile["3. Create Feature Archive File<br>e.g., `memory-bank/archive/feature-[FeatureNameOrID]_YYYYMMDD.md`"] -->
+    PopulateArchive["4. Populate Archive File<br>(Using L3 Archive Template below)"] -->
+    VerifyLinks["5. Verify All Internal Links<br>in Archive File are Correct"] -->
+    FinalUpdateTasks["6. Final Update to `tasks.md`<br>(Mark Feature FULLY COMPLETED & ARCHIVED, link to archive file)"] -->
+    UpdateProgressFile["7. Add Final Entry to `progress.md`<br>(Note archiving & link to archive file)"] -->
+    ClearActiveCtx["8. Clear `activeContext.md`<br>Reset for Next Task/Project"] -->
+    ArchiveDone["L3 Archiving Complete<br>Feature successfully documented and closed."]
+
+    style StartArchive fill:#90a4ae,stroke:#607d8b
+    style ArchiveDone fill:#b0bec5,stroke:#90a4ae
+````
+
+## `memory-bank/archive/feature-[FeatureNameOrID]_YYYYMMDD.md` 结构
+
+  * **功能标题：** （例如："归档：用户资料功能 - 头像上传增强"）
+  * **功能ID（来自 `tasks.md`）：**
+  * **归档日期：** YYYY-MM-DD
+  * **状态：** 已完成并已归档
+  * **1. 功能概述：**
+      * 功能的简要描述及其目的（可从 `tasks.md` 或 `projectbrief.md` 提取）。
+      * 链接到 `tasks.md` 中的原始任务条目/计划（如果 `tasks.md` 有版本控制或保留历史记录）。
+  * **2. 已满足的关键需求：**
+      * 列出此功能解决的主要功能性和非功能性需求。
+  * **3. 设计决策和创意输出：**
+      * 关键设计选择摘要。
+      * 直接链接到所有相关的 `memory-bank/creative/creative-[aspect_name].md` 文档。
+      * 链接到使用的 `memory-bank/style-guide.md` 版本（如适用）。
+  * **4. 实现摘要：**
+      * 功能实现方式的高层概述。
+      * 创建的主要新组件/模块列表。
+      * 专门用于此功能的关键技术或库。
+      * 链接到主要功能分支合并提交或主要代码位置/拉取请求。
+  * **5. 测试概述：**
+      * 此功能采用的测试策略简要摘要（单元测试、集成测试、端到端测试）。
+      * 测试结果。
+  * **6. 反思和经验教训：**
+      * 直接链接到 `memory-bank/reflection/reflection-[feature_id].md`。
+      * 可选择将1-2个最关键的经验教训直接复制到归档摘要中。
+  * **7. 已知问题或未来考虑事项（可选，如果反思中有遗留问题）：**
+      * 任何延迟处理的小问题。
+      * 与此功能相关的潜在未来增强。
+
+### 受影响的关键文件和组件（来自 tasks.md）
+[来自原始 tasks.md 中此项目的文件/组件检查清单的摘要或直接副本。这提供了组件/文件级别变更范围的快速参考。]
+
+## L3 归档要点
+
+  * **自包含功能记录：** 目标是在归档中拥有一个概述此功能"故事"的首选文档。
+  * **可追溯性：** 从归档摘要轻松导航到详细的规划、设计和反思文档。
+  * **可维护性重点：** 帮助未来开发人员理解、维护或扩展此特定功能的信息。
+  * **非完整系统归档：** 与 Level 4 不同，这不是关于归档整个应用程序状态，而是关于一个重要功能的生命周期。

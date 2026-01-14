@@ -1,0 +1,71 @@
+---
+description: 隔离式记忆库的平台检测和命令适配
+globs: platform-awareness.mdc
+alwaysApply: false
+---
+
+
+# 平台感知系统
+
+> **摘要:** 本系统检测操作系统、路径格式和 shell 环境，然后相应地调整命令以确保跨平台兼容性。
+
+## 平台检测过程
+
+```mermaid
+graph TD
+    Start["开始平台<br>检测"] --> DetectOS["检测 OS<br>环境"]
+    DetectOS --> Windows["Windows<br>检测"]
+    DetectOS --> Mac["macOS<br>检测"]
+    DetectOS --> Linux["Linux<br>检测"]
+
+    Windows & Mac & Linux --> PathCheck["路径分隔符<br>检测"]
+    PathCheck --> CmdAdapt["命令<br>适配"]
+    CmdAdapt --> ShellCheck["Shell 类型<br>检测"]
+    ShellCheck --> Complete["平台检测<br>完成"]
+```
+
+## 平台检测实现
+
+可靠的平台检测:
+
+```
+## 平台检测结果
+操作系统: [Windows/macOS/Linux]
+路径分隔符: [\ 或 /]
+Shell 环境: [PowerShell/Bash/Zsh/Cmd]
+命令适配: [需要/不需要]
+
+正在为 [检测到的平台] 调整命令...
+```
+
+## 路径格式转换
+
+在格式之间转换路径时:
+
+```mermaid
+sequenceDiagram
+    participant Input as 路径输入
+    participant Detector as 格式检测器
+    participant Converter as 格式转换器
+    participant Output as 适配后的路径
+
+    Input->>Detector: 原始路径
+    Detector->>Detector: 检测当前格式
+    Detector->>Converter: 路径 + 当前格式
+    Converter->>Converter: 应用目标格式
+    Converter->>Output: 平台特定路径
+```
+
+## 平台验证检查清单
+
+```
+✓ 平台验证
+- 操作系统正确识别? [是/否]
+- 路径分隔符格式检测? [是/否]
+- Shell 环境已识别? [是/否]
+- 命令集已适当调整? [是/否]
+- 路径格式处理已配置? [是/否]
+
+→ 如果全部是: 平台适配完成
+→ 如果有否: 运行额外的检测步骤
+```

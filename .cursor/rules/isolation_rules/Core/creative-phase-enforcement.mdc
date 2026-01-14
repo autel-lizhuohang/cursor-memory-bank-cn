@@ -1,0 +1,145 @@
+---
+description: 创意阶段强制执行
+globs: creative-phase-enforcement.md
+alwaysApply: false
+---
+
+# 创意阶段强制执行
+
+> **摘要:** 本文档实施对级别 3-4 任务的创意阶段需求的严格执行，确保所有设计决策在实施前都已正确记录和验证。
+
+## 强制执行工作流程
+
+```mermaid
+graph TD
+    Start["任务开始"] --> Check{"级别 3-4<br>任务?"}
+    Check -->|是| Analyze["分析设计<br>决策点"]
+    Check -->|否| Optional["创意阶段<br>可选"]
+
+    Analyze --> Decision{"需要设计<br>决策?"}
+    Decision -->|是| Gate["🚨 实施<br>已阻止"]
+    Decision -->|否| Allow["允许<br>实施"]
+
+    Gate --> Creative["进入创意<br>阶段"]
+    Creative --> Verify{"所有决策<br>已记录?"}
+    Verify -->|否| Return["返回<br>创意阶段"]
+    Verify -->|是| Proceed["允许<br>实施"]
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style Check fill:#ffa64d,stroke:#cc7a30,color:white
+    style Analyze fill:#4dbb5f,stroke:#36873f,color:white
+    style Gate fill:#d94dbb,stroke:#a3378a,color:white
+    style Creative fill:#4dbbbb,stroke:#368787,color:white
+    style Verify fill:#d971ff,stroke:#a33bc2,color:white
+```
+
+## 强制执行门禁
+
+```mermaid
+graph TD
+    subgraph "创意阶段门禁"
+    G1["入口门禁<br>验证需求"]
+    G2["过程门禁<br>验证进度"]
+    G3["出口门禁<br>验证完成"]
+    end
+
+    G1 --> G2 --> G3
+
+    style G1 fill:#4dbb5f,stroke:#36873f,color:white
+    style G2 fill:#ffa64d,stroke:#cc7a30,color:white
+    style G3 fill:#d94dbb,stroke:#a3378a,color:white
+```
+
+## 强制执行检查清单
+
+```markdown
+## 入口门禁验证
+- [ ] 任务复杂度为级别 3-4
+- [ ] 设计决策已识别
+- [ ] 创意阶段需求已记录
+- [ ] 必要参与者已通知
+
+## 过程门禁验证
+- [ ] 所有选项正在考虑中
+- [ ] 优缺点已记录
+- [ ] 技术约束已识别
+- [ ] 实施影响已评估
+
+## 出口门禁验证
+- [ ] 所有决策已记录
+- [ ] 选择理由已提供
+- [ ] 实施计划已概述
+- [ ] 已对照需求验证
+```
+
+## 实施阻止通知
+
+当需要创意阶段但未完成时:
+
+```
+🚨 实施已阻止
+创意阶段必须在实施前完成。
+
+所需创意阶段:
+- [ ] [创意阶段 1]
+- [ ] [创意阶段 2]
+- [ ] [创意阶段 3]
+
+⛔ 这是硬阻止
+在所有创意阶段完成之前，实施无法进行。
+输入 "PHASE.REVIEW" 开始创意阶段审查。
+```
+
+## 验证协议
+
+```mermaid
+graph TD
+    subgraph "验证步骤"
+    V1["1. 需求<br>检查"]
+    V2["2. 文档<br>审查"]
+    V3["3. 决策<br>验证"]
+    V4["4. 实施<br>准备就绪"]
+    end
+
+    V1 --> V2 --> V3 --> V4
+
+    style V1 fill:#4dbb5f,stroke:#36873f,color:white
+    style V2 fill:#ffa64d,stroke:#cc7a30,color:white
+    style V3 fill:#d94dbb,stroke:#a3378a,color:white
+    style V4 fill:#4dbbbb,stroke:#368787,color:white
+```
+
+## 创意阶段标记
+
+使用这些标记清楚地表示创意阶段边界:
+
+```markdown
+🎨🎨🎨 进入创意阶段: [类型] 🎨🎨🎨
+焦点: [特定组件/功能]
+目标: [此创意阶段的明确目标]
+需求: [需求列表]
+
+[创意阶段内容]
+
+🎨 创意检查点: [里程碑]
+- 进度: [状态]
+- 决策: [列表]
+- 后续步骤: [计划]
+
+🎨🎨🎨 退出创意阶段 🎨🎨🎨
+摘要: [简要描述]
+关键决策: [列表]
+后续步骤: [实施计划]
+```
+
+## 文档管理
+
+```mermaid
+graph TD
+    Current["当前文档"] --> Active["活动:<br>- creative-phase-enforcement.md"]
+    Current --> Related["相关:<br>- creative-phase-architecture.md<br>- task-tracking-intermediate.md"]
+
+    style Current fill:#4da6ff,stroke:#0066cc,color:white
+    style Active fill:#4dbb5f,stroke:#36873f,color:white
+    style Related fill:#ffa64d,stroke:#cc7a30,color:white
+```

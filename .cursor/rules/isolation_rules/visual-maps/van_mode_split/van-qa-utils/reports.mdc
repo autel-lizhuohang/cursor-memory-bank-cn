@@ -1,0 +1,149 @@
+---
+description: VAN QA 验证报告的工具文件
+globs: van-qa-utils/reports.mdc
+alwaysApply: false
+---
+# VAN QA：验证报告
+
+> **简述：** 此组件包含 QA 验证流程完成后生成的综合成功和失败报告格式。
+
+## 📋 综合成功报告格式
+
+所有四个验证点通过后，生成此成功报告：
+
+```
+╔═════════════════════ 🔍 QA 验证报告 ══════════════════════╗
+│ 项目：[项目名称] | 时间戳：[当前日期/时间]                   │
+├─────────────────────────────────────────────────────────────┤
+│ 1️⃣ 依赖：✓ 兼容                                             │
+│ 2️⃣ 配置：✓ 有效且兼容                                       │
+│ 3️⃣ 环境：✓ 就绪                                             │
+│ 4️⃣ 最小构建：✓ 成功且通过                                   │
+├─────────────────────────────────────────────────────────────┤
+│ 🚨 最终结论：通过                                            │
+│ ➡️ 可以进入 BUILD 模式                                       │
+╚═════════════════════════════════════════════════════════════╝
+```
+
+### 成功报告生成示例：
+```powershell
+function Generate-SuccessReport {
+    param (
+        [string]$ProjectName = "当前项目"
+    )
+
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+
+    $report = @"
+╔═════════════════════ 🔍 QA 验证报告 ══════════════════════╗
+│ 项目：$ProjectName | 时间戳：$timestamp            │
+├─────────────────────────────────────────────────────────────┤
+│ 1️⃣ 依赖：✓ 兼容                                             │
+│ 2️⃣ 配置：✓ 有效且兼容                                       │
+│ 3️⃣ 环境：✓ 就绪                                             │
+│ 4️⃣ 最小构建：✓ 成功且通过                                   │
+├─────────────────────────────────────────────────────────────┤
+│ 🚨 最终结论：通过                                            │
+│ ➡️ 可以进入 BUILD 模式                                       │
+╚═════════════════════════════════════════════════════════════╝
+"@
+
+    # 保存验证状态（由 BUILD 模式阻止机制使用）
+    "PASS" | Set-Content -Path "memory-bank\.qa_validation_status"
+
+    return $report
+}
+```
+
+## ❌ 失败报告格式
+
+如果任何验证步骤失败，生成此详细失败报告：
+
+```
+⚠️⚠️⚠️ QA 验证失败 ⚠️⚠️⚠️
+
+在进入 BUILD 模式之前，必须解决以下问题：
+
+1️⃣ 依赖问题：
+- [依赖问题的详细描述]
+- [建议的修复方法]
+
+2️⃣ 配置问题：
+- [配置问题的详细描述]
+- [建议的修复方法]
+
+3️⃣ 环境问题：
+- [环境问题的详细描述]
+- [建议的修复方法]
+
+4️⃣ 构建测试问题：
+- [构建测试问题的详细描述]
+- [建议的修复方法]
+
+⚠️ BUILD 模式已被阻止，直到这些问题解决。
+修复问题后输入 'VAN QA' 重新验证。
+```
+
+### 失败报告生成示例：
+```powershell
+function Generate-FailureReport {
+    param (
+        [string[]]$DependencyIssues = @(),
+        [string[]]$ConfigIssues = @(),
+        [string[]]$EnvironmentIssues = @(),
+        [string[]]$BuildIssues = @()
+    )
+
+    $report = @"
+⚠️⚠️⚠️ QA 验证失败 ⚠️⚠️⚠️
+
+在进入 BUILD 模式之前，必须解决以下问题：
+
+"@
+
+    if ($DependencyIssues.Count -gt 0) {
+        $report += @"
+1️⃣ 依赖问题：
+$(($DependencyIssues | ForEach-Object { "- $_" }) -join "`n")
+
+"@
+    }
+
+    if ($ConfigIssues.Count -gt 0) {
+        $report += @"
+2️⃣ 配置问题：
+$(($ConfigIssues | ForEach-Object { "- $_" }) -join "`n")
+
+"@
+    }
+
+    if ($EnvironmentIssues.Count -gt 0) {
+        $report += @"
+3️⃣ 环境问题：
+$(($EnvironmentIssues | ForEach-Object { "- $_" }) -join "`n")
+
+"@
+    }
+
+    if ($BuildIssues.Count -gt 0) {
+        $report += @"
+4️⃣ 构建测试问题：
+$(($BuildIssues | ForEach-Object { "- $_" }) -join "`n")
+
+"@
+    }
+
+    $report += @"
+⚠️ BUILD 模式已被阻止，直到这些问题解决。
+修复问题后输入 'VAN QA' 重新验证。
+"@
+
+    # 保存验证状态（由 BUILD 模式阻止机制使用）
+    "FAIL" | Set-Content -Path "memory-bank\.qa_validation_status"
+
+    return $report
+}
+```
+
+**下一步（成功时）：** 加载 `van-qa-utils/mode-transitions.mdc` 处理 BUILD 模式转换。
+**下一步（失败时）：** 加载 `van-qa-utils/common-fixes.mdc` 获取问题修复指导。

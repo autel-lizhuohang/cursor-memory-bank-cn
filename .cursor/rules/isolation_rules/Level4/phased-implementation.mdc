@@ -1,0 +1,654 @@
+---
+description: Level 4 复杂系统任务的分阶段实施
+globs: "**/level4/**", "**/implementation/**"
+alwaysApply: false
+---
+
+# LEVEL 4 任务的分阶段实施
+
+> **简述:** 本文档概述了 Level 4（复杂系统）任务的结构化分阶段实施方法，确保对复杂系统进行可控的、增量式的交付，并在每个阶段进行适当的验证。
+
+## 🔍 分阶段实施概述
+
+Level 4 复杂系统任务需要可控的、增量式的实施方法来管理复杂性、降低风险并确保质量。本文档概述了一种分阶段实施方法论，将复杂系统开发划分为离散的、可验证的阶段，每个阶段都有明确的进入和退出标准。
+
+```mermaid
+flowchart TD
+    classDef phase fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef artifact fill:#f4b8c4,stroke:#d498a4,color:#000
+    classDef verification fill:#c5e8b7,stroke:#a5c897,color:#000
+
+    Start([开始实施<br>流程]) --> Framework[建立实施<br>框架]
+    Framework --> Plan[创建分阶段<br>计划]
+    Plan --> Foundation[实施<br>基础阶段]
+    Foundation --> VerifyF{基础<br>验证}
+    VerifyF -->|通过| Core[实施<br>核心阶段]
+    VerifyF -->|失败| ReviseF[修订<br>基础]
+    ReviseF --> VerifyF
+
+    Core --> VerifyC{核心<br>验证}
+    VerifyC -->|通过| Extension[实施<br>扩展阶段]
+    VerifyC -->|失败| ReviseC[修订<br>核心]
+    ReviseC --> VerifyC
+
+    Extension --> VerifyE{扩展<br>验证}
+    VerifyE -->|通过| Integration[实施<br>集成阶段]
+    VerifyE -->|失败| ReviseE[修订<br>扩展]
+    ReviseE --> VerifyE
+
+    Integration --> VerifyI{集成<br>验证}
+    VerifyI -->|通过| Finalization[实施<br>收尾阶段]
+    VerifyI -->|失败| ReviseI[修订<br>集成]
+    ReviseI --> VerifyI
+
+    Finalization --> VerifyFin{收尾<br>验证}
+    VerifyFin -->|通过| Complete([实施<br>完成])
+    VerifyFin -->|失败| ReviseFin[修订<br>收尾]
+    ReviseFin --> VerifyFin
+
+    Framework -.-> IF((实施<br>框架))
+    Plan -.-> PP((分阶段<br>计划))
+    Foundation -.-> FP((基础<br>阶段))
+    Core -.-> CP((核心<br>阶段))
+    Extension -.-> EP((扩展<br>阶段))
+    Integration -.-> IP((集成<br>阶段))
+    Finalization -.-> FiP((收尾<br>阶段))
+
+    class Start,Complete milestone
+    class Framework,Plan,Foundation,Core,Extension,Integration,Finalization,ReviseF,ReviseC,ReviseE,ReviseI,ReviseFin step
+    class VerifyF,VerifyC,VerifyE,VerifyI,VerifyFin verification
+    class IF,PP,FP,CP,EP,IP,FiP artifact
+```
+
+## 📋 实施分阶段原则
+
+1. **增量价值交付**: 每个阶段交付有形的、可验证的价值。
+2. **渐进复杂性**: 复杂性在各阶段中逐步增加。
+3. **风险缓解**: 早期阶段解决高风险要素，以便在需要时快速失败。
+4. **验证关卡**: 每个阶段都有明确的进入和退出标准。
+5. **业务对齐**: 各阶段与业务优先级和用户需求保持一致。
+6. **技术完整性**: 每个阶段都保持架构和技术完整性。
+7. **持续集成**: 工作持续集成和测试。
+8. **知识积累**: 每个阶段都建立在前一阶段获得的知识之上。
+9. **显式依赖**: 各阶段之间的依赖关系清晰记录。
+10. **适应性**: 分阶段计划可以适应新信息，同时保持结构。
+
+## 📋 标准实施阶段
+
+Level 4 复杂系统任务通常遵循五阶段实施方法：
+
+```mermaid
+flowchart LR
+    classDef phase fill:#f9d77e,stroke:#d9b95c,color:#000
+
+    P1[1. 基础<br>阶段] --> P2[2. 核心<br>阶段]
+    P2 --> P3[3. 扩展<br>阶段]
+    P3 --> P4[4. 集成<br>阶段]
+    P4 --> P5[5. 收尾<br>阶段]
+
+    class P1,P2,P3,P4,P5 phase
+```
+
+### 阶段 1: 基础阶段
+
+基础阶段建立系统所需的基本架构和基础设施。
+
+**关键活动:**
+- 设置开发、测试和部署环境
+- 建立核心架构组件和模式
+- 实施数据库模式和基本数据访问
+- 创建骨架应用程序结构
+- 实施认证和授权框架
+- 建立日志、监控和错误处理
+- 创建基本 CI/CD 流水线
+
+**退出标准:**
+- 基本架构框架可运行
+- 环境设置完成并记录
+- 核心基础设施组件到位
+- 基本 CI/CD 流水线可运行
+- 架构评审确认与设计一致
+
+### 阶段 2: 核心阶段
+
+核心阶段实施提供最小可行系统的基本功能。
+
+**关键活动:**
+- 实施核心业务逻辑
+- 开发主要用户流程和界面
+- 创建基本系统服务
+- 实施关键 API 端点
+- 开发基本报告功能
+- 建立主要集成点
+- 为核心功能创建自动化测试
+
+**退出标准:**
+- 核心业务功能已实施
+- 基本用户流程可工作
+- 主要 API 可运行
+- 核心自动化测试通过
+- 业务干系人验证核心功能
+
+### 阶段 3: 扩展阶段
+
+扩展阶段向核心系统添加额外功能和能力。
+
+**关键活动:**
+- 实施次要业务流程
+- 添加额外的用户界面和功能
+- 根据反馈增强现有功能
+- 实施高级功能
+- 扩展集成能力
+- 增强错误处理和边缘情况
+- 扩大测试覆盖范围
+
+**退出标准:**
+- 所有计划功能已实施
+- 扩展功能正常工作
+- 次要业务流程可运行
+- 增强功能已验证
+- 测试覆盖率达到定义的阈值
+
+### 阶段 4: 集成阶段
+
+集成阶段确保所有组件正确协同工作，并与外部系统集成。
+
+**关键活动:**
+- 执行深度集成测试
+- 实施所有外部系统集成
+- 进行端到端测试
+- 执行性能和负载测试
+- 进行安全测试
+- 实施任何必需的数据迁移
+- 验证系统在各种条件下的行为
+
+**退出标准:**
+- 所有集成正常工作
+- 端到端测试通过
+- 性能满足定义的要求
+- 安全测试未发现严重漏洞
+- 系统优雅地处理错误条件
+
+### 阶段 5: 收尾阶段
+
+收尾阶段为生产发布准备系统。
+
+**关键活动:**
+- 优化性能
+- 进行用户验收测试
+- 完成文档
+- 进行最终安全审查
+- 创建生产部署计划
+- 准备支持材料和培训
+- 进行最终系统审查
+
+**退出标准:**
+- 所有验收标准已满足
+- 文档已完成
+- 用户验收测试成功
+- 生产部署计划已批准
+- 支持和维护程序已建立
+
+## 📋 阶段规划模板
+
+为每个实施阶段创建详细计划，使用此模板：
+
+```markdown
+## [阶段名称] 实施计划
+
+### 阶段概述
+- **目的**: [阶段目的的简要描述]
+- **时间线**: [开始和结束日期]
+- **依赖**: [对其他阶段或外部因素的依赖]
+- **关键干系人**: [此阶段的关键干系人列表]
+
+### 进入标准
+- [ ] [标准 1]
+- [ ] [标准 2]
+- [ ] [标准 3]
+
+### 实施组件
+- **组件 1**: [描述]
+  - [ ] 任务 1.1: [描述]
+  - [ ] 任务 1.2: [描述]
+
+- **组件 2**: [描述]
+  - [ ] 任务 2.1: [描述]
+  - [ ] 任务 2.2: [描述]
+
+### 技术考虑
+- [此阶段的关键技术考虑]
+
+### 风险评估
+- **风险 1**: [描述]
+  - 影响: [高/中/低]
+  - 缓解措施: [策略]
+
+- **风险 2**: [描述]
+  - 影响: [高/中/低]
+  - 缓解措施: [策略]
+
+### 质量保证
+- [此阶段的 QA 方法]
+- [测试要求]
+
+### 退出标准
+- [ ] [标准 1]
+- [ ] [标准 2]
+- [ ] [标准 3]
+
+### 交付物
+- [此阶段的交付物列表]
+```
+
+## 📋 阶段验证
+
+每个阶段在进入下一阶段之前需要正式验证。
+
+```mermaid
+flowchart TD
+    classDef activity fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef artifact fill:#f4b8c4,stroke:#d498a4,color:#000
+    classDef decision fill:#c5e8b7,stroke:#a5c897,color:#000
+
+    Start([开始阶段<br>验证]) --> CodeReview[进行代码<br>评审]
+    CodeReview --> TestExecution[执行自动化<br>测试]
+    TestExecution --> QAVerification[执行 QA<br>验证]
+    QAVerification --> ArchReview[进行架构<br>评审]
+    ArchReview --> StakeholderReview[进行干系人<br>评审]
+    StakeholderReview --> Checklist[完成验证<br>清单]
+    Checklist --> ExitCriteria{所有退出<br>标准满足?}
+    ExitCriteria -->|是| Approval[获得阶段<br>批准]
+    ExitCriteria -->|否| Issues[记录<br>问题]
+    Issues --> Remediation[实施<br>补救]
+    Remediation --> Retest[验证<br>修复]
+    Retest --> ExitCriteria
+    Approval --> Complete([验证<br>完成])
+
+    CodeReview -.-> CodeReport((代码评审<br>报告))
+    TestExecution -.-> TestReport((测试<br>报告))
+    QAVerification -.-> QAReport((QA<br>报告))
+    ArchReview -.-> ArchReport((架构<br>报告))
+    StakeholderReview -.-> StakeReport((干系人<br>报告))
+    Checklist -.-> CheckDoc((验证<br>清单))
+
+    class Start,Complete milestone
+    class CodeReview,TestExecution,QAVerification,ArchReview,StakeholderReview,Checklist,Approval,Issues,Remediation,Retest activity
+    class ExitCriteria decision
+    class CodeReport,TestReport,QAReport,ArchReport,StakeReport,CheckDoc artifact
+```
+
+### 阶段验证清单模板
+
+```markdown
+## 阶段验证清单
+
+### 实施完整性
+- [ ] 所有计划组件已实施
+- [ ] 所有任务标记为完成
+- [ ] 代码中没有未解决的 TODO
+- [ ] 所有文档已更新
+
+### 代码质量
+- [ ] 代码评审已完成
+- [ ] 静态分析未发现严重问题
+- [ ] 代码符合既定标准
+- [ ] 技术债务已记录
+
+### 测试
+- [ ] 单元测试完成并通过
+- [ ] 集成测试完成并通过
+- [ ] 端到端测试完成并通过
+- [ ] 性能测试完成（如适用）
+- [ ] 安全测试完成（如适用）
+- [ ] 测试覆盖率满足要求
+
+### 架构
+- [ ] 实施遵循架构设计
+- [ ] 未引入架构违规
+- [ ] 技术模式正确实施
+- [ ] 非功能需求已满足
+
+### 干系人验证
+- [ ] 业务需求已满足
+- [ ] 干系人演示已完成
+- [ ] 反馈已整合
+- [ ] 验收标准已验证
+
+### 风险评估
+- [ ] 所有已识别风险已解决
+- [ ] 未引入新风险
+- [ ] 已知问题有应急计划
+
+### 退出标准
+- [ ] 所有退出标准已满足
+- [ ] 任何例外已记录并批准
+- [ ] 已获得所需方的阶段签署
+```
+
+## 📋 处理阶段依赖
+
+```mermaid
+flowchart TD
+    classDef solid fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef partial fill:#a8d5ff,stroke:#88b5e0,color:#000
+
+    F[基础<br>阶段] --> C[核心<br>阶段]
+    F --> E[扩展<br>阶段]
+    F --> I[集成<br>阶段]
+    F --> FN[收尾<br>阶段]
+
+    C --> E
+    C --> I
+    C --> FN
+
+    E --> I
+    E --> FN
+
+    I --> FN
+
+    class F,C solid
+    class E,I,FN partial
+```
+
+### 依赖管理策略
+
+1. **纵向切片**: 为优先功能实施跨所有阶段的完整功能。
+2. **存根和模拟**: 创建临时实施以允许依赖组件的进展。
+3. **接口契约**: 定义组件之间的清晰接口以允许并行开发。
+4. **功能开关**: 实施功能但在依赖就绪之前保持禁用。
+5. **增量集成**: 随着组件可用逐步集成。
+
+### 依赖文档格式
+
+```markdown
+## 实施依赖
+
+### 基础阶段依赖
+- **外部依赖**:
+  - 开发环境设置
+  - 访问源代码控制
+  - 访问 CI/CD 流水线
+
+### 核心阶段依赖
+- **基础阶段依赖**:
+  - 认证框架
+  - 数据库模式
+  - 日志基础设施
+  - 基本应用程序骨架
+
+- **外部依赖**:
+  - 来自外部系统的 API 规范
+  - 测试数据
+
+### 扩展阶段依赖
+- **核心阶段依赖**:
+  - 核心业务逻辑
+  - 主要用户界面
+  - 基本服务
+
+- **外部依赖**:
+  - [列出外部依赖]
+
+### 集成阶段依赖
+- **核心阶段依赖**:
+  - [列出核心依赖]
+
+- **扩展阶段依赖**:
+  - [列出扩展依赖]
+
+- **外部依赖**:
+  - 访问集成测试环境
+  - 外部系统的测试凭证
+
+### 收尾阶段依赖
+- **所有前面的阶段必须完成**
+- **外部依赖**:
+  - 用户验收测试环境
+  - 生产部署批准
+```
+
+## 📋 阶段过渡流程
+
+```mermaid
+flowchart TD
+    classDef step fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef artifact fill:#f4b8c4,stroke:#d498a4,color:#000
+    classDef verification fill:#c5e8b7,stroke:#a5c897,color:#000
+
+    Start([开始阶段<br>过渡]) --> Verification[验证当前<br>阶段完成]
+    Verification --> Checkpoint{阶段<br>已验证?}
+    Checkpoint -->|否| Remediation[补救<br>问题]
+    Remediation --> Verification
+    Checkpoint -->|是| Documentation[更新<br>文档]
+    Documentation --> Reflection[进行阶段<br>反思]
+    Reflection --> NextPlan[确定下一<br>阶段计划]
+    NextPlan --> Approvals[获得<br>批准]
+    Approvals --> Kickoff[进行下一<br>阶段启动]
+    Kickoff --> End([开始下一<br>阶段])
+
+    Verification -.-> VerifDoc((验证<br>清单))
+    Documentation -.-> Docs((更新的<br>文档))
+    Reflection -.-> ReflectDoc((反思<br>文档))
+    NextPlan -.-> PlanDoc((阶段<br>计划))
+
+    class Start,End milestone
+    class Verification,Remediation,Documentation,Reflection,NextPlan,Approvals,Kickoff step
+    class Checkpoint verification
+    class VerifDoc,Docs,ReflectDoc,PlanDoc artifact
+```
+
+### 阶段过渡清单
+
+```markdown
+## 阶段过渡清单
+
+### 当前阶段收尾
+- [ ] 所有退出标准已满足并记录
+- [ ] 所有验证步骤已完成
+- [ ] 所有问题已解决或记录
+- [ ] 阶段回顾已完成
+
+### 文档更新
+- [ ] 技术文档已更新
+- [ ] 用户文档已更新
+- [ ] 架构文档已更新
+- [ ] 测试文档已更新
+
+### 知识转移
+- [ ] 经验教训已记录
+- [ ] 知识已与团队分享
+- [ ] 如需要已进行培训
+
+### 下一阶段准备
+- [ ] 下一阶段计划已审查和更新
+- [ ] 资源已对齐
+- [ ] 依赖已验证
+- [ ] 进入标准已确认
+
+### 批准
+- [ ] 技术负责人批准
+- [ ] 业务干系人批准
+- [ ] 项目管理批准
+```
+
+## 📋 在 TASKS.MD 中跟踪实施
+
+更新 `tasks.md` 以跟踪分阶段实施进度：
+
+```markdown
+## [SYSTEM-ID]: 系统名称
+
+### 实施阶段
+#### 1. 基础阶段
+- **状态**: [未开始/进行中/完成]
+- **进度**: [0-100%]
+- **开始日期**: [日期]
+- **目标完成日期**: [日期]
+- **实际完成日期**: [日期]
+
+**关键组件**:
+- [ ] 组件 1: [状态] - [进度 %]
+- [ ] 组件 2: [状态] - [进度 %]
+
+**验证状态**:
+- [ ] 代码评审: [状态]
+- [ ] 测试: [状态]
+- [ ] 架构评审: [状态]
+- [ ] 干系人批准: [状态]
+
+**问题/障碍**:
+- [如有问题列表]
+
+#### 2. 核心阶段
+...
+
+#### 3. 扩展阶段
+...
+
+#### 4. 集成阶段
+...
+
+#### 5. 收尾阶段
+...
+```
+
+## 📋 记忆库集成
+
+```mermaid
+flowchart TD
+    classDef memfile fill:#f4b8c4,stroke:#d498a4,color:#000
+    classDef process fill:#f9d77e,stroke:#d9b95c,color:#000
+
+    Implementation[分阶段<br>实施] --> PB[projectbrief.md]
+    Implementation --> PC[productContext.md]
+    Implementation --> AC[activeContext.md]
+    Implementation --> SP[systemPatterns.md]
+    Implementation --> TC[techContext.md]
+    Implementation --> P[progress.md]
+
+    PB & PC & AC & SP & TC & P --> MBI[记忆库<br>集成]
+    MBI --> Implementation
+
+    class PB,PC,AC,SP,TC,P memfile
+    class Implementation,MBI process
+```
+
+### 记忆库更新
+
+在分阶段实施期间更新以下记忆库文件：
+
+1. **projectbrief.md**
+   - 更新实施方法
+   - 记录阶段特定目标
+   - 链接到阶段计划
+
+2. **activeContext.md**
+   - 更新当前实施阶段
+   - 记录活跃的实施任务
+   - 突出当前焦点领域
+
+3. **systemPatterns.md**
+   - 记录使用的实施模式
+   - 更新实施期间做出的架构决策
+   - 记录任何模式适应
+
+4. **techContext.md**
+   - 更新实施技术
+   - 记录遇到的技术约束
+   - 记录做出的技术决策
+
+5. **progress.md**
+   - 按阶段更新实施进度
+   - 记录已完成的组件
+   - 跟踪整体实施状态
+
+## 📋 实施验证清单
+
+```
+✓ 实施验证清单
+
+规划
+- 实施框架已建立? [是/否]
+- 分阶段计划已创建? [是/否]
+- 阶段依赖已记录? [是/否]
+- 所有阶段的进入/退出标准已定义? [是/否]
+- 风险评估已执行? [是/否]
+
+基础阶段
+- 环境设置完成? [是/否]
+- 核心架构已实施? [是/否]
+- 基本基础设施到位? [是/否]
+- CI/CD 流水线可运行? [是/否]
+- 基础验证已完成? [是/否]
+
+核心阶段
+- 核心业务逻辑已实施? [是/否]
+- 主要用户流程可工作? [是/否]
+- 基本服务可运行? [是/否]
+- 核心 API 已实施? [是/否]
+- 核心验证已完成? [是/否]
+
+扩展阶段
+- 次要功能已实施? [是/否]
+- 增强功能可工作? [是/否]
+- 额外用户界面完成? [是/否]
+- 扩展测试覆盖到位? [是/否]
+- 扩展验证已完成? [是/否]
+
+集成阶段
+- 所有组件已集成? [是/否]
+- 外部集成可工作? [是/否]
+- 端到端测试已完成? [是/否]
+- 性能测试已执行? [是/否]
+- 集成验证已完成? [是/否]
+
+收尾阶段
+- 所有优化完成? [是/否]
+- 用户验收测试通过? [是/否]
+- 文档已完成? [是/否]
+- 生产部署计划就绪? [是/否]
+- 最终系统审查已完成? [是/否]
+
+记忆库集成
+- 所有记忆库文件已更新? [是/否]
+- 实施状态已反映? [是/否]
+- 技术决策已记录? [是/否]
+- 进度跟踪是最新的? [是/否]
+```
+
+## 📋 精简模式实施格式
+
+对于需要更紧凑实施方法的情况：
+
+```markdown
+## [SYSTEM-ID]: 分阶段实施
+
+### 阶段状态摘要
+- **基础**: [状态] - [进度 %]
+- **核心**: [状态] - [进度 %]
+- **扩展**: [状态] - [进度 %]
+- **集成**: [状态] - [进度 %]
+- **收尾**: [状态] - [进度 %]
+
+### 当前阶段: [阶段名称]
+- **关键组件**: [正在实施的关键组件列表]
+- **障碍**: [如有障碍列表]
+- **下一步**: [即时下一步列表]
+
+### 验证状态
+- [验证步骤及其状态列表]
+
+### 记忆库更新
+- [需要更新的记忆库文件列表]
+```
+
+## 🚨 实施验证原则
+
+```
+┌─────────────────────────────────────────────────────┐
+│ 在所有验证步骤通过并记录之前，任何阶段都不能          │
+│ 被视为完成。不得以牺牲质量或架构完整性为代价          │
+│ 来赶工期。                                           │
+└─────────────────────────────────────────────────────┘
+```

@@ -1,0 +1,74 @@
+---
+description: 已完成 Level 3 中级功能的反思流程指南，专注于从规划、设计到实现和测试的整个功能开发生命周期的详细审查
+globs: reflection-intermediate.mdc
+alwaysApply: false
+---
+# 第3级反思：中级功能审查
+
+> **简要说明：** 本指南为已完成的 Level 3 中级功能构建反思流程。重点是对整个功能开发生命周期进行详细审查，从规划和设计到实现和测试，以提取有意义的经验教训并确定未来功能工作的改进方向。
+
+## Level 3 反思流程
+
+目标是创建一个全面的 `memory-bank/reflection/reflection-[feature_id].md` 文档。
+
+```mermaid
+graph TD
+    StartReflect["Start L3 Reflection"] -->
+    ReviewDocs["1. Review All Gathered Documentation"] -->
+    AssessOutcome["2. Assess Overall Feature Outcome<br>Did it meet all requirements from tasks.md? Was it successful?"] -->
+    AnalyzePlan["3. Analyze Planning Phase Effectiveness<br>Was planning-comprehensive.mdc guidance effective? Was the plan accurate? Scope creep?"] -->
+    AnalyzeCreative["4. Analyze Creative Phase(s) Effectiveness<br>Were design decisions sound? Did they translate well to implementation? Issues?"] -->
+    AnalyzeImpl["5. Analyze Implementation Phase<br>What went well? Challenges? Bottlenecks? Adherence to design/style guide?"] -->
+    AnalyzeTesting["6. Analyze Testing Phase<br>Were tests adequate? Bugs found post-release (if applicable)? Test coverage feel right?"] -->
+    IdentifyLessons["7. Identify Key Lessons Learned<br>(Technical, Process, Teamwork, Estimation)"] -->
+    ProposeImprovements["8. Propose Actionable Improvements<br>For future L3 feature development"] -->
+    DraftReflectionDoc["9. Draft `reflection-[feature_id].md`<br>Using structured template"] -->
+    FinalizeReflection["10. Finalize & Save Reflection Document"] -->
+    UpdateTasksStatus["11. Update `tasks.md`<br>Mark L3 Reflection Complete"] -->
+    ReflectionDone["L3 Reflection Complete<br>Ready for ARCHIVE Mode"]
+
+    style StartReflect fill:#ba68c8,stroke:#9c27b0
+    style ReflectionDone fill:#d1c4e9,stroke:#b39ddb
+````
+
+## `memory-bank/reflection-[feature_id].md` 结构
+
+  * **功能名称和 ID：**
+  * **反思日期：**
+  * **功能简要摘要：** （构建了什么？）
+  * **1. 总体结果和需求对齐：**
+      * 最终功能与初始需求的匹配程度如何？
+      * 是否有任何偏离原始范围的情况？如果有，为什么？
+      * 对功能成功性的总体评估是什么？
+  * **2. 规划阶段审查：**
+      * `Level3/planning-comprehensive.mdc` 的指导效果如何？
+      * `tasks.md` 中的初始计划（组件分解、策略、风险）是否准确且有帮助？
+      * 什么可以规划得更好？估算（如果有）是否准确？
+  * **3. 创意阶段审查（如适用）：**
+      * 是否正确标记了需要创意模式的方面？
+      * `creative-*.md` 文档中的设计决策效果如何？
+      * 这些设计是否很好地转化为实际实现？有哪些摩擦点？
+      * `memory-bank/style-guide.md` 对 UI 方面是否清晰且充分？
+  * **4. 实现阶段审查：**
+      * 实现期间的主要成功是什么？（例如，高效的模块开发、良好的库使用）
+      * 最大的挑战或障碍是什么？如何克服的？
+      * 是否有任何意外的技术困难或复杂性？
+      * 对样式指南和编码标准的遵守情况如何？
+  * **5. 测试阶段审查：**
+      * 测试策略（功能的单元测试、集成测试、端到端测试）是否有效？
+      * 测试是否足够早地发现了重大问题？
+      * 对于类似功能，什么可以改进测试流程？
+  * **6. 哪些做得好？（突出此功能所有阶段的 3-5 个关键积极点）**
+  * **7. 哪些可以做得不同？（确定 3-5 个改进领域）**
+  * **8. 关键经验教训：**
+      * **技术：** 关于此功能使用的技术、模式或架构的新见解。
+      * **流程：** 关于 L3 工作流程、沟通、任务管理的见解。
+      * **估算（如适用）：** 关于估算此规模工作的经验教训。
+  * **9. 未来 L3 功能的可行改进建议：**（具体建议）
+
+## L3 反思重点领域
+
+  * **功能范围管理：** 范围是否定义明确并得到管理？
+  * **集成复杂性：** 将功能与现有应用程序集成的挑战或成功。
+  * **设计到实现的保真度：** 最终产品与设计的匹配程度如何？
+  * **跨组件影响：** 理解功能的连锁反应。

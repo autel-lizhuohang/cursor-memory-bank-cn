@@ -1,0 +1,19 @@
+---
+description: 用于记忆如何调用 VAN QA 规则的工具文件
+globs: van-qa-utils/rule-calling-help.mdc
+alwaysApply: false
+---
+# VAN QA：如何调用规则
+
+> **简述：** 此文件提供正确使用 fetch_rules 工具调用 VAN QA 规则的示例和提醒。
+
+## 🚨 规则调用语法
+
+始终使用 `fetch_rules` 工具和正确的语法：
+
+```
+<function_calls>
+<invoke name="fetch_rules">
+<parameter name="rule_names">["isolation_rules/visual-maps/rule-name"]
+</invoke>
+</function_calls>

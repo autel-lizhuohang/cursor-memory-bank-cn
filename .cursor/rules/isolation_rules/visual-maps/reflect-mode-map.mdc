@@ -1,0 +1,229 @@
+---
+description: REFLECT 模式（任务反思）的可视化流程图
+globs: "**/reflect*/**", "**/review*/**", "**/retrospect*/**"
+alwaysApply: false
+---
+
+# REFLECT 模式：任务回顾流程图
+
+> **简述：** 此可视化流程图指导 REFLECT 模式流程，专注于对实现进行结构化回顾、记录经验教训，并为将来参考准备洞见。
+
+## 🧭 REFLECT 模式流程
+
+```mermaid
+graph TD
+    Start["开始 REFLECT 模式"] --> ReadTasks["读取 tasks.md<br>和 progress.md"]
+
+    %% 初始评估
+    ReadTasks --> VerifyImplement{"实现<br>完成？"}
+    VerifyImplement -->|"否"| ReturnBuild["返回<br>BUILD 模式"]
+    VerifyImplement -->|"是"| AssessLevel{"确定<br>复杂度级别"}
+
+    %% 基于级别的反思
+    AssessLevel -->|"级别 1"| L1Reflect["级别 1 反思<br>Level1/reflection-basic.md"]
+    AssessLevel -->|"级别 2"| L2Reflect["级别 2 反思<br>Level2/reflection-standard.md"]
+    AssessLevel -->|"级别 3"| L3Reflect["级别 3 反思<br>Level3/reflection-comprehensive.md"]
+    AssessLevel -->|"级别 4"| L4Reflect["级别 4 反思<br>Level4/reflection-advanced.md"]
+
+    %% 级别 1 反思（快速）
+    L1Reflect --> L1Review["回顾<br>Bug 修复"]
+    L1Review --> L1Document["记录<br>解决方案"]
+    L1Document --> L1Update["更新<br>tasks.md"]
+
+    %% 级别 2 反思（标准）
+    L2Reflect --> L2Review["回顾<br>增强功能"]
+    L2Review --> L2WWW["记录<br>做得好的地方"]
+    L2WWW --> L2Challenges["记录<br>挑战"]
+    L2Challenges --> L2Lessons["记录<br>经验教训"]
+    L2Lessons --> L2Update["更新<br>tasks.md"]
+
+    %% 级别 3-4 反思（综合）
+    L3Reflect & L4Reflect --> L34Review["回顾实现<br>和创意阶段"]
+    L34Review --> L34Plan["与原始计划<br>对比"]
+    L34Plan --> L34WWW["记录<br>做得好的地方"]
+    L34WWW --> L34Challenges["记录<br>挑战"]
+    L34Challenges --> L34Lessons["记录<br>经验教训"]
+    L34Lessons --> L34ImproveProcess["记录流程<br>改进"]
+    L34ImproveProcess --> L34Update["更新<br>tasks.md"]
+
+    %% 完成和转换
+    L1Update & L2Update & L34Update --> CreateReflection["创建<br>reflection.md"]
+    CreateReflection --> UpdateSystem["更新系统<br>文档"]
+    UpdateSystem --> Transition["下一模式：<br>ARCHIVE 模式"]
+```
+
+## 📋 反思结构
+
+反思应遵循以下结构化格式：
+
+```mermaid
+graph TD
+    subgraph "反思文档结构"
+        Header["# 任务反思：[任务名称]"]
+        Summary["## 摘要<br>已完成任务的简要总结"]
+        WWW["## 做得好的地方<br>实现中成功的方面"]
+        Challenges["## 挑战<br>实现过程中遇到的困难"]
+        Lessons["## 经验教训<br>从经验中获得的关键洞见"]
+        ProcessImp["## 流程改进<br>如何改进未来任务"]
+        TechImp["## 技术改进<br>类似任务的更好方法"]
+        NextSteps["## 下一步<br>后续行动或未来工作"]
+    end
+
+    Header --> Summary --> WWW --> Challenges --> Lessons --> ProcessImp --> TechImp --> NextSteps
+```
+
+## 📊 必需的文件状态验证
+
+在反思开始前，验证文件状态：
+
+```mermaid
+graph TD
+    Start["文件状态<br>验证"] --> CheckTasks{"tasks.md 有<br>实现<br>完成？"}
+
+    CheckTasks -->|"否"| ErrorBuild["错误：<br>返回 BUILD 模式"]
+    CheckTasks -->|"是"| CheckProgress{"progress.md<br>有实现<br>详情？"}
+
+    CheckProgress -->|"否"| ErrorProgress["错误：<br>先更新 progress.md"]
+    CheckProgress -->|"是"| ReadyReflect["准备好<br>反思"]
+```
+
+## 🔍 实现回顾方法
+
+```mermaid
+graph TD
+    subgraph "实现回顾"
+        Original["回顾原始<br>需求"]
+        Plan["与实施计划<br>对比"]
+        Actual["评估实际<br>实现"]
+        Creative["回顾创意<br>阶段决策"]
+        Changes["识别与计划的<br>偏差"]
+        Results["评估<br>结果"]
+    end
+
+    Original --> Plan --> Actual
+    Plan --> Creative --> Changes
+    Actual --> Results
+    Changes --> Results
+```
+
+## 📝 反思文档模板
+
+### 级别 1（基本）反思
+```
+# Bug 修复反思：[Bug 名称]
+
+## 摘要
+[Bug 和解决方案的简要描述]
+
+## 实现
+[实现的修复描述]
+
+## 测试
+[执行的测试描述]
+
+## 附加说明
+[其他相关信息]
+```
+
+### 级别 2-4（综合）反思
+```
+# 任务反思：[任务名称]
+
+## 摘要
+[任务和达成目标的简要总结]
+
+## 做得好的地方
+- [成功点 1]
+- [成功点 2]
+- [成功点 3]
+
+## 挑战
+- [挑战 1]：[如何解决]
+- [挑战 2]：[如何解决]
+- [挑战 3]：[如何解决]
+
+## 经验教训
+- [教训 1]
+- [教训 2]
+- [教训 3]
+
+## 流程改进
+- [流程改进 1]
+- [流程改进 2]
+
+## 技术改进
+- [技术改进 1]
+- [技术改进 2]
+
+## 下一步
+- [后续任务 1]
+- [后续任务 2]
+```
+
+## 📊 反思质量指标
+
+```mermaid
+graph TD
+    subgraph "反思质量指标"
+        Specific["具体<br>不笼统或模糊"]
+        Actionable["可操作<br>提供清晰方向"]
+        Honest["诚实<br>承认成功和失败"]
+        Forward["前瞻性<br>关注未来改进"]
+        Evidence["基于证据<br>基于具体例子"]
+    end
+```
+
+## 📋 TASKS.MD 更新格式
+
+在反思期间，使用以下内容更新 tasks.md：
+
+```
+## 状态
+- [x] 初始化完成
+- [x] 规划完成
+[对于级别 3-4：]
+- [x] 创意阶段完成
+- [x] 实现完成
+- [x] 反思完成
+- [ ] 归档
+
+## 反思要点
+- **做得好的地方**：[关键成功]
+- **挑战**：[关键挑战]
+- **经验教训**：[关键教训]
+- **下一步**：[后续行动]
+```
+
+## 📊 反思验证清单
+
+```
+✓ 反思验证
+- 实现已彻底回顾？[是/否]
+- 做得好的地方部分已完成？[是/否]
+- 挑战部分已完成？[是/否]
+- 经验教训部分已完成？[是/否]
+- 流程改进已识别？[是/否]
+- 技术改进已识别？[是/否]
+- 下一步已记录？[是/否]
+- reflection.md 已创建？[是/否]
+- tasks.md 已更新反思状态？[是/否]
+
+→ 如果全部为是：反思完成 - 准备进入 ARCHIVE 模式
+→ 如果有否：完成缺失的反思元素
+```
+
+## 🔄 模式转换通知
+
+反思完成时，通知用户：
+
+```
+## 反思完成
+
+✅ 实现已彻底回顾
+✅ 反思文档已创建
+✅ 经验教训已记录
+✅ 流程改进已识别
+✅ tasks.md 已更新反思状态
+
+→ 下一推荐模式：ARCHIVE 模式
+```

@@ -1,0 +1,224 @@
+---
+description: CREATIVE 模式（设计决策）的可视化流程图
+globs: "**/creative*/**", "**/design*/**", "**/decision*/**"
+alwaysApply: false
+---
+
+# CREATIVE 模式：设计流程图
+
+> **简述：** 此可视化流程图指导 CREATIVE 模式流程，专注于对需要在实现前进行深入探索的组件进行结构化设计决策。
+
+## 🧭 CREATIVE 模式流程
+
+```mermaid
+graph TD
+    Start["开始 CREATIVE 模式"] --> ReadTasks["读取 tasks.md<br>获取创意需求"]
+
+    %% 初始评估
+    ReadTasks --> VerifyPlan{"计划完成<br>且创意阶段<br>已识别？"}
+    VerifyPlan -->|"否"| ReturnPlan["返回<br>PLAN 模式"]
+    VerifyPlan -->|"是"| IdentifyPhases["识别所需的<br>创意阶段"]
+
+    %% 创意阶段选择
+    IdentifyPhases --> SelectPhase["选择下一个<br>创意阶段"]
+    SelectPhase --> PhaseType{"创意<br>阶段类型？"}
+
+    %% 创意阶段类型
+    PhaseType -->|"UI/UX<br>设计"| UIPhase["UI/UX 创意阶段<br>Core/creative-phase-uiux.md"]
+    PhaseType -->|"架构<br>设计"| ArchPhase["架构创意阶段<br>Core/creative-phase-architecture.md"]
+    PhaseType -->|"数据模型<br>设计"| DataPhase["数据模型创意阶段<br>Core/creative-phase-data.md"]
+    PhaseType -->|"算法<br>设计"| AlgoPhase["算法创意阶段<br>Core/creative-phase-algorithm.md"]
+
+    %% UI/UX 创意阶段
+    UIPhase --> UI_Problem["定义 UI/UX<br>问题"]
+    UI_Problem --> UI_Research["研究 UI<br>模式"]
+    UI_Research --> UI_Options["探索 UI<br>选项"]
+    UI_Options --> UI_Evaluate["评估用户<br>体验"]
+    UI_Evaluate --> UI_Decision["做出设计<br>决策"]
+    UI_Decision --> UI_Document["记录 UI<br>设计"]
+
+    %% 架构创意阶段
+    ArchPhase --> Arch_Problem["定义架构<br>挑战"]
+    Arch_Problem --> Arch_Options["探索架构<br>选项"]
+    Arch_Options --> Arch_Analyze["分析权衡"]
+    Arch_Analyze --> Arch_Decision["做出架构<br>决策"]
+    Arch_Decision --> Arch_Document["记录<br>架构"]
+    Arch_Document --> Arch_Diagram["创建架构<br>图"]
+
+    %% 数据模型创意阶段
+    DataPhase --> Data_Requirements["定义数据<br>需求"]
+    Data_Requirements --> Data_Structure["设计数据<br>结构"]
+    Data_Structure --> Data_Relations["定义<br>关系"]
+    Data_Relations --> Data_Validation["设计<br>验证"]
+    Data_Validation --> Data_Document["记录<br>数据模型"]
+
+    %% 算法创意阶段
+    AlgoPhase --> Algo_Problem["定义算法<br>问题"]
+    Algo_Problem --> Algo_Options["探索算法<br>方法"]
+    Algo_Options --> Algo_Evaluate["评估时间/空间<br>复杂度"]
+    Algo_Evaluate --> Algo_Decision["做出算法<br>决策"]
+    Algo_Decision --> Algo_Document["记录<br>算法"]
+
+    %% 文档和完成
+    UI_Document & Arch_Diagram & Data_Document & Algo_Document --> CreateDoc["创建创意<br>阶段文档"]
+    CreateDoc --> UpdateTasks["使用决策更新<br>tasks.md"]
+    UpdateTasks --> MorePhases{"还有更多<br>创意阶段？"}
+    MorePhases -->|"是"| SelectPhase
+    MorePhases -->|"否"| VerifyComplete["验证所有<br>阶段完成"]
+    VerifyComplete --> NotifyComplete["发出创意<br>阶段完成信号"]
+```
+
+## 📋 创意阶段文档格式
+
+每个创意阶段应产出具有以下结构的文档：
+
+```mermaid
+graph TD
+    subgraph "创意阶段文档"
+        Header["🎨 创意阶段：[类型]"]
+        Problem["问题陈述<br>问题的清晰定义"]
+        Options["选项分析<br>考虑的多种方法"]
+        Pros["优缺点<br>每个选项的权衡"]
+        Decision["决策<br>选定的方法 + 理由"]
+        Impl["实施计划<br>实施决策的步骤"]
+        Diagram["可视化<br>解决方案图"]
+    end
+
+    Header --> Problem --> Options --> Pros --> Decision --> Impl --> Diagram
+```
+
+## 🔍 创意类型和方法
+
+```mermaid
+graph TD
+    subgraph "UI/UX 设计"
+        UI1["用户流程<br>分析"]
+        UI2["组件<br>层级"]
+        UI3["交互<br>模式"]
+        UI4["视觉设计<br>原则"]
+    end
+
+    subgraph "架构设计"
+        A1["组件<br>结构"]
+        A2["数据流<br>模式"]
+        A3["接口<br>设计"]
+        A4["系统<br>集成"]
+    end
+
+    subgraph "数据模型设计"
+        D1["实体<br>关系"]
+        D2["模式<br>设计"]
+        D3["验证<br>规则"]
+        D4["查询<br>优化"]
+    end
+
+    subgraph "算法设计"
+        AL1["复杂度<br>分析"]
+        AL2["效率<br>优化"]
+        AL3["边缘情况<br>处理"]
+        AL4["扩展性<br>考虑"]
+    end
+```
+
+## 📊 必需的文件状态验证
+
+在创意阶段工作开始前，验证文件状态：
+
+```mermaid
+graph TD
+    Start["文件状态<br>验证"] --> CheckTasks{"tasks.md 有<br>规划完成？"}
+
+    CheckTasks -->|"否"| ErrorPlan["错误：<br>返回 PLAN 模式"]
+    CheckTasks -->|"是"| CheckCreative{"创意阶段<br>已识别？"}
+
+    CheckCreative -->|"否"| ErrorCreative["错误：<br>返回 PLAN 模式"]
+    CheckCreative -->|"是"| ReadyCreative["准备好进行<br>创意阶段"]
+```
+
+## 📋 选项分析模板
+
+对于每个创意阶段，分析多个选项：
+
+```
+## 选项分析
+
+### 选项 1：[名称]
+**描述**：[简要描述]
+**优点**：
+- [优点 1]
+- [优点 2]
+**缺点**：
+- [缺点 1]
+- [缺点 2]
+**复杂度**：[低/中/高]
+**实施时间**：[估计]
+
+### 选项 2：[名称]
+**描述**：[简要描述]
+**优点**：
+- [优点 1]
+- [优点 2]
+**缺点**：
+- [缺点 1]
+- [缺点 2]
+**复杂度**：[低/中/高]
+**实施时间**：[估计]
+
+### 选项 3：[名称]
+**描述**：[简要描述]
+**优点**：
+- [优点 1]
+- [优点 2]
+**缺点**：
+- [缺点 1]
+- [缺点 2]
+**复杂度**：[低/中/高]
+**实施时间**：[估计]
+```
+
+## 🎨 创意阶段标记
+
+在创意阶段使用这些视觉标记：
+
+```
+🎨🎨🎨 进入创意阶段：[类型] 🎨🎨🎨
+
+[创意阶段内容]
+
+🎨 创意检查点：[里程碑]
+
+[附加内容]
+
+🎨🎨🎨 退出创意阶段 - 决策已做出 🎨🎨🎨
+```
+
+## 📊 创意阶段验证清单
+
+```
+✓ 创意阶段验证
+- 问题已清晰定义？[是/否]
+- 已考虑多个选项（3+）？[是/否]
+- 每个选项的优缺点已记录？[是/否]
+- 决策已做出并有清晰理由？[是/否]
+- 包含实施计划？[是/否]
+- 已创建可视化/图表？[是/否]
+- tasks.md 已更新决策？[是/否]
+
+→ 如果全部为是：创意阶段完成
+→ 如果有否：完成缺失的元素
+```
+
+## 🔄 模式转换通知
+
+当所有创意阶段完成时，通知用户：
+
+```
+## 创意阶段完成
+
+✅ 所有必需的设计决策已做出
+✅ 创意阶段文档已创建
+✅ tasks.md 已更新决策
+✅ 实施计划已更新
+
+→ 下一推荐模式：BUILD 模式
+```

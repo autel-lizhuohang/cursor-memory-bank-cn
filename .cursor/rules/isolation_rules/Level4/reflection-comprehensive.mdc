@@ -1,0 +1,718 @@
+---
+description: Level 4 复杂系统任务的全面反思格式
+globs: "**/level4/**", "**/reflection/**"
+alwaysApply: false
+---
+
+# LEVEL 4 任务的全面反思
+
+> **简述:** 本文档概述了 Level 4（复杂系统）任务的结构化、全面的反思方法，包括系统审查、成功和挑战分析、战略洞察和行动规划。
+
+## 🔍 全面反思概述
+
+Level 4 复杂系统任务需要深入的反思，以捕获关键洞察、记录成功和挑战、提取战略教训，并指导未来改进。这种系统化的反思过程确保组织学习和持续改进。
+
+```mermaid
+flowchart TD
+    classDef phase fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef artifact fill:#f4b8c4,stroke:#d498a4,color:#000
+    classDef verification fill:#c5e8b7,stroke:#a5c897,color:#000
+
+    Start([开始反思<br>流程]) --> Template[加载全面<br>反思模板]
+    Template --> SysReview[进行系统<br>审查]
+    SysReview --> ArchReview[审查架构<br>决策]
+    ArchReview --> ImplementReview[审查实施<br>方法]
+    ImplementReview --> SuccessAnalysis[记录成功<br>和成就]
+    SuccessAnalysis --> ChallengeAnalysis[记录挑战<br>和解决方案]
+    ChallengeAnalysis --> Technical[提取技术<br>洞察]
+    Technical --> Process[提取流程<br>洞察]
+    Process --> Business[提取业务<br>洞察]
+    Business --> Strategic[定义战略<br>行动]
+    Strategic --> Timeline[分析时间线<br>绩效]
+    Timeline --> Documentation[完成反思<br>文档]
+    Documentation --> Integration[集成到<br>记忆库]
+    Integration --> Verification{反思<br>验证}
+    Verification -->|通过| Complete([反思<br>完成])
+    Verification -->|失败| Revise[修订<br>反思]
+    Revise --> Verification
+
+    Template -.-> RT((反思<br>模板))
+    SysReview -.-> SR((系统<br>审查))
+    SuccessAnalysis & ChallengeAnalysis -.-> SCD((成功/挑战<br>文档))
+    Technical & Process & Business -.-> Insights((洞察<br>文档))
+    Strategic -.-> Actions((战略<br>行动))
+
+    class Start,Complete milestone
+    class Template,SysReview,ArchReview,ImplementReview,SuccessAnalysis,ChallengeAnalysis,Technical,Process,Business,Strategic,Timeline,Documentation,Integration step
+    class Verification verification
+    class RT,SR,SCD,Insights,Actions artifact
+```
+
+## 📋 反思模板结构
+
+### 1. 系统概述
+
+```markdown
+## 系统概述
+
+### 系统描述
+[已实施系统的全面描述，包括目的、范围和关键功能]
+
+### 系统上下文
+[系统如何融入更广泛的技术和业务生态系统的描述]
+
+### 关键组件
+- 组件 1: [描述和目的]
+- 组件 2: [描述和目的]
+- 组件 3: [描述和目的]
+
+### 系统架构
+[架构方法、关键模式和设计决策的摘要]
+
+### 系统边界
+[系统边界、接口和集成点的描述]
+
+### 实施摘要
+[实施方法、技术和方法的概述]
+```
+
+### 2. 项目绩效分析
+
+```markdown
+## 项目绩效分析
+
+### 时间线绩效
+- **计划时长**: [X] 周/月
+- **实际时长**: [Y] 周/月
+- **偏差**: [+/-Z] 周/月 ([P]%)
+- **说明**: [时间线偏差分析]
+
+### 资源利用率
+- **计划资源**: [X] 人月
+- **实际资源**: [Y] 人月
+- **偏差**: [+/-Z] 人月 ([P]%)
+- **说明**: [资源偏差分析]
+
+### 质量指标
+- **计划质量目标**: [质量目标列表]
+- **实际质量结果**: [实际质量结果列表]
+- **偏差分析**: [质量偏差分析]
+
+### 风险管理效果
+- **已识别风险**: [已识别风险数量]
+- **实际发生的风险**: [发生风险的数量和百分比]
+- **缓解效果**: [风险缓解策略的有效性]
+- **未预见的风险**: [出现的未预见风险描述]
+```
+
+### 3. 成就和成功
+
+```markdown
+## 成就和成功
+
+### 关键成就
+1. **成就 1**: [描述]
+   - **证据**: [成功的具体证据]
+   - **影响**: [业务/技术影响]
+   - **促成因素**: [促成此成功的因素]
+
+2. **成就 2**: [描述]
+   - **证据**: [成功的具体证据]
+   - **影响**: [业务/技术影响]
+   - **促成因素**: [促成此成功的因素]
+
+### 技术成功
+- **成功 1**: [技术成功的描述]
+  - **采用的方法**: [方法描述]
+  - **结果**: [取得的成果]
+  - **可复用性**: [如何复用]
+
+- **成功 2**: [技术成功的描述]
+  - **采用的方法**: [方法描述]
+  - **结果**: [取得的成果]
+  - **可复用性**: [如何复用]
+
+### 流程成功
+- **成功 1**: [流程成功的描述]
+  - **采用的方法**: [方法描述]
+  - **结果**: [取得的成果]
+  - **可复用性**: [如何复用]
+
+### 团队成功
+- **成功 1**: [团队成功的描述]
+  - **采用的方法**: [方法描述]
+  - **结果**: [取得的成果]
+  - **可复用性**: [如何复用]
+```
+
+### 4. 挑战和解决方案
+
+```markdown
+## 挑战和解决方案
+
+### 关键挑战
+1. **挑战 1**: [描述]
+   - **影响**: [业务/技术影响]
+   - **解决方法**: [如何解决]
+   - **结果**: [最终结果]
+   - **预防措施**: [未来如何预防]
+
+2. **挑战 2**: [描述]
+   - **影响**: [业务/技术影响]
+   - **解决方法**: [如何解决]
+   - **结果**: [最终结果]
+   - **预防措施**: [未来如何预防]
+
+### 技术挑战
+- **挑战 1**: [技术挑战的描述]
+  - **根本原因**: [根本原因分析]
+  - **解决方案**: [如何解决]
+  - **备选方法**: [考虑过的其他方法]
+  - **经验教训**: [关键收获]
+
+- **挑战 2**: [技术挑战的描述]
+  - **根本原因**: [根本原因分析]
+  - **解决方案**: [如何解决]
+  - **备选方法**: [考虑过的其他方法]
+  - **经验教训**: [关键收获]
+
+### 流程挑战
+- **挑战 1**: [流程挑战的描述]
+  - **根本原因**: [根本原因分析]
+  - **解决方案**: [如何解决]
+  - **流程改进**: [已做或建议的改进]
+
+### 未解决的问题
+- **问题 1**: [未解决问题的描述]
+  - **当前状态**: [状态]
+  - **建议的推进路径**: [建议的下一步]
+  - **所需资源**: [解决所需的资源]
+```
+
+### 5. 技术洞察
+
+```markdown
+## 技术洞察
+
+### 架构洞察
+- **洞察 1**: [架构洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对未来工作的意义]
+  - **建议**: [建议的变更或行动]
+
+- **洞察 2**: [架构洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对未来工作的意义]
+  - **建议**: [建议的变更或行动]
+
+### 实施洞察
+- **洞察 1**: [实施洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对未来工作的意义]
+  - **建议**: [建议的变更或行动]
+
+### 技术栈洞察
+- **洞察 1**: [技术栈洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对未来工作的意义]
+  - **建议**: [建议的变更或行动]
+
+### 性能洞察
+- **洞察 1**: [性能洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **指标**: [相关性能指标]
+  - **影响**: [对未来工作的意义]
+  - **建议**: [建议的优化]
+
+### 安全洞察
+- **洞察 1**: [安全洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对未来工作的意义]
+  - **建议**: [建议的安全改进]
+```
+
+### 6. 流程洞察
+
+```markdown
+## 流程洞察
+
+### 规划洞察
+- **洞察 1**: [规划流程洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对未来工作的意义]
+  - **建议**: [建议的流程改进]
+
+### 开发流程洞察
+- **洞察 1**: [开发流程洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对未来工作的意义]
+  - **建议**: [建议的流程改进]
+
+### 测试洞察
+- **洞察 1**: [测试流程洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对未来工作的意义]
+  - **建议**: [建议的流程改进]
+
+### 协作洞察
+- **洞察 1**: [协作洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对未来工作的意义]
+  - **建议**: [建议的协作改进]
+
+### 文档洞察
+- **洞察 1**: [文档洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对未来工作的意义]
+  - **建议**: [建议的文档改进]
+```
+
+### 7. 业务洞察
+
+```markdown
+## 业务洞察
+
+### 价值交付洞察
+- **洞察 1**: [价值交付洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **业务影响**: [对业务结果的影响]
+  - **建议**: [建议的改进]
+
+### 干系人洞察
+- **洞察 1**: [干系人洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对干系人管理的意义]
+  - **建议**: [建议的改进]
+
+### 市场/用户洞察
+- **洞察 1**: [市场/用户洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对产品方向的意义]
+  - **建议**: [建议的改进]
+
+### 业务流程洞察
+- **洞察 1**: [业务流程洞察的描述]
+  - **背景**: [观察到此洞察的时间/地点]
+  - **影响**: [对业务流程的意义]
+  - **建议**: [建议的改进]
+```
+
+### 8. 战略行动
+
+```markdown
+## 战略行动
+
+### 即时行动
+- **行动 1**: [即时行动的描述]
+  - **负责人**: [责任人]
+  - **时间线**: [预期完成日期]
+  - **成功标准**: [如何衡量成功]
+  - **所需资源**: [所需资源]
+  - **优先级**: [高/中/低]
+
+- **行动 2**: [即时行动的描述]
+  - **负责人**: [责任人]
+  - **时间线**: [预期完成日期]
+  - **成功标准**: [如何衡量成功]
+  - **所需资源**: [所需资源]
+  - **优先级**: [高/中/低]
+
+### 短期改进 (1-3 个月)
+- **改进 1**: [短期改进的描述]
+  - **负责人**: [责任人]
+  - **时间线**: [预期完成日期]
+  - **成功标准**: [如何衡量成功]
+  - **所需资源**: [所需资源]
+  - **优先级**: [高/中/低]
+
+### 中期计划 (3-6 个月)
+- **计划 1**: [中期计划的描述]
+  - **负责人**: [责任人]
+  - **时间线**: [预期完成日期]
+  - **成功标准**: [如何衡量成功]
+  - **所需资源**: [所需资源]
+  - **优先级**: [高/中/低]
+
+### 长期战略方向 (6+ 个月)
+- **方向 1**: [长期战略方向的描述]
+  - **业务对齐**: [如何与业务战略对齐]
+  - **预期影响**: [预期结果]
+  - **关键里程碑**: [主要检查点]
+  - **成功标准**: [如何衡量成功]
+```
+
+### 9. 知识转移
+
+```markdown
+## 知识转移
+
+### 组织关键学习
+- **学习 1**: [组织关键学习的描述]
+  - **背景**: [学到此知识的时间/地点]
+  - **适用性**: [可以应用的地方]
+  - **建议的沟通方式**: [如何分享]
+
+### 技术知识转移
+- **技术知识 1**: [技术知识的描述]
+  - **受众**: [谁需要此知识]
+  - **转移方式**: [如何转移]
+  - **文档**: [文档位置]
+
+### 流程知识转移
+- **流程知识 1**: [流程知识的描述]
+  - **受众**: [谁需要此知识]
+  - **转移方式**: [如何转移]
+  - **文档**: [文档位置]
+
+### 文档更新
+- **文档 1**: [要更新的文档名称]
+  - **所需更新**: [需要更新的内容]
+  - **负责人**: [责任人]
+  - **时间线**: [何时更新]
+```
+
+### 10. 反思总结
+
+```markdown
+## 反思总结
+
+### 关键收获
+- **收获 1**: [关键收获的描述]
+- **收获 2**: [关键收获的描述]
+- **收获 3**: [关键收获的描述]
+
+### 可复制的成功模式
+1. [模式 1 描述]
+2. [模式 2 描述]
+3. [模式 3 描述]
+
+### 未来应避免的问题
+1. [问题 1 描述]
+2. [问题 2 描述]
+3. [问题 3 描述]
+
+### 总体评估
+[项目成功、挑战和战略价值的全面评估]
+
+### 下一步
+[此反思之后的明确下一步描述]
+```
+
+## 📋 反思流程
+
+### 1. 准备
+
+```mermaid
+flowchart TD
+    classDef step fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef artifact fill:#f4b8c4,stroke:#d498a4,color:#000
+
+    Start([开始反思<br>准备]) --> Template[加载反思<br>模板]
+    Template --> Data[收集项目<br>数据]
+    Data --> Metrics[收集绩效<br>指标]
+    Metrics --> Feedback[收集干系人<br>反馈]
+    Feedback --> Schedule[安排反思<br>会议]
+    Schedule --> Participants[确定<br>参与者]
+    Participants --> Agenda[创建会议<br>议程]
+    Agenda --> Complete([准备<br>完成])
+
+    Template -.-> TDoc((反思<br>模板))
+    Data -.-> ProjData((项目<br>数据))
+    Metrics -.-> MetricsDoc((绩效<br>指标))
+    Feedback -.-> FeedbackDoc((干系人<br>反馈))
+
+    class Start,Complete milestone
+    class Template,Data,Metrics,Feedback,Schedule,Participants,Agenda step
+    class TDoc,ProjData,MetricsDoc,FeedbackDoc artifact
+```
+
+**关键准备步骤:**
+1. 加载全面反思模板
+2. 收集项目数据（tasks.md、文档、产物）
+3. 收集绩效指标（时间线、资源利用率、质量）
+4. 收集干系人反馈（内部和外部）
+5. 与关键参与者安排反思会议
+6. 准备会议议程和预备材料
+
+### 2. 进行反思会议
+
+```mermaid
+flowchart TD
+    classDef step fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef artifact fill:#f4b8c4,stroke:#d498a4,color:#000
+
+    Start([开始反思<br>会议]) --> Intro[介绍和<br>背景设定]
+    Intro --> Project[项目概述<br>演示]
+    Project --> Success[成功<br>识别]
+    Success --> Challenge[挑战<br>识别]
+    Challenge --> Root[根本原因<br>分析]
+    Root --> Insights[洞察<br>生成]
+    Insights --> Actions[行动<br>规划]
+    Actions --> Documentation[记录<br>结果]
+    Documentation --> Next[定义下一<br>步]
+    Next --> Complete([会议<br>完成])
+
+    Success -.-> SuccessDoc((成功<br>文档))
+    Challenge -.-> ChallengeDoc((挑战<br>文档))
+    Insights -.-> InsightDoc((洞察<br>文档))
+    Actions -.-> ActionDoc((行动<br>计划))
+
+    class Start,Complete milestone
+    class Intro,Project,Success,Challenge,Root,Insights,Actions,Documentation,Next step
+    class SuccessDoc,ChallengeDoc,InsightDoc,ActionDoc artifact
+```
+
+**会议格式:**
+- **时长**: 2-4 小时（可分多次会议）
+- **参与者**: 项目团队、关键干系人、技术负责人
+- **主持**: 中立的主持人引导流程
+- **文档**: 专人记录洞察和行动
+
+### 3. 文档和集成
+
+```mermaid
+flowchart TD
+    classDef step fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef artifact fill:#f4b8c4,stroke:#d498a4,color:#000
+    classDef verification fill:#c5e8b7,stroke:#a5c897,color:#000
+
+    Start([开始文档<br>和集成]) --> Draft[起草反思<br>文档]
+    Draft --> Review[与关键<br>干系人审查]
+    Review --> Revise[整合<br>反馈]
+    Revise --> Finalize[完成<br>文档]
+    Finalize --> UpdateMB[更新记忆<br>库]
+    UpdateMB --> ActionReg[创建行动<br>登记册]
+    ActionReg --> Archive[归档项目<br>文档]
+    Archive --> Verification{文档<br>验证}
+    Verification -->|通过| Complete([文档<br>完成])
+    Verification -->|失败| MoreRevision[解决<br>文档差距]
+    MoreRevision --> Verification
+
+    Draft -.-> DraftDoc((草稿<br>文档))
+    Finalize -.-> FinalDoc((最终<br>反思))
+    ActionReg -.-> ActReg((行动<br>登记册))
+
+    class Start,Complete milestone
+    class Draft,Review,Revise,Finalize,UpdateMB,ActionReg,Archive,MoreRevision step
+    class Verification verification
+    class DraftDoc,FinalDoc,ActReg artifact
+```
+
+**关键文档步骤:**
+1. 使用模板起草全面反思文档
+2. 与关键干系人和参与者审查草稿
+3. 整合反馈并完成文档
+4. 用关键洞察和经验更新记忆库
+5. 创建行动登记册以跟踪改进行动
+6. 将项目文档与反思文档一起归档
+7. 验证文档的完整性和质量
+
+## 📋 反思技术
+
+### 根本原因分析
+
+```mermaid
+flowchart TD
+    classDef step fill:#f9d77e,stroke:#d9b95c,color:#000
+
+    Start([识别<br>挑战]) --> What[发生了<br>什么?]
+    What --> When[何时<br>发生的?]
+    When --> Where[在哪里<br>发生的?]
+    Where --> Who[谁<br>参与了?]
+    Who --> How[如何<br>发生的?]
+    How --> Why1[为什么<br>发生?]
+    Why1 --> Why2[为什么?<br>更深层]
+    Why2 --> Why3[为什么?<br>更深层]
+    Why3 --> Why4[为什么?<br>更深层]
+    Why4 --> Why5[为什么?<br>根本原因]
+    Why5 --> Solution[识别<br>解决方案]
+    Solution --> Prevent[预防<br>策略]
+
+    class Start milestone
+    class What,When,Where,Who,How,Why1,Why2,Why3,Why4,Why5,Solution,Prevent step
+```
+
+### 成功分析
+
+```mermaid
+flowchart TD
+    classDef step fill:#f9d77e,stroke:#d9b95c,color:#000
+
+    Start([识别<br>成功]) --> Define[定义<br>成功]
+    Define --> Impact[衡量<br>影响]
+    Impact --> Factors[识别促成<br>因素]
+    Factors --> Context[考虑<br>背景]
+    Context --> Patterns[识别<br>模式]
+    Patterns --> Generalize[归纳<br>方法]
+    Generalize --> Apply[定义应用<br>场景]
+
+    class Start milestone
+    class Define,Impact,Factors,Context,Patterns,Generalize,Apply step
+```
+
+### 洞察生成
+
+```mermaid
+flowchart TD
+    classDef step fill:#f9d77e,stroke:#d9b95c,color:#000
+
+    Start([开始洞察<br>生成]) --> Observe[观察<br>模式]
+    Observe --> Question[质疑<br>假设]
+    Question --> Connect[连接<br>点]
+    Connect --> Contrast[与先前<br>知识对比]
+    Contrast --> Hypothesize[形成<br>假设]
+    Hypothesize --> Test[验证<br>假设]
+    Test --> Refine[完善<br>洞察]
+    Refine --> Apply[应用到<br>未来工作]
+
+    class Start milestone
+    class Observe,Question,Connect,Contrast,Hypothesize,Test,Refine,Apply step
+```
+
+## 📋 记忆库集成
+
+```mermaid
+flowchart TD
+    classDef memfile fill:#f4b8c4,stroke:#d498a4,color:#000
+    classDef process fill:#f9d77e,stroke:#d9b95c,color:#000
+
+    Reflection[全面<br>反思] --> PB[projectbrief.md]
+    Reflection --> PC[productContext.md]
+    Reflection --> AC[activeContext.md]
+    Reflection --> SP[systemPatterns.md]
+    Reflection --> TC[techContext.md]
+    Reflection --> P[progress.md]
+
+    PB & PC & AC & SP & TC & P --> MBI[记忆库<br>集成]
+    MBI --> Next[增强的未来<br>项目]
+
+    class PB,PC,AC,SP,TC,P memfile
+    class Reflection,MBI,Next process
+```
+
+### 记忆库更新
+
+需要对记忆库文件进行的具体更新：
+
+1. **projectbrief.md**
+   - 更新战略洞察
+   - 记录关键成就
+   - 整合经验教训
+
+2. **productContext.md**
+   - 更新业务洞察
+   - 记录市场/用户洞察
+   - 包含价值交付洞察
+
+3. **activeContext.md**
+   - 更新当前状态
+   - 记录行动项
+   - 包含下一步
+
+4. **systemPatterns.md**
+   - 更新架构洞察
+   - 记录成功模式
+   - 包含技术知识
+
+5. **techContext.md**
+   - 更新实施洞察
+   - 记录技术栈洞察
+   - 包含性能和安全洞察
+
+6. **progress.md**
+   - 更新最终状态
+   - 记录成就
+   - 包含项目指标
+
+## 📋 反思验证清单
+
+```
+✓ 反思验证清单
+
+系统审查
+- 系统概述完整准确? [是/否]
+- 项目绩效指标已收集并分析? [是/否]
+- 系统边界和接口已描述? [是/否]
+
+成功和挑战分析
+- 关键成就已用证据记录? [是/否]
+- 技术成功已用方法记录? [是/否]
+- 关键挑战已用解决方案记录? [是/否]
+- 技术挑战已用解决方案记录? [是/否]
+- 未解决的问题已用推进路径记录? [是/否]
+
+洞察生成
+- 技术洞察已提取并记录? [是/否]
+- 流程洞察已提取并记录? [是/否]
+- 业务洞察已提取并记录? [是/否]
+
+战略规划
+- 即时行动已定义并指定负责人? [是/否]
+- 短期改进已识别? [是/否]
+- 中期计划已规划? [是/否]
+- 长期战略方向已概述? [是/否]
+
+知识转移
+- 组织关键学习已记录? [是/否]
+- 技术知识转移已规划? [是/否]
+- 流程知识转移已规划? [是/否]
+- 文档更新已识别? [是/否]
+
+记忆库集成
+- projectbrief.md 已用洞察更新? [是/否]
+- productContext.md 已用洞察更新? [是/否]
+- activeContext.md 已用洞察更新? [是/否]
+- systemPatterns.md 已用洞察更新? [是/否]
+- techContext.md 已用洞察更新? [是/否]
+- progress.md 已用最终状态更新? [是/否]
+```
+
+## 📋 精简模式反思格式
+
+对于需要更紧凑反思的情况：
+
+```markdown
+## Level 4 任务反思: [系统名称]
+
+### 系统摘要
+- **目的**: [系统目的的简要描述]
+- **关键组件**: [关键组件列表]
+- **架构**: [简要架构描述]
+
+### 绩效摘要
+- **时间线**: [计划] vs [实际] ([偏差])
+- **资源**: [计划] vs [实际] ([偏差])
+- **质量**: [质量成就摘要]
+
+### 关键成功
+1. [成功 1 及证据和影响]
+2. [成功 2 及证据和影响]
+3. [成功 3 及证据和影响]
+
+### 关键挑战
+1. [挑战 1 及解决方案和教训]
+2. [挑战 2 及解决方案和教训]
+3. [挑战 3 及解决方案和教训]
+
+### 关键洞察
+- **技术**: [关键技术洞察及建议]
+- **流程**: [关键流程洞察及建议]
+- **业务**: [关键业务洞察及建议]
+
+### 优先行动
+1. [即时行动及负责人和时间线]
+2. [短期改进及负责人和时间线]
+3. [中期计划及负责人和时间线]
+
+### 记忆库更新
+- [需要的具体记忆库更新列表]
+```
+
+## 🚨 反思强制原则
+
+```
+┌─────────────────────────────────────────────────────┐
+│ 全面反思对于 Level 4 任务是强制性的。                 │
+│ 在反思完成并验证之前，不能进行归档。                  │
+└─────────────────────────────────────────────────────┘
+```

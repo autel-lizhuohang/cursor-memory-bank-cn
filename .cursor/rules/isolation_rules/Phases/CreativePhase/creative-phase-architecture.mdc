@@ -1,0 +1,187 @@
+---
+description: 创意阶段架构设计
+globs: creative-phase-architecture.md
+alwaysApply: false
+---
+
+# 创意阶段：架构设计
+
+> **摘要：** 本文档为创意阶段的架构设计决策提供结构化指导，确保对各选项进行全面评估并清晰记录架构选择。
+
+## 🏗️ 架构设计工作流程
+
+```mermaid
+graph TD
+    Start["架构<br>设计开始"] --> Req["1. 需求<br>分析"]
+    Req --> Comp["2. 组件<br>识别"]
+    Comp --> Options["3. 架构<br>选项"]
+    Options --> Eval["4. 选项<br>评估"]
+    Eval --> Decision["5. 决策与<br>文档记录"]
+    Decision --> Valid["6. 验证与<br>确认"]
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style Req fill:#ffa64d,stroke:#cc7a30,color:white
+    style Comp fill:#4dbb5f,stroke:#36873f,color:white
+    style Options fill:#d94dbb,stroke:#a3378a,color:white
+    style Eval fill:#4dbbbb,stroke:#368787,color:white
+    style Decision fill:#d971ff,stroke:#a33bc2,color:white
+    style Valid fill:#ff71c2,stroke:#c23b8a,color:white
+```
+
+## 📋 架构决策模板
+
+```markdown
+# 架构决策记录
+
+## 背景
+- 系统需求：
+  - [需求 1]
+  - [需求 2]
+- 技术约束：
+  - [约束 1]
+  - [约束 2]
+
+## 组件分析
+- 核心组件：
+  - [组件 1]：[用途/角色]
+  - [组件 2]：[用途/角色]
+- 交互关系：
+  - [交互 1]
+  - [交互 2]
+
+## 架构选项
+### 选项 1：[名称]
+- 描述：[简要描述]
+- 优点：
+  - [优点 1]
+  - [优点 2]
+- 缺点：
+  - [缺点 1]
+  - [缺点 2]
+- 技术契合度：[高/中/低]
+- 复杂度：[高/中/低]
+- 可扩展性：[高/中/低]
+
+### 选项 2：[名称]
+[与选项 1 结构相同]
+
+## 决策
+- 选定选项：[选项名称]
+- 理由：[说明]
+- 实施注意事项：
+  - [注意事项 1]
+  - [注意事项 2]
+
+## 验证
+- 需求满足情况：
+  - [✓] 需求 1
+  - [✓] 需求 2
+- 技术可行性：[评估结果]
+- 风险评估：[评估结果]
+```
+
+## 🎯 架构评估标准
+
+```mermaid
+graph TD
+    subgraph "评估标准"
+    C1["可扩展性"]
+    C2["可维护性"]
+    C3["性能"]
+    C4["安全性"]
+    C5["成本"]
+    C6["上市时间"]
+    end
+
+    style C1 fill:#4dbb5f,stroke:#36873f,color:white
+    style C2 fill:#ffa64d,stroke:#cc7a30,color:white
+    style C3 fill:#d94dbb,stroke:#a3378a,color:white
+    style C4 fill:#4dbbbb,stroke:#368787,color:white
+    style C5 fill:#d971ff,stroke:#a33bc2,color:white
+    style C6 fill:#ff71c2,stroke:#c23b8a,color:white
+```
+
+## 📊 架构可视化模板
+
+### 组件图模板
+```mermaid
+graph TD
+    subgraph "系统架构"
+    C1["组件 1"]
+    C2["组件 2"]
+    C3["组件 3"]
+
+    C1 -->|"接口 1"| C2
+    C2 -->|"接口 2"| C3
+    end
+
+    style C1 fill:#4dbb5f,stroke:#36873f,color:white
+    style C2 fill:#ffa64d,stroke:#cc7a30,color:white
+    style C3 fill:#d94dbb,stroke:#a3378a,color:white
+```
+
+### 数据流模板
+```mermaid
+sequenceDiagram
+    participant C1 as 组件 1
+    participant C2 as 组件 2
+    participant C3 as 组件 3
+
+    C1->>C2: 请求
+    C2->>C3: 处理
+    C3-->>C2: 响应
+    C2-->>C1: 结果
+```
+
+## ✅ 验证清单
+
+```markdown
+## 架构设计验证
+- [ ] 所有系统需求已处理
+- [ ] 组件职责已定义
+- [ ] 接口已指定
+- [ ] 数据流已记录
+- [ ] 安全考虑已处理
+- [ ] 可扩展性需求已满足
+- [ ] 性能需求已满足
+- [ ] 维护方案已定义
+
+## 实施准备状态
+- [ ] 所有组件已识别
+- [ ] 依赖关系已映射
+- [ ] 技术约束已记录
+- [ ] 风险评估已完成
+- [ ] 资源需求已定义
+- [ ] 时间估算已提供
+```
+
+## 🔄 架构评审流程
+
+```mermaid
+graph TD
+    subgraph "评审流程"
+    R1["技术<br>评审"]
+    R2["安全<br>评审"]
+    R3["性能<br>评审"]
+    R4["最终<br>批准"]
+    end
+
+    R1 --> R2 --> R3 --> R4
+
+    style R1 fill:#4dbb5f,stroke:#36873f,color:white
+    style R2 fill:#ffa64d,stroke:#cc7a30,color:white
+    style R3 fill:#d94dbb,stroke:#a3378a,color:white
+    style R4 fill:#4dbbbb,stroke:#368787,color:white
+```
+
+## 🔄 文档管理
+
+```mermaid
+graph TD
+    Current["当前文档"] --> Active["活跃文档：<br>- creative-phase-architecture.md"]
+    Current --> Related["相关文档：<br>- creative-phase-enforcement.md<br>- planning-comprehensive.md"]
+
+    style Current fill:#4da6ff,stroke:#0066cc,color:white
+    style Active fill:#4dbb5f,stroke:#36873f,color:white
+    style Related fill:#ffa64d,stroke:#cc7a30,color:white
+```

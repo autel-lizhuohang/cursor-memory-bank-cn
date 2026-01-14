@@ -1,0 +1,232 @@
+---
+description: 创意阶段的UI/UX设计指南和流程
+globs: creative-phase-uiux.mdc
+alwaysApply: false
+---
+好的，我已将样式指南位置更新为 `memory-bank/style-guide.md`，并将在单个 markdown 代码块中提供新的 `creative-phase-uiux.md` 文件的完整内容以便于复制。我还审查了 Mermaid 图表以确保它们格式正确。
+
+# 创意阶段：UI/UX 设计指南
+
+**文档目的：** 本文档概述了创意阶段 UI/UX 设计决策的结构化方法。它确保以用户为中心的设计、探索多种选项、遵循样式指南（如果可用或已创建），以及清晰记录 UI/UX 选择，与 React/Tailwind 最佳实践保持一致。
+
+## 🎨 UI/UX 设计理念
+
+* **以用户为中心**：设计必须优先考虑用户的需求、目标和上下文。
+* **清晰与简洁**：界面应直观易懂。
+* **一致性**：与既定的设计模式、项目特定样式和平台规范保持一致。
+* **无障碍访问 (A11y)**：遵循 WCAG 指南，确保残障人士的可用性。
+* **高效性**：使用户能够以最少的努力完成任务。
+* **反馈**：为用户操作提供清晰及时的反馈。
+* **视觉统一**：确保新的 UI 元素与现有或定义的项目样式指南保持一致。
+
+## 🌊 UI/UX 设计工作流程
+
+此工作流程指导创意阶段的 UI/UX 设计过程，包含关键的样式指南检查。
+
+```mermaid
+graph TD
+    Start["UI/UX 设计开始"] --> StyleGuideCheck["0. 样式指南检查<br>尝试定位 'memory-bank/style-guide.md' 或用户提供的路径。"]
+    StyleGuideCheck --> HasStyleGuide{"样式指南<br>可用/已加载？"}
+
+    HasStyleGuide -- "是" --> Understand["理解用户和任务<br>（用户画像、用户故事、需求）"]
+    HasStyleGuide -- "否" --> PromptCreateStyleGuide["提示用户：创建/链接样式指南？"]
+
+    PromptCreateStyleGuide --> UserResponse{"用户选择创建/链接？"}
+    UserResponse -- "是，创建" --> DefineStyleGuideSubProcess["子流程：定义基本样式指南"]
+    UserResponse -- "是，链接" --> LinkStyleGuide["用户提供路径/URL。<br>加载样式指南。"]
+    UserResponse -- "否" --> Understand_NoGuide["理解用户和任务<br>（在没有样式指南的情况下继续 - 警告用户可能出现不一致）"]
+
+    DefineStyleGuideSubProcess --> StyleGuideCreated["基本 'memory-bank/style-guide.md' 已创建/定义"]
+    StyleGuideCreated --> Understand
+    LinkStyleGuide --> Understand
+    Understand_NoGuide --> InfoArch_NoGuide["信息架构"]
+
+    Understand --> InfoArch["信息架构<br>（结构、导航、内容层次）"]
+    InfoArch --> Interaction["交互设计<br>（用户流程、线框图、原型 - 概念性）"]
+    Interaction --> VisualDesign["视觉设计<br>（应用样式指南、使用 React/Tailwind、设计稿 - 概念性）"]
+    VisualDesign --> Options["探索 UI/UX 选项<br>（生成 2-3 个不同的解决方案）"]
+    Options --> Evaluate["评估选项<br>（可用性、可行性、无障碍、美观性、<b>样式指南一致性</b>）"]
+    Evaluate --> Decision["做出并记录 UI/UX 决策<br>（使用优化的创意模板）"]
+    Decision --> Validate["根据需求、原则和<b>样式指南</b>进行验证"]
+    Validate --> UIUX_Complete["组件的 UI/UX 设计完成"]
+
+    InfoArch_NoGuide --> Interaction_NoGuide["交互设计"]
+    Interaction_NoGuide --> VisualDesign_NoGuide["视觉设计<br>（使用 React/Tailwind，追求内部一致性）"]
+    VisualDesign_NoGuide --> Options_NoGuide["探索 UI/UX 选项"]
+    Options_NoGuide --> Evaluate_NoGuide["评估选项<br>（可用性、可行性、无障碍、美观性）"]
+    Evaluate_NoGuide --> Decision_NoGuide["做出并记录 UI/UX 决策"]
+    Decision_NoGuide --> Validate_NoGuide["根据需求和原则进行验证"]
+    Validate_NoGuide --> UIUX_Complete
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style StyleGuideCheck fill:#ab87ff,stroke:#7d5bbe,color:white
+    style HasStyleGuide fill:#ab87ff,stroke:#7d5bbe,color:white
+    style PromptCreateStyleGuide fill:#ffcb6b,stroke:#f9a825,color:black
+    style UserResponse fill:#ffcb6b,stroke:#f9a825,color:black
+    style DefineStyleGuideSubProcess fill:#c3e88d,stroke:#82a75c,color:black
+    style LinkStyleGuide fill:#c3e88d,stroke:#82a75c,color:black
+    style StyleGuideCreated fill:#c3e88d,stroke:#82a75c,color:black
+    style VisualDesign fill:#4dbbbb,stroke:#368787,color:white
+    style Evaluate fill:#d971ff,stroke:#a33bc2,color:white
+    style Validate fill:#71c2ff,stroke:#3b8aa3,color:white
+    style Understand_NoGuide fill:#ff8a80,stroke:#c85a54,color:black
+    style UIUX_Complete fill:#5fd94d,stroke:#3da336,color:white
+```
+
+## 📖 样式指南集成
+
+一致的视觉风格对于良好的 UI/UX 至关重要。本节详细说明如何引用现有样式指南或提示创建样式指南。**本系统中样式指南的主要位置为 `memory-bank/style-guide.md`。**
+
+### 步骤 0：样式指南检查与处理
+
+**A. 检查现有样式指南：**
+1.  **主要位置检查**：系统**必须**首先在以下特定路径查找样式指南：
+    * `memory-bank/style-guide.md`
+2.  **次要检查（用户提示）**：如果未找到 `memory-bank/style-guide.md`，系统**必须**提示用户：
+    ```
+    "我找不到 'memory-bank/style-guide.md'。
+    是否有其他位置的现有样式指南，或者我应该参考的 URL？
+    如果有，请提供完整路径或 URL。
+    否则，我们可以现在创建一个基本的 'memory-bank/style-guide.md'，或者您可以选择在没有样式指南的情况下继续（但对于新的 UI 开发不推荐这样做）。"
+    ```
+
+**B. 使用现有样式指南：**
+* 如果找到 `memory-bank/style-guide.md` 或用户提供了替代路径/URL：
+    * 将其内容加载到上下文中。
+    * **关键**：所有后续的 UI/UX 设计提案（颜色、字体、间距、组件外观）**必须**严格遵循此指南。
+    * 在评估选项（工作流程的第 6 步）时，"遵循样式指南"**必须**是关键的评估标准。
+
+**C. 如果没有样式指南存在或未提供（用户交互）：**
+* 如果用户未找到或链接样式指南，系统**必须**强烈建议创建一个：
+    ```
+    "未引用样式指南。为了获得最佳的 UI 一致性和开发效率，强烈建议创建 'memory-bank/style-guide.md'。"
+
+    "您想要："
+    "1. 现在创建一个基本的 'memory-bank/style-guide.md'？（我可以帮助您根据观察或您的输入定义核心元素，如颜色、字体和间距。）"
+    "2. 在没有样式指南的情况下继续进行 UI/UX 设计？（警告：这可能导致视觉不一致，对于新功能或重大 UI 更改强烈不建议这样做。）"
+    "请选择 1 或 2。"
+    ```
+    （如果用户之前选择链接但失败，此提示应相应调整）。
+
+**D. 协助创建样式指南（如果用户选择选项 1）：**
+这将启动一个子流程来定义和记录基本样式指南，该指南将保存为 `memory-bank/style-guide.md`。
+
+```mermaid
+graph TD
+    StartCreate["用户选择创建样式指南"] --> GatherInspiration["收集灵感<br>（例如，分析用户提供的图片、现有 UI 或直接用户输入）"]
+    GatherInspiration --> DefineColors["定义核心调色板<br>（主色、次色、强调色、中性色、状态色 - 附十六进制代码）"]
+    DefineColors --> DefineTypography["定义字体排版<br>（字体系列、大小、粗细用于标题、正文、链接）"]
+    DefineTypography --> DefineSpacing["定义间距系统<br>（基本单位、边距、内边距、Tailwind 比例使用）"]
+    DefineSpacing --> DefineComponents["定义关键组件样式（概念性）<br>（按钮、输入框、卡片 - 如适用使用 Tailwind 工具类）"]
+    DefineComponents --> DefineTone["定义语气和图像风格（可选）"]
+    DefineTone --> GenerateDoc["生成 'memory-bank/style-guide.md' 内容<br>（填充已定义的元素）"]
+    GenerateDoc --> SaveFile["将生成的内容保存到 'memory-bank/style-guide.md'"]
+    SaveFile --> Confirm["确认 'memory-bank/style-guide.md' 创建成功并继续 UI/UX 设计"]
+
+    style StartCreate fill:#c3e88d,stroke:#82a75c,color:black
+    style GatherInspiration fill:#e0f2f1,stroke:#a7c4c0,color:black
+    style SaveFile fill:#89cff0,stroke:#50a6c2,color:black
+```
+* **流程**：
+    1.  **灵感**：分析用户提供的示例（如仪表板图片 `original-a5959a2926d1e7ede16dbe1d27593a59.webp`）或询问用户偏好。
+        * `AI："要创建样式指南，您是否有现有的设计、截图或网站供我分析样式？或者您想从头开始定义？"`
+    2.  **定义元素**：引导用户定义颜色、字体、间距和关键组件样式（如之前基于图片创建的示例样式指南中所述）。
+    3.  **文档**：生成 `memory-bank/style-guide.md` 的内容。结构应类似于根据仪表板图片创建的示例样式指南。
+    4.  **保存文件**：系统随后应创建此内容并保存到文件 `memory-bank/style-guide.md`。
+* 一旦 `memory-bank/style-guide.md` 创建/加载完成，它将成为**视觉设计的唯一真实来源**。
+
+## 🖼️ 关键 UI/UX 设计考虑因素（使用 `memory-bank/style-guide.md` 应用）
+
+### 1. 用户需求分析
+* **用户画像**：定义目标用户画像。
+* **用户故事/待完成任务**：阐明用户需要实现的目标。
+* **用例**：详细说明具体的交互场景。
+
+### 2. 信息架构 (IA)
+* **内容清单与审计**：了解现有内容。
+* **层次与结构**：逻辑地组织内容。
+* **导航设计**：设计直观的导航（菜单、面包屑），外观遵循 `memory-bank/style-guide.md`。
+* **标签**：使用清晰一致的标签。
+
+### 3. 交互设计 (IxD)
+* **用户流程**：绘制用户的路径。
+* **线框图**：创建低保真布局。
+* **原型（概念性）**：描述交互元素和过渡效果。
+* **错误处理与预防**：设计清晰的错误消息（按 `memory-bank/style-guide.md` 设置样式）。
+* **反馈机制**：实现视觉/文本反馈（按 `memory-bank/style-guide.md` 设置样式）。
+
+### 4. 视觉设计（严格遵循 `memory-bank/style-guide.md`）
+* **遵循样式指南**：**关键** - 所有视觉选择**必须**符合 `memory-bank/style-guide.md`。
+* **视觉层次**：使用样式指南的字体和间距来引导用户。
+* **布局与构图**：使用 Tailwind CSS 和样式指南间距有效地排列元素。
+* **字体排版**：应用样式指南中定义的字体系列、大小和粗细。
+* **调色板**：仅使用样式指南中定义的颜色。
+* **图像与图标**：使用符合样式指南定义风格的图标和图像。
+* **品牌**：与样式指南中记录的项目品牌指南保持一致。
+
+### 5. 无障碍访问 (A11y)
+* **WCAG 合规级别**：目标为 AA 或 AAA。
+* **语义化 HTML**。
+* **键盘导航**。
+* **ARIA 属性**。
+* **颜色对比**：根据样式指南颜色进行验证。
+* **替代文本**。
+
+### 6. 平台与响应式设计
+* **响应式设计**：使用样式指南的响应式原则（如果已定义）确保 UI 适应屏幕尺寸。
+* **平台规范**：遵循目标平台的 UI 模式。
+
+## 🛠️ UI/UX 选项评估与决策制定
+
+参考项目的 `optimized-creative-template.mdc`。关键评估标准**必须**包括：
+
+* 可用性
+* 可学习性
+* 高效性
+* 无障碍性
+* 美观性（由 `memory-bank/style-guide.md` 定义）
+* 可行性（React/Tailwind）
+* 与需求的一致性
+* **遵循 `memory-bank/style-guide.md`（如果指南存在则为关键）**
+
+```mermaid
+graph TD
+    subgraph "UI/UX 评估标准"
+        C1["可用性"]
+        C2["可学习性"]
+        C3["高效性"]
+        C4["无障碍性 (A11y)"]
+        C5["美观性（按样式指南）"]
+        C6["可行性（React/Tailwind）"]
+        C7["与需求的一致性"]
+        C8["<b>遵循样式指南</b>"]
+    end
+
+    style C8 fill:#ff5555,stroke:#c30052,color:white
+```
+
+## 📝 文档标准
+
+* 使用项目的 `optimized-creative-template.mdc` 来记录 UI/UX 决策。
+* 清楚描述所选的 UI 模式和理由，引用 `memory-bank/style-guide.md`。
+* 记录响应式状态和无障碍性的考虑因素，按 `memory-bank/style-guide.md` 指导。
+
+## ✅ UI/UX 设计验证清单
+
+* [ ] **样式指南（`memory-bank/style-guide.md`）已引用或创建？**
+* [ ] 用户需求已清晰理解并处理？
+* [ ] 信息架构逻辑且直观？
+* [ ] 交互设计清晰高效？
+* [ ] **视觉设计严格遵循 `memory-bank/style-guide.md`？**
+* [ ] 无障碍标准已满足？
+* [ ] 响应式设计已处理？
+* [ ] 设计决策已记录并附有理由和样式指南引用？
+* [ ] 与 React/Tailwind 最佳实践和样式指南的一致性已考虑？
+
+## 🔄 与其他创意阶段的集成
+
+* **架构设计**：确保 UI/UX 与系统架构兼容。
+* **数据模型设计**：UI 应有效地呈现/捕获数据模型中的数据。
+* **样式指南**：所有 UI/UX 工作**必须**是已建立的 `memory-bank/style-guide.md` 的直接应用或扩展。
+
+```

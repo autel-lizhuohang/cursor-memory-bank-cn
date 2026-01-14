@@ -1,0 +1,683 @@
+---
+description: Level 4 复杂系统任务的全面归档方法
+globs: "**/level4/**", "**/archive/**"
+alwaysApply: false
+---
+
+# LEVEL 4 任务的全面归档
+
+> **简述:** 本文档概述了 Level 4（复杂系统）任务的全面归档方法，确保所有系统知识、决策、实施细节和经验教训都被保存，以供未来参考和复用。
+
+## 🔍 全面归档概述
+
+Level 4 复杂系统任务需要彻底的归档，以保存系统知识、设计决策、实施细节和经验教训。这种系统化的归档过程确保组织保持机构知识，并使未来的团队能够理解、维护和扩展系统。
+
+```mermaid
+flowchart TD
+    classDef phase fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef artifact fill:#f4b8c4,stroke:#d498a4,color:#000
+    classDef verification fill:#c5e8b7,stroke:#a5c897,color:#000
+
+    Start([开始归档<br>流程]) --> Template[加载全面<br>归档模板]
+    Template --> RefDoc[审查反思<br>文档]
+    RefDoc --> SysDoc[创建系统<br>文档]
+    SysDoc --> ArchDoc[记录架构<br>和设计]
+    ArchDoc --> ImplDoc[记录实施<br>细节]
+    ImplDoc --> APIDoc[创建 API<br>文档]
+    APIDoc --> DataDoc[记录数据<br>模型和模式]
+    DataDoc --> SecDoc[记录安全<br>措施]
+    SecDoc --> TestDoc[记录测试<br>程序和结果]
+    TestDoc --> DeployDoc[记录部署<br>程序]
+    DeployDoc --> OpDoc[创建运维<br>文档]
+    OpDoc --> KnowledgeDoc[创建知识<br>转移文档]
+    KnowledgeDoc --> CrossRef[创建交叉引用<br>文档]
+    CrossRef --> Archive[归档所有<br>项目材料]
+    Archive --> UpdateMB[更新记忆<br>库]
+    UpdateMB --> Verification{归档<br>验证}
+    Verification -->|通过| Complete([归档<br>完成])
+    Verification -->|失败| Revise[修订<br>归档]
+    Revise --> Verification
+
+    Template -.-> AT((归档<br>模板))
+    SysDoc -.-> SD((系统<br>文档))
+    ArchDoc -.-> AD((架构<br>文档))
+    ImplDoc -.-> ID((实施<br>文档))
+    APIDoc & DataDoc -.-> IntDoc((接口<br>文档))
+    TestDoc & DeployDoc & OpDoc -.-> OpDocs((运维<br>文档))
+
+    class Start,Complete milestone
+    class Template,RefDoc,SysDoc,ArchDoc,ImplDoc,APIDoc,DataDoc,SecDoc,TestDoc,DeployDoc,OpDoc,KnowledgeDoc,CrossRef,Archive,UpdateMB step
+    class Verification verification
+    class AT,SD,AD,ID,IntDoc,OpDocs artifact
+```
+
+## 📋 归档模板结构
+
+### 1. 系统概述
+
+```markdown
+## 系统概述
+
+### 系统目的和范围
+[系统目的、范围和业务上下文的全面描述]
+
+### 系统架构
+[架构摘要，包括图表、模式和关键设计决策]
+
+### 关键组件
+- 组件 1: [描述和目的]
+- 组件 2: [描述和目的]
+- 组件 3: [描述和目的]
+
+### 集成点
+[所有内部和外部集成点的描述]
+
+### 技术栈
+[使用的所有技术、框架和工具的完整列表]
+
+### 部署环境
+[部署环境、基础设施和配置的描述]
+```
+
+### 2. 需求和设计文档
+
+```markdown
+## 需求和设计文档
+
+### 业务需求
+[具有可追溯性的业务需求完整列表]
+
+### 功能需求
+[详细的功能需求及其实施映射]
+
+### 非功能需求
+[非功能需求及其实施方法]
+
+### 架构决策记录
+[所有架构决策记录 (ADR) 的集合]
+
+### 使用的设计模式
+[所有设计模式及使用示例的目录]
+
+### 设计约束
+[所有设计约束及其影响的文档]
+
+### 考虑的设计备选方案
+[考虑过的备选方案及最终选择原因的摘要]
+```
+
+### 3. 实施文档
+
+```markdown
+## 实施文档
+
+### 组件实施细节
+- **组件 1**:
+  - **目的**: [组件目的]
+  - **实施方法**: [实施细节]
+  - **关键类/模块**: [带描述的列表]
+  - **依赖**: [内部和外部依赖]
+  - **特殊注意事项**: [重要说明]
+
+- **组件 2**:
+  - **目的**: [组件目的]
+  - **实施方法**: [实施细节]
+  - **关键类/模块**: [带描述的列表]
+  - **依赖**: [内部和外部依赖]
+  - **特殊注意事项**: [重要说明]
+
+### 受影响的关键文件和组件 (来自 tasks.md)
+[来自此项目原始 tasks.md 的文件/组件清单摘要或直接复制。这提供了在组件/文件级别更改范围的快速参考。]
+
+### 算法和复杂逻辑
+[关键算法和复杂业务逻辑的文档]
+
+### 第三方集成
+[所有第三方集成的详细信息，包括 API 和库]
+
+### 配置参数
+[所有配置参数及其用途的完整列表]
+
+### 构建和打包详情
+[构建过程、打包和产物的文档]
+```
+
+### 4. API 文档
+
+```markdown
+## API 文档
+
+### API 概述
+[所有 API（内部和外部）的高层概述]
+
+### API 端点
+- **端点 1**:
+  - **URL/路径**: [端点 URL 或路径]
+  - **方法**: [HTTP 方法]
+  - **目的**: [端点目的]
+  - **请求格式**: [带示例的请求格式]
+  - **响应格式**: [带示例的响应格式]
+  - **错误代码**: [可能的错误代码及含义]
+  - **安全**: [安全注意事项]
+  - **速率限制**: [任何速率限制]
+  - **备注**: [其他说明]
+
+- **端点 2**:
+  - **URL/路径**: [端点 URL 或路径]
+  - **方法**: [HTTP 方法]
+  - **目的**: [端点目的]
+  - **请求格式**: [带示例的请求格式]
+  - **响应格式**: [带示例的响应格式]
+  - **错误代码**: [可能的错误代码及含义]
+  - **安全**: [安全注意事项]
+  - **速率限制**: [任何速率限制]
+  - **备注**: [其他说明]
+
+### API 认证
+[认证方法和实施细节]
+
+### API 版本策略
+[版本方法和迁移策略]
+
+### SDK 或客户端库
+[带使用示例的可用 SDK 或客户端库]
+```
+
+### 5. 数据模型和模式文档
+
+```markdown
+## 数据模型和模式文档
+
+### 数据模型概述
+[带实体关系图的数据模型高层概述]
+
+### 数据库模式
+[详细的数据库模式，包括表、列和关系]
+
+### 数据字典
+[包含所有实体和属性的完整数据字典]
+
+### 数据验证规则
+[数据验证规则和执行机制]
+
+### 数据迁移程序
+[数据迁移和版本管理程序]
+
+### 数据归档策略
+[数据归档和保留策略]
+```
+
+### 6. 安全文档
+
+```markdown
+## 安全文档
+
+### 安全架构
+[安全架构和设计原则概述]
+
+### 认证和授权
+[认证和授权的详细实施]
+
+### 数据保护措施
+[保护敏感数据实施的措施]
+
+### 安全控制
+[技术和程序安全控制]
+
+### 漏洞管理
+[漏洞管理和补丁方法]
+
+### 安全测试结果
+[安全测试和评估摘要]
+
+### 合规注意事项
+[已解决的监管和合规注意事项]
+```
+
+### 7. 测试文档
+
+```markdown
+## 测试文档
+
+### 测试策略
+[整体测试策略和方法]
+
+### 测试用例
+[带预期结果的测试用例目录]
+
+### 自动化测试
+[自动化测试和框架的文档]
+
+### 性能测试结果
+[带基准的性能测试结果]
+
+### 安全测试结果
+[带发现的安全测试结果]
+
+### 用户验收测试
+[UAT 方法、场景和结果]
+
+### 已知问题和限制
+[已知问题和系统限制的文档]
+```
+
+### 8. 部署文档
+
+```markdown
+## 部署文档
+
+### 部署架构
+[带图表的详细部署架构]
+
+### 环境配置
+[所有环境的配置详情]
+
+### 部署程序
+[逐步部署程序]
+
+### 配置管理
+[配置管理方法和工具]
+
+### 发布管理
+[发布管理过程和程序]
+
+### 回滚程序
+[部署回滚程序]
+
+### 监控和告警
+[监控设置、指标和告警配置]
+```
+
+### 9. 运维文档
+
+```markdown
+## 运维文档
+
+### 操作程序
+[日常操作程序]
+
+### 维护任务
+[例行维护任务和计划]
+
+### 故障排除指南
+[常见问题故障排除指南]
+
+### 备份和恢复
+[备份和恢复程序]
+
+### 灾难恢复
+[灾难恢复计划和程序]
+
+### 性能调优
+[性能调优指南和程序]
+
+### SLA 和指标
+[服务级别协议和关键性能指标]
+```
+
+### 10. 知识转移文档
+
+```markdown
+## 知识转移文档
+
+### 新团队成员系统概述
+[入职用的简明系统概述]
+
+### 关键概念和术语
+[关键概念和术语词汇表]
+
+### 常见任务和程序
+[常见任务和程序指南]
+
+### 常见问题
+[系统用户和维护人员的常见问题]
+
+### 培训材料
+[不同角色的培训材料]
+
+### 支持升级流程
+[升级支持问题的流程]
+
+### 延伸阅读和资源
+[其他资源和文档]
+```
+
+### 11. 项目历史和经验
+
+```markdown
+## 项目历史和经验
+
+### 项目时间线
+[项目时间线和关键里程碑摘要]
+
+### 关键决策和理由
+[关键决策及其理由记录]
+
+### 挑战和解决方案
+[面临的挑战及解决方式的文档]
+
+### 经验教训
+[可能对未来项目有益的关键经验教训]
+
+### 目标达成情况
+[相对于原始目标的绩效评估]
+
+### 未来增强
+[潜在的未来增强和扩展]
+```
+
+## 📋 归档流程
+
+### 1. 准备
+
+```mermaid
+flowchart TD
+    classDef step fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef artifact fill:#f4b8c4,stroke:#d498a4,color:#000
+
+    Start([开始归档<br>准备]) --> Template[加载归档<br>模板]
+    Template --> Review[审查项目<br>文档]
+    Review --> Identify[识别所有<br>产物]
+    Identify --> Gather[收集所有<br>材料]
+    Gather --> Organize[组织<br>材料]
+    Organize --> Plan[创建归档<br>计划]
+    Plan --> Resources[分配<br>资源]
+    Resources --> Complete([准备<br>完成])
+
+    Template -.-> AT((归档<br>模板))
+    Review -.-> ProjDocs((项目<br>文档))
+    Identify -.-> ArtList((产物<br>列表))
+    Plan -.-> ArchPlan((归档<br>计划))
+
+    class Start,Complete milestone
+    class Template,Review,Identify,Gather,Organize,Plan,Resources step
+    class AT,ProjDocs,ArtList,ArchPlan artifact
+```
+
+**关键准备步骤:**
+1. 加载全面归档模板
+2. 审查所有项目文档，包括反思文档
+3. 识别所有要归档的产物
+4. 从各种来源收集所有材料
+5. 根据归档结构组织材料
+6. 创建详细的归档计划
+7. 为归档过程分配资源
+
+### 2. 文档创建
+
+```mermaid
+flowchart TD
+    classDef step fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef artifact fill:#f4b8c4,stroke:#d498a4,color:#000
+
+    Start([开始文档<br>创建]) --> System[创建系统<br>文档]
+    System --> Req[创建需求和<br>设计文档]
+    Req --> Impl[创建实施<br>文档]
+    Impl --> API[创建 API<br>文档]
+    API --> Data[创建数据模型<br>文档]
+    Data --> Security[创建安全<br>文档]
+    Security --> Test[创建测试<br>文档]
+    Test --> Deploy[创建部署<br>文档]
+    Deploy --> Ops[创建运维<br>文档]
+    Ops --> Knowledge[创建知识转移<br>文档]
+    Knowledge --> History[创建项目历史<br>文档]
+    History --> Review[审查所有<br>文档]
+    Review --> Complete([文档创建<br>完成])
+
+    System -.-> SysDoc((系统<br>文档))
+    Req -.-> ReqDoc((需求<br>文档))
+    Impl -.-> ImplDoc((实施<br>文档))
+    API -.-> APIDoc((API<br>文档))
+    Data -.-> DataDoc((数据模型<br>文档))
+    Security -.-> SecDoc((安全<br>文档))
+    Test -.-> TestDoc((测试<br>文档))
+    Deploy -.-> DeployDoc((部署<br>文档))
+    Ops -.-> OpsDoc((运维<br>文档))
+    Knowledge -.-> KnowDoc((知识转移<br>文档))
+    History -.-> HistDoc((项目历史<br>文档))
+
+    class Start,Complete milestone
+    class System,Req,Impl,API,Data,Security,Test,Deploy,Ops,Knowledge,History,Review step
+    class SysDoc,ReqDoc,ImplDoc,APIDoc,DataDoc,SecDoc,TestDoc,DeployDoc,OpsDoc,KnowDoc,HistDoc artifact
+```
+
+**关键文档步骤:**
+1. 创建全面的系统文档
+2. 记录需求和设计决策
+3. 记录所有组件的实施细节
+4. 创建完整的 API 文档
+5. 记录数据模型和模式
+6. 记录安全措施和控制
+7. 创建完整的测试文档
+8. 记录部署程序
+9. 创建运维文档
+10. 准备知识转移文档
+11. 记录项目历史和经验
+12. 审查所有文档的完整性和准确性
+
+### 3. 归档和集成
+
+```mermaid
+flowchart TD
+    classDef step fill:#f9d77e,stroke:#d9b95c,color:#000
+    classDef artifact fill:#f4b8c4,stroke:#d498a4,color:#000
+    classDef verification fill:#c5e8b7,stroke:#a5c897,color:#000
+
+    Start([开始归档<br>和集成]) --> Consolidate[整合所有<br>文档]
+    Consolidate --> CrossRef[创建交叉引用<br>索引]
+    CrossRef --> Version[版本化所有<br>文档]
+    Version --> Archive[归档到<br>仓库]
+    Archive --> UpdateMB[更新记忆<br>库]
+    UpdateMB --> AccessControl[建立访问<br>控制]
+    AccessControl --> Announce[宣布<br>可用性]
+    Announce --> Verification{归档<br>验证}
+    Verification -->|通过| Complete([归档<br>完成])
+    Verification -->|失败| Revise[修订<br>归档]
+    Revise --> Verification
+
+    Consolidate -.-> AllDocs((整合的<br>文档))
+    CrossRef -.-> Index((交叉引用<br>索引))
+    Archive -.-> Repo((归档<br>仓库))
+    UpdateMB -.-> MB((更新的记忆<br>库))
+
+    class Start,Complete milestone
+    class Consolidate,CrossRef,Version,Archive,UpdateMB,AccessControl,Announce,Revise step
+    class Verification verification
+    class AllDocs,Index,Repo,MB artifact
+```
+
+**关键归档步骤:**
+1. 将所有文档整合成一个连贯的包
+2. 创建链接所有文档的交叉引用索引
+3. 适当地版本化所有文档
+4. 归档到指定的仓库
+5. 用相关信息更新记忆库
+6. 建立适当的访问控制
+7. 向相关干系人宣布可用性
+8. 验证归档的完整性和可访问性
+
+## 📋 记忆库集成
+
+```mermaid
+flowchart TD
+    classDef memfile fill:#f4b8c4,stroke:#d498a4,color:#000
+    classDef process fill:#f9d77e,stroke:#d9b95c,color:#000
+
+    Archiving[全面<br>归档] --> PB[projectbrief.md]
+    Archiving --> PC[productContext.md]
+    Archiving --> AC[activeContext.md]
+    Archiving --> SP[systemPatterns.md]
+    Archiving --> TC[techContext.md]
+    Archiving --> P[progress.md]
+
+    PB & PC & AC & SP & TC & P --> MBI[记忆库<br>集成]
+    MBI --> Next[知识<br>仓库]
+
+    class PB,PC,AC,SP,TC,P memfile
+    class Archiving,MBI,Next process
+```
+
+### 记忆库更新
+
+需要对记忆库文件进行的具体更新：
+
+1. **projectbrief.md**
+   - 更新最终系统描述
+   - 记录完成状态
+   - 包含归档文档链接
+
+2. **productContext.md**
+   - 更新最终业务上下文
+   - 记录交付的业务价值
+   - 包含需求文档链接
+
+3. **activeContext.md**
+   - 更新系统状态（已完成）
+   - 记录交接信息
+   - 包含运维文档链接
+
+4. **systemPatterns.md**
+   - 更新最终架构模式
+   - 记录成功的实施模式
+   - 包含架构文档链接
+
+5. **techContext.md**
+   - 更新最终技术栈
+   - 记录集成点
+   - 包含技术文档链接
+
+6. **progress.md**
+   - 更新最终项目状态
+   - 记录完成指标
+   - 包含项目历史文档链接
+
+## 📋 归档验证清单
+
+```
+✓ 归档验证清单
+
+系统文档
+- 系统概述完整? [是/否]
+- 架构已用图表记录? [是/否]
+- 关键组件已记录? [是/否]
+- 集成点已记录? [是/否]
+
+需求和设计
+- 业务需求已记录? [是/否]
+- 功能需求已记录? [是/否]
+- 架构决策已记录? [是/否]
+- 设计模式已记录? [是/否]
+
+实施
+- 组件实施细节已记录? [是/否]
+- 关键算法已记录? [是/否]
+- 第三方集成已记录? [是/否]
+- 配置参数已记录? [是/否]
+
+API 文档
+- API 端点已记录? [是/否]
+- 请求/响应格式已记录? [是/否]
+- 认证已记录? [是/否]
+- 错误处理已记录? [是/否]
+
+数据文档
+- 数据模型已记录? [是/否]
+- 数据库模式已记录? [是/否]
+- 提供了数据字典? [是/否]
+- 数据验证规则已记录? [是/否]
+
+安全文档
+- 安全架构已记录? [是/否]
+- 认证/授权已记录? [是/否]
+- 数据保护措施已记录? [是/否]
+- 安全测试结果已记录? [是/否]
+
+测试文档
+- 测试策略已记录? [是/否]
+- 测试用例已记录? [是/否]
+- 测试结果已记录? [是/否]
+- 已知问题已记录? [是/否]
+
+部署文档
+- 部署架构已记录? [是/否]
+- 环境配置已记录? [是/否]
+- 部署程序已记录? [是/否]
+- 回滚程序已记录? [是/否]
+
+运维文档
+- 操作程序已记录? [是/否]
+- 提供了故障排除指南? [是/否]
+- 备份和恢复已记录? [是/否]
+- 监控配置已记录? [是/否]
+
+知识转移
+- 提供了入职概述? [是/否]
+- 关键概念已记录? [是/否]
+- 常见任务已记录? [是/否]
+- 提供了常见问题? [是/否]
+
+项目历史
+- 项目时间线已记录? [是/否]
+- 关键决策已记录? [是/否]
+- 经验教训已记录? [是/否]
+- 建议了未来增强? [是/否]
+
+记忆库集成
+- 所有记忆库文件已更新? [是/否]
+- 交叉引用已创建? [是/否]
+- 文档已正确版本化? [是/否]
+- 归档仓库已建立? [是/否]
+```
+
+## 📋 精简模式归档格式
+
+对于需要更紧凑归档方法的情况：
+
+```markdown
+## Level 4 任务归档: [系统名称]
+
+### 系统摘要
+- **目的**: [系统目的的简要描述]
+- **关键组件**: [关键组件列表]
+- **架构**: [带图表的简要架构描述]
+
+### 实施摘要
+- **技术栈**: [使用的关键技术]
+- **关键模块**: [重要模块的简要描述]
+- **集成点**: [主要集成点列表]
+
+### 关键文档
+- **API 文档**: [链接或简要摘要]
+- **数据模型**: [链接或简要描述]
+- **部署配置**: [链接或简要描述]
+- **安全措施**: [链接或简要摘要]
+
+### 运维信息
+- **部署程序**: [链接或简要描述]
+- **关键配置参数**: [重要参数列表]
+- **监控设置**: [简要监控详情]
+- **常见问题**: [常见问题及解决方案列表]
+
+### 仓库信息
+- **代码仓库**: [仓库链接]
+- **文档仓库**: [文档链接]
+- **构建产物**: [构建产物链接]
+
+### 知识转移摘要
+- **关键联系人**: [具有知识的关键人员列表]
+- **关键知识领域**: [需要特殊专业知识的领域]
+- **培训资源**: [培训材料链接]
+
+### 记忆库链接
+- [更新的记忆库文件链接]
+```
+
+## 🚨 归档强制原则
+
+```
+┌─────────────────────────────────────────────────────┐
+│ 全面归档对于 Level 4 任务是强制性的。                 │
+│ 在全面归档完成并验证之前，任何复杂系统都不能          │
+│ 被视为完成。                                         │
+└─────────────────────────────────────────────────────┘
+```

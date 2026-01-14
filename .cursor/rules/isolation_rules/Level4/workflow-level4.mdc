@@ -1,0 +1,423 @@
+---
+description: Level 4 复杂系统任务的全面工作流程
+globs: "**/level4/**", "**/workflow/**"
+alwaysApply: false
+---
+# LEVEL 4 任务的全面工作流程
+
+> **简述:** 本文档概述了 Level 4（复杂系统）任务的全面工作流程，包括 7 个关键阶段，具有严格的规划、强制性的创意阶段、架构设计、分阶段实施和全面的文档记录。
+
+## 🔍 LEVEL 4 工作流程概述
+
+```mermaid
+graph LR
+    Init["1. 初始化"] --> Doc["2. 文档<br>设置"]
+    Doc --> Plan["3. 架构<br>规划"]
+    Plan --> Create["4. 创意<br>阶段"]
+    Create --> Impl["5. 分阶段<br>实施"]
+    Impl --> Reflect["6. 反思"]
+    Reflect --> Archive["7. 归档"]
+
+    %% 每个阶段的文档连接
+    Init -.-> InitDocs["初始化"]
+    Doc -.-> DocDocs["文档"]
+    Plan -.-> PlanDocs["架构规划"]
+    Create -.-> CreateDocs["创意阶段"]
+    Impl -.-> ImplDocs["分阶段实施"]
+    Reflect -.-> ReflectDocs["反思"]
+    Archive -.-> ArchiveDocs["归档"]
+```
+
+## 🔄 级别过渡处理
+
+```mermaid
+graph TD
+    L4["Level 4 任务"] --> Assess["持续<br>评估"]
+
+    Assess --> Down["降级到<br>Level 2/3"]
+    Assess --> Split["拆分为<br>多个任务"]
+
+    Down --> L23Trigger["触发条件:<br>- 复杂性较低<br>- 范围有限<br>- 组件较少"]
+
+    Split --> MultiTrigger["触发条件:<br>- 太大<br>- 独立部分<br>- 可并行"]
+
+    L23Trigger --> L23Switch["切换到<br>Level 2/3 工作流程"]
+    MultiTrigger --> CreateTasks["创建多个<br>较低级别任务"]
+```
+
+Level 4 任务涉及需要全面规划、严格设计、系统化实施和彻底文档记录的复杂系统。此工作流程确保所有方面都以适当的细节、结构和验证级别得到处理。
+
+## 📋 工作流程阶段
+
+### 阶段 1: 初始化
+
+```mermaid
+graph TD
+    Start["开始 Level 4 任务"] --> Platform{"检测<br>平台"}
+    Platform --> FileCheck["关键文件<br>验证"]
+    FileCheck --> LoadStructure["全面记忆库<br>结构加载"]
+    LoadStructure --> TaskCreation["创建详细<br>任务框架"]
+    TaskCreation --> Context["建立企业<br>上下文"]
+    Context --> Resources["识别和分配<br>所有资源"]
+    Resources --> SetupComplete["初始化<br>完成"]
+```
+
+**步骤:**
+1. 平台检测与全面环境配置
+2. 关键文件验证与深入完整性检查
+3. 全面记忆库结构加载与完整引用映射
+4. 在 tasks.md 中创建详细任务框架与完整结构
+5. 建立完整的企业上下文和干系人需求
+6. 识别和分配所有必要资源（技术、人力、时间）
+7. 执行系统就绪评估
+
+**里程碑检查点:**
+```
+✓ 初始化检查点
+- 平台已检测并完全配置? [是/否]
+- 关键文件已验证并进行完整性检查? [是/否]
+- 记忆库已全面加载和映射? [是/否]
+- 详细任务框架已创建? [是/否]
+- 企业上下文已建立? [是/否]
+- 干系人需求已记录? [是/否]
+- 所有资源已识别和分配? [是/否]
+- 系统就绪已评估? [是/否]
+
+→ 如果全部是: 继续文档设置
+→ 如果有否: 完成初始化步骤
+```
+
+### 阶段 2: 文档设置
+
+```mermaid
+graph TD
+    Start["开始文档<br>设置"] --> LoadTemplate["加载全面<br>文档模板"]
+    LoadTemplate --> Framework["建立文档<br>框架"]
+    Framework --> UpdateProject["更新<br>projectbrief.md"]
+    UpdateProject --> UpdateContext["更新<br>activeContext.md"]
+    UpdateContext --> SystemPatterns["更新<br>systemPatterns.md"]
+    SystemPatterns --> TechContext["更新<br>techContext.md"]
+    TechContext --> Standards["记录系统<br>标准"]
+    Standards --> Architecture["记录现有<br>架构"]
+    Architecture --> SetupComplete["文档设置<br>完成"]
+```
+
+**步骤:**
+1. 加载所有方面的全面文档模板
+2. 建立具有结构的完整文档框架
+3. 用详细系统描述和需求更新 projectbrief.md
+4. 用当前焦点、依赖和干系人更新 activeContext.md
+5. 用全面模式和原则更新 systemPatterns.md
+6. 用完整技术景观更新 techContext.md
+7. 记录系统标准、约束和惯例
+8. 记录现有架构和集成点
+
+**里程碑检查点:**
+```
+✓ 文档检查点
+- 文档模板已加载? [是/否]
+- 文档框架已建立? [是/否]
+- projectbrief.md 已全面更新? [是/否]
+- activeContext.md 已完全更新? [是/否]
+- systemPatterns.md 已全面更新? [是/否]
+- techContext.md 已完全更新? [是/否]
+- 系统标准已记录? [是/否]
+- 现有架构已记录? [是/否]
+
+→ 如果全部是: 继续架构规划
+→ 如果有否: 完成文档设置
+```
+
+### 阶段 3: 架构规划
+
+```mermaid
+graph TD
+    Start["开始架构<br>规划"] --> Requirements["分析全面<br>需求"]
+    Requirements --> BusinessContext["记录业务<br>上下文"]
+    BusinessContext --> VisionDefine["定义愿景<br>和目标"]
+    VisionDefine --> ArchitecturalPrinciples["建立架构<br>原则"]
+    ArchitecturalPrinciples --> Alternatives["探索架构<br>备选方案"]
+    Alternatives --> Evaluation["执行详细<br>评估"]
+    Evaluation --> Selection["做出架构<br>选择"]
+    Selection --> Documentation["创建架构<br>文档"]
+    Documentation --> Review["进行架构<br>评审"]
+    Review --> PlanComplete["架构规划<br>完成"]
+```
+
+**步骤:**
+1. 分析具有可追溯性的全面需求
+2. 记录完整的业务上下文和约束
+3. 用可衡量目标定义清晰的愿景和目标
+4. 建立架构原则和非功能需求
+5. 通过彻底分析探索多个架构备选方案
+6. 使用加权标准执行详细评估
+7. 做出具有全面理由的架构选择
+8. 创建带图表的完整架构文档
+9. 与干系人进行正式架构评审
+
+**里程碑检查点:**
+```
+✓ 架构规划检查点
+- 需求已全面分析? [是/否]
+- 业务上下文已完全记录? [是/否]
+- 愿景和目标已清晰定义? [是/否]
+- 架构原则已建立? [是/否]
+- 备选方案已彻底探索? [是/否]
+- 详细评估已执行? [是/否]
+- 架构选择已有理由? [是/否]
+- 架构文档完整? [是/否]
+- 架构评审已进行? [是/否]
+
+→ 如果全部是: 继续创意阶段
+→ 如果有否: 完成架构规划
+```
+
+### 阶段 4: 创意阶段
+
+```mermaid
+graph TD
+    Start["开始创意<br>阶段"] --> IdentifyNeeds["识别创意<br>阶段需求"]
+    IdentifyNeeds --> Architecture["架构<br>设计阶段"]
+    Architecture --> Algorithm["算法<br>设计阶段"]
+    Algorithm --> UIUX["UI/UX<br>设计阶段"]
+    UIUX --> Integration["集成<br>设计阶段"]
+    Integration --> Security["安全<br>设计阶段"]
+    Security --> Performance["性能<br>设计阶段"]
+    Performance --> Resilience["弹性<br>设计阶段"]
+    Resilience --> Documentation["全面<br>设计文档"]
+    Documentation --> Review["设计<br>评审"]
+    Review --> CreativeComplete["创意阶段<br>完成"]
+```
+
+**步骤:**
+1. 根据系统需求识别所有必需的创意阶段
+2. 执行带模式和原则的全面架构设计
+3. 对所有复杂流程进行彻底的算法设计
+4. 执行带用户研究和测试的详细 UI/UX 设计
+5. 为所有系统接口创建集成设计
+6. 开发带威胁建模的安全设计
+7. 设计带容量规划的性能
+8. 规划带故障模式和恢复的弹性
+9. 为所有方面创建全面设计文档
+10. 与干系人进行正式设计评审
+
+**里程碑检查点:**
+```
+✓ 创意阶段检查点
+- 所有必需创意阶段已识别? [是/否]
+- 架构设计已完成并有模式? [是/否]
+- 算法设计已针对复杂流程进行? [是/否]
+- UI/UX 设计已执行并有用户研究? [是/否]
+- 集成设计已为接口创建? [是/否]
+- 安全设计已开发并有威胁建模? [是/否]
+- 性能设计已完成并有容量规划? [是/否]
+- 弹性设计已规划并有故障模式? [是/否]
+- 全面设计文档已创建? [是/否]
+- 正式设计评审已进行? [是/否]
+
+→ 如果全部是: 继续分阶段实施
+→ 如果有否: 完成创意阶段
+```
+
+### 阶段 5: 分阶段实施
+
+```mermaid
+graph TD
+    Start["开始分阶段<br>实施"] --> PrepEnv["准备全面<br>实施环境"]
+    PrepEnv --> Framework["建立实施<br>框架"]
+    Framework --> RoadmapDefine["定义实施<br>路线图"]
+    RoadmapDefine --> PhaseImplementation["实施<br>顺序阶段"]
+    PhaseImplementation --> PhaseVerification["验证每个<br>阶段"]
+    PhaseVerification --> Integration["执行集成<br>测试"]
+    Integration --> SystemTest["进行系统<br>测试"]
+    SystemTest --> UAT["用户验收<br>测试"]
+    UAT --> Stabilization["系统<br>稳定化"]
+    Stabilization --> ImplComplete["实施<br>完成"]
+```
+
+**步骤:**
+1. 准备具有所有工具的全面实施环境
+2. 建立具有标准和流程的实施框架
+3. 定义带阶段和依赖的详细实施路线图
+4. 实施带里程碑验证的顺序阶段
+5. 根据需求和设计验证每个阶段
+6. 跨阶段执行全面集成测试
+7. 对完整解决方案进行彻底的系统测试
+8. 与干系人执行正式的用户验收测试
+9. 执行系统稳定化和性能调优
+10. 记录所有实施细节和部署程序
+
+**里程碑检查点:**
+```
+✓ 分阶段实施检查点
+- 实施环境已完全准备? [是/否]
+- 实施框架已建立? [是/否]
+- 详细路线图已定义并有阶段? [是/否]
+- 所有阶段已顺序实施? [是/否]
+- 每个阶段已根据需求验证? [是/否]
+- 全面集成测试已执行? [是/否]
+- 彻底系统测试已进行? [是/否]
+- 用户验收测试已执行? [是/否]
+- 系统稳定化已完成? [是/否]
+- 实施细节已记录? [是/否]
+
+→ 如果全部是: 继续反思
+→ 如果有否: 完成实施步骤
+```
+
+### 阶段 6: 反思
+
+```mermaid
+graph TD
+    Start["开始<br>反思"] --> Template["加载全面<br>反思模板"]
+    Template --> SystemReview["完成系统<br>审查"]
+    SystemReview --> Process["分析流程<br>效果"]
+    Process --> Success["用证据<br>记录成功"]
+    Success --> Challenges["用解决方案<br>记录挑战"]
+    Challenges --> TechnicalInsights["提取战略<br>技术洞察"]
+    TechnicalInsights --> ProcessInsights["提取流程<br>改进洞察"]
+    ProcessInsights --> BusinessInsights["记录业务<br>影响"]
+    BusinessInsights --> StrategicActions["定义战略<br>行动项"]
+    StrategicActions --> ReflectComplete["反思<br>完成"]
+```
+
+**步骤:**
+1. 加载具有所有部分的全面反思模板
+2. 根据原始目标进行完整系统审查
+3. 用指标分析流程效果
+4. 用具体证据和影响记录成功
+5. 用实施的解决方案和教训记录挑战
+6. 为企业知识提取战略技术洞察
+7. 为未来项目提取流程改进洞察
+8. 记录业务影响和交付的价值
+9. 定义带优先级的战略行动项
+10. 创建全面反思文档
+
+**里程碑检查点:**
+```
+✓ 反思检查点
+- 全面反思模板已加载? [是/否]
+- 完整系统审查已进行? [是/否]
+- 流程效果已分析? [是/否]
+- 成功已用证据记录? [是/否]
+- 挑战已用解决方案记录? [是/否]
+- 战略技术洞察已提取? [是/否]
+- 流程改进洞察已提取? [是/否]
+- 业务影响已记录? [是/否]
+- 战略行动项已定义? [是/否]
+- 全面反思文档已创建? [是/否]
+
+→ 如果全部是: 继续归档
+→ 如果有否: 完成反思步骤
+```
+
+### 阶段 7: 归档
+
+```mermaid
+graph TD
+    Start["开始<br>归档"] --> Template["加载全面<br>归档模板"]
+    Template --> SystemDoc["创建系统<br>文档"]
+    SystemDoc --> Architecture["记录最终<br>架构"]
+    Architecture --> Design["汇编设计<br>决策"]
+    Design --> Implementation["记录实施<br>细节"]
+    Implementation --> Testing["汇编测试<br>文档"]
+    Testing --> Deployment["创建部署<br>文档"]
+    Deployment --> Maintenance["准备维护<br>指南"]
+    Maintenance --> Knowledge["向干系人<br>转移知识"]
+    Knowledge --> Archive["创建全面<br>归档包"]
+    Archive --> ArchiveComplete["归档<br>完成"]
+```
+
+**步骤:**
+1. 加载具有所有部分的全面归档模板
+2. 创建涵盖所有方面的完整系统文档
+3. 记录带图表和理由的最终架构
+4. 汇编所有设计决策及其理由
+5. 记录所有具有技术细节的实施细节
+6. 汇编具有结果的全面测试文档
+7. 创建具有程序的详细部署文档
+8. 准备具有运维程序的维护指南
+9. 通过培训向所有干系人转移知识
+10. 创建具有所有产物的全面归档包
+
+**里程碑检查点:**
+```
+✓ 归档检查点
+- 全面归档模板已加载? [是/否]
+- 完整系统文档已创建? [是/否]
+- 最终架构已记录? [是/否]
+- 设计决策已汇编? [是/否]
+- 实施细节已记录? [是/否]
+- 测试文档已汇编? [是/否]
+- 部署文档已创建? [是/否]
+- 维护指南已准备? [是/否]
+- 知识已转移给干系人? [是/否]
+- 全面归档包已创建? [是/否]
+
+→ 如果全部是: 任务完成
+→ 如果有否: 完成归档步骤
+```
+
+## 📋 工作流程验证清单
+
+```
+✓ 最终工作流程验证
+- 全部 7 个阶段完成? [是/否]
+- 所有里程碑检查点通过? [是/否]
+- 架构规划正确执行? [是/否]
+- 所有必需创意阶段完成? [是/否]
+- 实施按正确阶段执行? [是/否]
+- 全面反思已进行? [是/否]
+- 完整系统文档已归档? [是/否]
+- 记忆库已完全更新? [是/否]
+- 知识已成功转移? [是/否]
+
+→ 如果全部是: Level 4 任务成功完成
+→ 如果有否: 处理未完成项
+```
+
+## 📋 精简模式工作流程
+
+对于精简模式，使用此简化工作流程同时保留关键要素：
+
+```
+1. 初始化: 验证环境，创建结构化任务框架，建立上下文
+2. 文档: 更新所有记忆库文档，记录标准和架构
+3. 规划: 定义具有原则、备选方案、评估、选择的架构
+4. 创意: 执行所有必需创意阶段并记录
+5. 实施: 分阶段实施并验证、集成、测试
+6. 反思: 记录成功、挑战、洞察和战略行动
+7. 归档: 创建全面文档和知识转移
+```
+
+## 🔄 与记忆库集成
+
+此工作流程与记忆库全面集成：
+
+```mermaid
+graph TD
+    Workflow["Level 4<br>工作流程"] --> PB["全面更新<br>projectbrief.md"]
+    Workflow --> AC["详细更新<br>activeContext.md"]
+    Workflow --> SP["战略更新<br>systemPatterns.md"]
+    Workflow --> TC["完整更新<br>techContext.md"]
+    Workflow --> TM["结构化维护<br>tasks.md"]
+    Workflow --> PM["企业更新<br>progress.md"]
+
+    PB & AC & SP & TC & TM & PM --> MB["记忆库<br>集成"]
+    MB --> KT["知识<br>转移"]
+    KT --> NextSystem["企业<br>系统演进"]
+```
+
+## 🚨 LEVEL 4 治理原则
+
+请记住：
+
+```
+┌─────────────────────────────────────────────────────┐
+│ Level 4 任务代表企业关键工作。                        │
+│ 在每个阶段严格的治理、全面的文档和彻底的验证          │
+│ 是强制性的。无例外。                                  │
+└─────────────────────────────────────────────────────┘
+```
+
+这确保复杂系统按照最高标准进行设计、实施和记录，具有企业级的质量和治理。

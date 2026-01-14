@@ -1,0 +1,271 @@
+---
+description: 用于优化令牌使用的分层规则加载系统
+globs: "**/rule-loading*/**", "**/optimization*/**"
+alwaysApply: false
+---
+
+# 分层规则加载系统
+
+> **摘要:** 本规则实现了一个优化的加载系统，根据上下文、复杂度级别和当前阶段只加载必要的规则，以最大化令牌效率。
+
+## 分层规则结构
+
+```mermaid
+graph TD
+    Root["根规则"] --> Core["核心规则<br>(始终加载)"]
+    Root --> Common["通用规则<br>(模式无关)"]
+    Root --> Mode["模式特定<br>规则"]
+    Root --> Level["复杂度级别<br>规则"]
+
+    Core --> Platform["平台<br>检测"]
+    Core --> File["文件<br>操作"]
+    Core --> Transition["模式<br>转换"]
+
+    Mode --> VAN["VAN 模式<br>规则"]
+    Mode --> PLAN["PLAN 模式<br>规则"]
+    Mode --> CREATIVE["CREATIVE 模式<br>规则"]
+    Mode --> BUILD["BUILD 模式<br>规则"]
+    Mode --> REFLECT["REFLECT 模式<br>规则"]
+
+    Level --> Level1["级别 1<br>规则"]
+    Level --> Level2["级别 2<br>规则"]
+    Level --> Level3["级别 3<br>规则"]
+    Level --> Level4["级别 4<br>规则"]
+
+    style Root fill:#4da6ff,stroke:#0066cc,color:white
+    style Core fill:#ffa64d,stroke:#cc7a30,color:white
+    style Common fill:#4dbb5f,stroke:#36873f,color:white
+    style Mode fill:#d94dbb,stroke:#a3378a,color:white
+    style Level fill:#4dbbbb,stroke:#368787,color:white
+```
+
+## 规则加载协议
+
+```mermaid
+sequenceDiagram
+    participant User as 用户
+    participant LoadManager as 加载管理器
+    participant RuleCache as 规则缓存
+    participant FileSystem as 文件系统
+
+    User->>LoadManager: 请求模式激活
+    LoadManager->>RuleCache: 检查缓存的核心规则
+    RuleCache-->>LoadManager: 如果可用返回缓存的规则
+
+    LoadManager->>FileSystem: 加载必要的模式规则
+    FileSystem-->>LoadManager: 返回必要的规则
+
+    LoadManager->>LoadManager: 为专业规则注册延迟加载器
+    LoadManager->>User: 返回已初始化的模式
+
+    User->>LoadManager: 请求专业功能
+    LoadManager->>RuleCache: 检查专业规则缓存
+    RuleCache-->>LoadManager: 如果可用返回缓存的规则
+
+    alt 规则不在缓存中
+        LoadManager->>FileSystem: 加载专业规则
+        FileSystem-->>LoadManager: 返回专业规则
+        LoadManager->>RuleCache: 缓存专业规则
+    end
+
+    LoadManager->>User: 执行专业功能
+```
+
+## 规则加载实现
+
+```javascript
+// 分层规则加载的伪代码
+class RuleLoadManager {
+  constructor() {
+    this.cache = {
+      core: {},
+      common: {},
+      mode: {},
+      level: {}
+    };
+    this.lazyLoaders = {};
+  }
+
+  // 仅使用必要规则初始化模式
+  initializeMode(modeName, complexityLevel) {
+    // 始终加载核心规则
+    this.loadCoreRules();
+
+    // 加载通用规则
+    this.loadCommonRules();
+
+    // 加载必要的模式特定规则
+    this.loadEssentialModeRules(modeName);
+
+    // 加载复杂度级别规则
+    this.loadComplexityRules(complexityLevel);
+
+    // 为专业功能注册延迟加载器
+    this.registerLazyLoaders(modeName, complexityLevel);
+
+    return {
+      modeName,
+      complexityLevel,
+      status: "initialized"
+    };
+  }
+
+  // 仅在需要专业功能时加载
+  loadSpecializedRule(ruleType) {
+    if (this.lazyLoaders[ruleType]) {
+      if (!this.cache.specialized[ruleType]) {
+        const rule = this.lazyLoaders[ruleType]();
+        this.cache.specialized[ruleType] = rule;
+      }
+      return this.cache.specialized[ruleType];
+    }
+    return null;
+  }
+
+  // 根据模式和复杂度注册专业规则加载器
+  registerLazyLoaders(modeName, complexityLevel) {
+    // 清除现有的延迟加载器
+    this.lazyLoaders = {};
+
+    // 注册模式特定的延迟加载器
+    if (modeName === "CREATIVE") {
+      this.lazyLoaders["architecture"] = () => this.loadRule("creative-phase-architecture.mdc");
+      this.lazyLoaders["algorithm"] = () => this.loadRule("creative-phase-algorithm.mdc");
+      this.lazyLoaders["uiux"] = () => this.loadRule("creative-phase-uiux.mdc");
+    } else if (modeName === "BUILD") {
+      this.lazyLoaders["testing"] = () => this.loadRule("implementation-testing.mdc");
+      this.lazyLoaders["deployment"] = () => this.loadRule("implementation-deployment.mdc");
+    }
+
+    // 注册复杂度特定的延迟加载器
+    if (complexityLevel >= 3) {
+      this.lazyLoaders["comprehensive-planning"] = () => this.loadRule("planning-comprehensive.mdc");
+      this.lazyLoaders["advanced-verification"] = () => this.loadRule("verification-advanced.mdc");
+    }
+  }
+}
+```
+
+## 规则依赖映射
+
+```mermaid
+graph TD
+    Main["main.mdc"] --> Core1["platform-awareness.mdc"]
+    Main --> Core2["file-verification.mdc"]
+    Main --> Core3["command-execution.mdc"]
+
+    subgraph "VAN 模式"
+        VanMap["van-mode-map.mdc"] --> Van1["van-complexity-determination.mdc"]
+        VanMap --> Van2["van-file-verification.mdc"]
+        VanMap --> Van3["van-platform-detection.mdc"]
+    end
+
+    subgraph "PLAN 模式"
+        PlanMap["plan-mode-map.mdc"] --> Plan1["task-tracking-basic.mdc"]
+        PlanMap --> Plan2["planning-comprehensive.mdc"]
+    end
+
+    subgraph "CREATIVE 模式"
+        CreativeMap["creative-mode-map.mdc"] --> Creative1["creative-phase-enforcement.mdc"]
+        CreativeMap --> Creative2["creative-phase-metrics.mdc"]
+        Creative1 & Creative2 -.-> CreativeSpecialized["专业创意规则"]
+        CreativeSpecialized --> CArch["creative-phase-architecture.mdc"]
+        CreativeSpecialized --> CAlgo["creative-phase-algorithm.mdc"]
+        CreativeSpecialized --> CUIUX["creative-phase-uiux.mdc"]
+    end
+
+    subgraph "BUILD 模式"
+        BuildMap["build-mode-map.mdc"] --> Impl1["implementation-guide.mdc"]
+        BuildMap --> Impl2["testing-strategy.mdc"]
+    end
+```
+
+## 模式特定规则加载
+
+### VAN 模式必要规则
+```markdown
+- main.mdc (核心)
+- platform-awareness.mdc (核心)
+- file-verification.mdc (核心)
+- van-mode-map.mdc (模式)
+```
+
+### PLAN 模式必要规则
+```markdown
+- main.mdc (核心)
+- plan-mode-map.mdc (模式)
+- task-tracking-[complexity].mdc (级别)
+```
+
+### CREATIVE 模式必要规则
+```markdown
+- main.mdc (核心)
+- creative-mode-map.mdc (模式)
+- creative-phase-enforcement.mdc (模式)
+```
+
+### CREATIVE 模式专业规则 (延迟加载)
+```markdown
+- creative-phase-architecture.mdc (专业)
+- creative-phase-algorithm.mdc (专业)
+- creative-phase-uiux.mdc (专业)
+```
+
+### BUILD 模式必要规则
+```markdown
+- main.mdc (核心)
+- command-execution.mdc (核心)
+- build-mode-map.mdc (模式)
+```
+
+## 实现优势
+
+分层加载系统提供:
+
+1. **减少初始加载**: 启动时只加载必要规则 (~70% 令牌减少)
+2. **缓存核心规则**: 模式间共享的规则被缓存
+3. **专业规则加载**: 专业规则仅在需要时加载
+4. **基于复杂度的加载**: 只加载适合任务复杂度的规则
+
+## 令牌使用比较
+
+| 方法 | 初始令牌 | 专业令牌 | 总令牌 |
+|----------|---------------|-------------------|--------------|
+| 原始系统 | ~70,000 | 包含在初始中 | ~70,000 |
+| 分层系统 | ~15,000 | ~10,000 (按需) | ~25,000 |
+| **令牌减少** | **~55,000 (78%)** | **不适用** | **~45,000 (64%)** |
+
+## 使用示例
+
+### 示例: 带架构规则的创意阶段
+
+```javascript
+// 仅使用必要规则初始化 CREATIVE 模式
+const mode = ruleManager.initializeMode("CREATIVE", 3);
+
+// 核心和必要的模式规则已加载
+// 架构规则尚未加载
+
+// 稍后，当需要架构设计时:
+const architectureRule = ruleManager.loadSpecializedRule("architecture");
+
+// 现在架构规则已加载并缓存
+```
+
+## 规则加载验证
+
+确保规则加载系统正常工作:
+
+```markdown
+## 规则加载验证
+
+- 核心规则: [已加载]
+- 模式必要规则: [已加载]
+- 复杂度级别规则: [已加载]
+- 专业规则: [未加载]
+
+当前令牌使用: [X] 令牌
+潜在令牌节省: [Y] 令牌
+```
+
+这种分层方法确保最佳的令牌使用，同时保持所有功能。

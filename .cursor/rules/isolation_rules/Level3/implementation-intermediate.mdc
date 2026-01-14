@@ -1,0 +1,72 @@
+---
+description: 专注于已规划和设计的 Level 3 功能的系统化实现指南
+globs: implementation-intermediate.mdc
+alwaysApply: false
+---
+# 第3级实现：构建中级功能
+
+> **简要说明：** 本指南专注于已规划和设计的 Level 3 功能的系统化实现。强调模块化开发、严格遵守创意决策和样式指南、与现有系统集成以及全面的功能特定测试。
+
+## Level 3 功能实现工作流程
+
+此工作流程概述了构建中级功能的典型步骤。
+
+```mermaid
+graph TD
+    StartImpl["Start L3 Implementation"] -->
+    ReviewDocs["1. Review All Relevant Docs<br>(Tasks, Creative Docs, Style Guide)"] -->
+    SetupEnv["2. Setup/Verify Dev Environment<br>(Branch, Tools, Dependencies)"] -->
+    ModuleBreakdown["3. Break Down Feature into Modules/Major Components<br>(Based on plan in `tasks.md`)"] -->
+    BuildIterate["4. Implement Modules/Components Iteratively"]
+
+    BuildIterate --> ImplementModule["4a. Select Next Module/Component"]
+    ImplementModule --> CodeModule["4b. Code Module<br>(Adhere to design, style guide, coding standards)"]
+    CodeModule --> UnitTests["4c. Write & Pass Unit Tests"]
+    UnitTests --> SelfReview["4d. Self-Review/Code Linting"]
+    SelfReview --> MoreModules{"4e. More Modules<br>for this Feature?"}
+    MoreModules -- Yes --> ImplementModule
+
+    MoreModules -- No --> IntegrateModules["5. Integrate All Feature Modules/Components"]
+    IntegrateModules --> IntegrationTesting["6. Perform Integration Testing<br>(Feature modules + existing system parts)"]
+    IntegrationTesting --> E2EFeatureTesting["7. End-to-End Feature Testing<br>(Validate against user stories & requirements)"]
+    E2EFeatureTesting --> AccessibilityCheck["8. Accessibility & Responsiveness Check<br>(If UI is involved)"]
+    AccessibilityCheck --> CodeCleanup["9. Code Cleanup & Refinement"]
+    CodeCleanup --> UpdateMB["10. Update Memory Bank<br>(`tasks.md` sub-tasks, `progress.md` details)"]
+    UpdateMB --> FinalFeatureReview["11. Final Feature Review (Conceptual Peer Review if possible)"]
+    FinalFeatureReview --> ImplementationDone["L3 Implementation Complete<br>Ready for REFLECT Mode"]
+
+    style StartImpl fill:#e57373,stroke:#f44336
+    style BuildIterate fill:#ffcdd2,stroke:#ef9a9a
+    style ImplementationDone fill:#ef9a9a,stroke:#e57373
+````
+
+## Level 3 实现关键注意事项
+
+  * **模块化和封装：** 以定义良好、可复用且松散耦合的模块或组件来设计和构建功能。
+  * **遵循设计：** 严格遵循 `memory-bank/creative-*.md` 文件和 `memory-bank/style-guide.md` 中记录的决策。偏离必须有正当理由并记录在案。
+  * **状态管理：** 如果功能引入或显著交互复杂的应用程序状态，确保正确实现和测试状态管理策略（可能在创意模式中定义）。
+  * **API 交互：**
+      * 如果使用新的或现有的 API，确保正确处理请求和响应，包括错误状态。
+      * 如果作为功能的一部分公开新的 API 端点，确保它们健壮、安全且有文档说明。
+  * **错误处理：** 在功能范围内实现用户友好的错误消息和健壮的错误处理。
+  * **性能：** 注意性能影响。避免常见陷阱，如 N+1 数据库查询、低效算法或未优化的大型资源加载，特别是如果在计划或创意阶段已被识别为关注点。
+  * **安全性：** 实现时牢记安全最佳实践，特别是对于处理用户输入、身份验证或敏感数据的功能。参考创意模式中的任何安全设计决策。
+
+## Level 3 功能测试重点
+
+  * **单元测试：** 功能组件中的每个新函数、方法或逻辑单元都应有相应的单元测试。力求良好覆盖核心逻辑和边界情况。
+  * **组件测试（用于 UI 功能）：** 隔离测试 UI 组件，验证渲染、属性处理和事件发射。
+  * **集成测试：** 对 L3 至关重要。测试新功能的不同模块/组件如何协同工作。同时，测试完成的功能如何与其交互的应用程序现有部分集成。
+  * **用户场景/验收测试（功能特定）：** 从用户角度验证功能是否满足其定义的需求和用户故事。这可以是手动或自动化的。
+
+## 实现期间的文档
+
+  * **`memory-bank/tasks.md`：** 在完成时更新与功能相关的子任务状态。记录任何阻碍或估算变更。
+  * **`memory-bank/progress.md`：** 定期记录以下条目：
+      * 已完成的模块/组件。
+      * 实现期间做出的关键决策（如果是小决策且不需要完整的创意周期）。
+      * 显著修改的文件
+      * 主要集成点的测试结果。
+      * 任何偏离计划或创意设计的情况及其理由。
+  * **代码注释：** 编写清晰、简洁的注释，解释复杂逻辑、假设或待办事项。
+  * **README（如适用）：** 如果功能引入需要特定设置或使用说明的新模块或库，考虑添加或更新相关的 README 文件。

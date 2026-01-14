@@ -1,0 +1,181 @@
+---
+description: Level 2 简单增强任务的基础归档方法
+globs: "**/level2/**", "**/archive/**", "**/completion/**"
+alwaysApply: false
+---
+
+# LEVEL 2 任务的基础归档
+
+> **概要:** 本文档概述了 Level 2（简单增强）任务的基础归档方法，确保已完成的工作被正确记录，知识得以保存，同时保持最小的额外开销。
+
+## 归档概述
+
+即使对于 Level 2 任务，适当的归档也能确保已完成的工作被记录，知识得以保存。这种基础归档方法在保持效率的同时提供了足够的结构。
+
+## 归档原则
+
+1. **完整性**: 清楚记录已完成的内容
+2. **上下文**: 保存增强功能的背景信息
+3. **知识**: 捕获关键见解和经验教训
+4. **可发现性**: 使归档信息易于查找
+5. **引用**: 创建与相关工作的交叉引用
+
+## 基础归档结构
+
+```markdown
+# Enhancement Archive: [Feature Name]
+
+## Summary
+[Brief summary of the enhancement]
+
+## Date Completed
+YYYY-MM-DD
+
+## Key Files Modified
+- [File path 1]
+- [File path 2]
+- [File path 3]
+
+## Requirements Addressed
+- [Requirement 1]
+- [Requirement 2]
+- [Requirement 3]
+
+## Implementation Details
+[Brief description of how the enhancement was implemented]
+
+## Testing Performed
+- [Test 1]
+- [Test 2]
+- [Test 3]
+
+## Lessons Learned
+- [Lesson 1]
+- [Lesson 2]
+- [Lesson 3]
+
+## Related Work
+- [Link to related task/enhancement 1]
+- [Link to related task/enhancement 2]
+
+## Notes
+[Any additional information or context]
+```
+
+## 归档位置
+
+将归档存储在有组织的结构中：
+
+```
+docs/
+└── archive/
+    └── enhancements/
+        └── YYYY-MM/
+            ├── feature-name-1.md
+            └── feature-name-2.md
+```
+
+## 归档流程
+
+按照以下步骤归档 Level 2 任务：
+
+1. **准备归档内容**:
+   - 收集所有相关信息
+   - 填写归档模板
+   - 包含所有关键实现细节
+
+2. **创建交叉引用**:
+   - 更新 tasks.md 并添加归档链接
+   - 在 progress.md 中添加引用
+   - 更新 activeContext.md 的下一个关注点
+
+3. **文件创建和存储**:
+   - 如需要则创建适当的目录
+   - 使用描述性名称保存归档文件
+   - 确保文件遵循命名规范
+
+4. **最终验证**:
+   - 检查归档的完整性
+   - 验证所有交叉引用
+   - 确保所有链接正常工作
+
+## 交叉引用格式
+
+创建交叉引用时：
+
+1. **在 tasks.md 中**:
+   ```markdown
+   ## Completed Enhancements
+   - [X] [Feature Name] (YYYY-MM-DD) - [Archive Link](../docs/archive/enhancements/YYYY-MM/feature-name.md)
+   ```
+
+2. **在 progress.md 中**:
+   ```markdown
+   ## Completed Milestones
+   - [Feature Name] enhancement completed on YYYY-MM-DD. See [archive entry](../docs/archive/enhancements/YYYY-MM/feature-name.md).
+   ```
+
+3. **在 activeContext.md 中**:
+   ```markdown
+   ## Recently Completed
+   - [Feature Name] enhancement is now complete. Archive: [link](../docs/archive/enhancements/YYYY-MM/feature-name.md)
+
+   ## Current Focus
+   - Moving to [Next Task Name]
+   ```
+
+## 归档验证清单
+
+```
+✓ ARCHIVE VERIFICATION
+- Archive content complete? [YES/NO]
+- Archive properly stored? [YES/NO]
+- Cross-references created? [YES/NO]
+- tasks.md updated? [YES/NO]
+- progress.md updated? [YES/NO]
+- activeContext.md updated? [YES/NO]
+
+→ If all YES: Archiving complete
+→ If any NO: Complete archiving process
+```
+
+## 精简模式归档
+
+对于精简模式，使用以下格式：
+
+```
+✓ ARCHIVE: [Feature Name]
+✓ DATE: YYYY-MM-DD
+✓ FILES: [Key files changed]
+✓ SUMMARY: [One-sentence summary]
+✓ LESSONS: [Key takeaway]
+✓ REFS: [tasks.md, progress.md, activeContext.md]
+```
+
+## 与记忆库的集成
+
+归档与记忆库集成：
+
+```mermaid
+graph TD
+    Archive["Enhancement<br>Archive"] --> TasksUpdate["Update<br>tasks.md"]
+    Archive --> ProgressUpdate["Update<br>progress.md"]
+    Archive --> ContextUpdate["Update<br>activeContext.md"]
+
+    TasksUpdate & ProgressUpdate & ContextUpdate --> CrossLinks["Create<br>Cross-Links"]
+    CrossLinks --> Verify["Verify<br>References"]
+```
+
+## 知识保存原则
+
+请记住：
+
+```
+┌─────────────────────────────────────────────────────┐
+│ 归档文件是宝贵的知识资源。                            │
+│ 请用心保存那些将有益于未来工作的                      │
+│ 见解和经验教训。                                      │
+└─────────────────────────────────────────────────────┘
+```
+
+这确保了知识得以保存，并可在未来参考使用。

@@ -1,0 +1,103 @@
+---
+description: VAN QA 配置验证的流程图
+globs: van-qa-checks/config-check.mdc
+alwaysApply: false
+---
+# VAN QA：配置验证
+
+> **简述：** 此组件验证配置文件的语法正确性以及与项目和平台的兼容性。
+
+## 2️⃣ 配置验证流程
+
+```mermaid
+graph TD
+    Start["配置验证"] --> IdentifyConfigs["识别配置<br>文件"]
+    IdentifyConfigs --> ReadConfigs["读取配置<br>文件"]
+    ReadConfigs --> ValidateSyntax["验证语法<br>和格式"]
+    ValidateSyntax --> SyntaxStatus{"语法<br>有效？"}
+
+    SyntaxStatus -->|"是"| CheckCompatibility["检查与平台的<br>兼容性"]
+    SyntaxStatus -->|"否"| FixSyntax["修复语法<br>错误"]
+    FixSyntax --> RetryValidate["重试验证"]
+    RetryValidate --> SyntaxStatus
+
+    CheckCompatibility --> CompatStatus{"与平台<br>兼容？"}
+    CompatStatus -->|"是"| ConfigSuccess["配置已验证<br>✅ 通过"]
+    CompatStatus -->|"否"| AdaptConfigs["调整配置<br>以适应平台"]
+    AdaptConfigs --> RetryCompat["重试兼容性<br>检查"]
+    RetryCompat --> CompatStatus
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style ConfigSuccess fill:#10b981,stroke:#059669,color:white
+    style SyntaxStatus fill:#f6546a,stroke:#c30052,color:white
+    style CompatStatus fill:#f6546a,stroke:#c30052,color:white
+```
+
+### 配置验证实现：
+```powershell
+# 示例：为 Web 项目验证配置文件
+function Validate-Configurations {
+    $configFiles = @(
+        "package.json",
+        "tsconfig.json",
+        "vite.config.js"
+    )
+
+    $invalidConfigs = @()
+    $incompatibleConfigs = @()
+
+    foreach ($configFile in $configFiles) {
+        if (Test-Path $configFile) {
+            # 检查 JSON 文件的 JSON 语法
+            if ($configFile -match "\.json$") {
+                try {
+                    Get-Content $configFile -Raw | ConvertFrom-Json | Out-Null
+                } catch {
+                    $invalidConfigs += "$configFile (JSON 语法错误：$($_.Exception.Message))"
+                    continue
+                }
+            }
+
+            # 特定配置兼容性检查
+            if ($configFile -eq "vite.config.js") {
+                $content = Get-Content $configFile -Raw
+                # 检查 Vite 配置中的 React 插件
+                if ($content -notmatch "react\(\)") {
+                    $incompatibleConfigs += "$configFile (React 项目缺少 React 插件)"
+                }
+            }
+        } else {
+            $invalidConfigs += "$configFile (文件未找到)"
+        }
+    }
+
+    # 显示结果
+    if ($invalidConfigs.Count -eq 0 -and $incompatibleConfigs.Count -eq 0) {
+        Write-Output "✅ 所有配置已验证且兼容"
+        return $true
+    } else {
+        if ($invalidConfigs.Count -gt 0) {
+            Write-Output "❌ 无效配置：$($invalidConfigs -join ', ')"
+        }
+        if ($incompatibleConfigs.Count -gt 0) {
+            Write-Output "❌ 不兼容配置：$($incompatibleConfigs -join ', ')"
+        }
+        return $false
+    }
+}
+```
+
+## 📋 配置验证检查点
+
+```
+✓ 检查点：配置验证
+- 所有配置文件已找到？[是/否]
+- 所有配置语法有效？[是/否]
+- 所有配置与平台兼容？[是/否]
+
+→ 如果全部为是：继续环境验证。
+→ 如果有否：继续前请修复配置问题。
+```
+
+**下一步（通过时）：** 加载 `van-qa-checks/environment-check.mdc`。
+**下一步（失败时）：** 查看 `van-qa-utils/common-fixes.mdc` 获取配置修复方法。

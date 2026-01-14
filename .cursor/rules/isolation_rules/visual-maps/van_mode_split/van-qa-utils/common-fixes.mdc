@@ -1,0 +1,92 @@
+---
+description: VAN QA 常见验证修复的工具文件
+globs: van-qa-utils/common-fixes.mdc
+alwaysApply: false
+---
+# VAN QA：常见验证修复
+
+> **简述：** 此组件提供 QA 验证过程中可能出现问题的常见修复方法。
+
+## 🧪 按类别分类的常见 QA 验证修复
+
+### 依赖问题
+
+| 问题 | 修复方法 |
+|-------|-----|
+| **缺少 Node.js** | 从 https://nodejs.org/ 下载并安装 Node.js |
+| **npm 版本过旧** | 运行 `npm install -g npm@latest` 更新 |
+| **缺少包** | 运行 `npm install` 或 `npm install [包名]` |
+| **包版本冲突** | 调整 package.json 中的版本并运行 `npm install` |
+| **依赖解析问题** | 运行 `npm cache clean -f` 后重试安装 |
+
+### 配置问题
+
+| 问题 | 修复方法 |
+|-------|-----|
+| **无效 JSON** | 使用 JSON 验证器（如 jsonlint）检查语法 |
+| **缺少 React 插件** | 在 vite.config.js 中添加 `import react from '@vitejs/plugin-react'` 和 `plugins: [react()]` |
+| **TypeScript 配置不兼容** | 使用正确的 React 设置更新 `tsconfig.json` |
+| **版本引用不匹配** | 确保配置文件间版本一致 |
+| **配置文件缺少条目** | 在配置文件中添加必需字段 |
+
+### 环境问题
+
+| 问题 | 修复方法 |
+|-------|-----|
+| **权限被拒绝** | 以管理员身份运行终端（Windows）或使用 sudo（Mac/Linux） |
+| **端口已被占用** | 终止占用端口的进程：`netstat -ano \| findstr :PORT` 然后 `taskkill /F /PID PID`（Windows）或 `lsof -i :PORT` 然后 `kill -9 PID`（Mac/Linux） |
+| **缺少构建工具** | 安装所需的命令行工具（git、node 等） |
+| **环境变量问题** | 设置所需的环境变量：`$env:VAR_NAME = "value"`（PowerShell）或 `export VAR_NAME="value"`（Bash） |
+| **磁盘空间问题** | 释放磁盘空间，清理 npm/包缓存文件 |
+
+### 构建测试问题
+
+| 问题 | 修复方法 |
+|-------|-----|
+| **构建失败** | 检查控制台获取具体错误信息 |
+| **测试失败** | 验证最小配置是否正确 |
+| **路径问题** | 确保路径使用平台正确的分隔符（Windows 用 `\`，Mac/Linux 用 `/`） |
+| **缺少依赖** | 确保所有必需依赖已安装 |
+| **脚本权限** | 确保脚本文件具有执行权限（Unix 上使用 chmod +x） |
+
+## 📝 问题诊断程序
+
+### 1. 依赖诊断
+```powershell
+# 查找冲突的依赖
+npm ls [包名]
+
+# 检查过时的包
+npm outdated
+
+# 检查漏洞
+npm audit
+```
+
+### 2. 配置诊断
+```powershell
+# 列出所有配置文件
+Get-ChildItem -Recurse -Include "*.json","*.config.js" | Select-Object FullName
+
+# 查找 tsconfig.json 中缺失的引用
+if (Test-Path "tsconfig.json") {
+    $tsconfig = Get-Content "tsconfig.json" -Raw | ConvertFrom-Json
+    if (-not $tsconfig.compilerOptions.jsx) {
+        Write-Output "tsconfig.json 中缺少 jsx 设置"
+    }
+}
+```
+
+### 3. 环境诊断
+```powershell
+# 检查占用端口的进程（Windows）
+netstat -ano | findstr ":3000"
+
+# 列出环境变量
+Get-ChildItem Env:
+
+# 检查磁盘空间
+Get-PSDrive C | Select-Object Used,Free
+```
+
+**下一步：** 返回验证流程或按照上述具体修复建议操作。

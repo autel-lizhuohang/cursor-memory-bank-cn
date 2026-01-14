@@ -1,0 +1,66 @@
+---
+description: VAN QA 规则调用的综合指南
+globs: van-qa-utils/rule-calling-guide.mdc
+alwaysApply: false
+---
+# VAN QA：规则调用综合指南
+
+> **简述：** 此参考指南展示如何在验证过程中正确调用所有 VAN QA 规则。
+
+## 🔍 规则调用基础
+
+记住以下关键原则：
+1. 始终使用 `fetch_rules` 工具加载规则
+2. 使用精确的规则路径
+3. 仅在需要时加载组件
+
+## 📋 主 QA 入口点
+
+当用户输入 "VAN QA" 时，加载主入口点：
+
+```
+fetch_rules with "isolation_rules/visual-maps/van-qa-main"
+```
+
+## 📋 验证检查
+
+在验证过程中按顺序加载这些组件：
+
+```
+1. fetch_rules with "isolation_rules/visual-maps/van-qa-checks/dependency-check"
+2. fetch_rules with "isolation_rules/visual-maps/van-qa-checks/config-check"
+3. fetch_rules with "isolation_rules/visual-maps/van-qa-checks/environment-check"
+4. fetch_rules with "isolation_rules/visual-maps/van-qa-checks/build-test"
+```
+
+## 📋 工具组件
+
+根据验证结果按需加载：
+
+```
+- 报告：fetch_rules with "isolation_rules/visual-maps/van-qa-utils/reports"
+- 修复：fetch_rules with "isolation_rules/visual-maps/van-qa-utils/common-fixes"
+- 转换：fetch_rules with "isolation_rules/visual-maps/van-qa-utils/mode-transitions"
+```
+
+## ⚠️ 关键提醒
+
+记住在以下特定时点调用这些规则：
+- 当输入 "VAN QA" 时，始终加载主 QA 入口点
+- 开始验证前，始终加载 dependency-check
+- 完成验证后，始终加载 reports
+- 验证成功后，始终加载 mode-transitions
+- 验证失败后，始终加载 common-fixes
+
+## 🔄 完整验证序列
+
+QA 验证过程的完整序列：
+
+1. 加载主入口：`isolation_rules/visual-maps/van-qa-main`
+2. 加载第一个检查：`isolation_rules/visual-maps/van-qa-checks/dependency-check`
+3. 加载第二个检查：`isolation_rules/visual-maps/van-qa-checks/config-check`
+4. 加载第三个检查：`isolation_rules/visual-maps/van-qa-checks/environment-check`
+5. 加载第四个检查：`isolation_rules/visual-maps/van-qa-checks/build-test`
+6. 如果通过，加载：`isolation_rules/visual-maps/van-qa-utils/reports`
+7. 如果通过，加载：`isolation_rules/visual-maps/van-qa-utils/mode-transitions`
+8. 如果失败，加载：`isolation_rules/visual-maps/van-qa-utils/common-fixes`

@@ -1,0 +1,187 @@
+---
+description: Level 2 简单增强任务的基础任务跟踪
+globs: "**/level2/**", "**/tracking/**", "**/task/**"
+alwaysApply: false
+---
+
+# LEVEL 2 的基础任务跟踪
+
+> **概要:** 本文档概述了 Level 2（简单增强）任务的精简任务跟踪方法。它提供了一个平衡的框架来管理任务进度，同时保持最小的额外开销。
+
+## 任务跟踪概述
+
+Level 2 任务需要比 Level 1 更结构化的跟踪方法，但不需要更高级别任务的综合跟踪。这个基础跟踪系统在保持效率的同时提供了足够的结构。
+
+## 任务跟踪原则
+
+1. **清晰性**: 任务应该被清楚定义
+2. **可见性**: 进度应该一目了然
+3. **结构性**: 将工作分解为逻辑子任务
+4. **更新性**: 保持进度定期更新
+5. **完成性**: 清楚标记任务何时完成
+
+## LEVEL 2 的任务结构
+
+```markdown
+## [Feature Name] Enhancement
+
+**Status**: [Not Started/In Progress/Complete]
+**Priority**: [High/Medium/Low]
+**Estimated Effort**: [Small/Medium/Large]
+
+### Description
+[Brief description of the enhancement]
+
+### Requirements
+- [Requirement 1]
+- [Requirement 2]
+- [Requirement 3]
+
+### Subtasks
+- [ ] [Subtask 1]
+- [ ] [Subtask 2]
+- [ ] [Subtask 3]
+
+### Dependencies
+- [Dependency 1]
+- [Dependency 2]
+
+### Notes
+[Any additional information or context]
+```
+
+## TASKS.MD 组织结构
+
+为 Level 2 任务组织 tasks.md，包含以下部分：
+
+```markdown
+# Tasks
+
+## Active Enhancements
+- [Enhancement 1] - [Status]
+- [Enhancement 2] - [Status]
+
+## Enhancement Details
+### [Enhancement 1]
+[Task structure as above]
+
+### [Enhancement 2]
+[Task structure as above]
+
+## Completed Enhancements
+- [X] [Completed Enhancement 1] (YYYY-MM-DD)
+- [X] [Completed Enhancement 2] (YYYY-MM-DD)
+```
+
+## 更新任务状态
+
+使用以下流程更新任务：
+
+1. **开始任务**:
+   - 将状态更新为"进行中"
+   - 在备注中添加开始日期
+
+2. **进度更新**:
+   - 完成后勾选子任务
+   - 添加关于进度的简要说明
+   - 更新任何变更的需求
+
+3. **完成任务**:
+   - 将状态更新为"完成"
+   - 勾选所有子任务
+   - 移至已完成增强功能
+   - 添加完成日期
+
+## 子任务管理
+
+对于 Level 2 任务，子任务应该：
+
+1. 可操作且具体
+2. 代表大约 30-60 分钟的工作量
+3. 遵循逻辑顺序
+4. 完成后立即更新
+5. 包含验证步骤
+
+结构良好的子任务示例：
+```markdown
+### Subtasks
+- [ ] Review existing implementation of related features
+- [ ] Create draft UI design for new button
+- [ ] Add HTML structure for new component
+- [ ] Implement button functionality in JavaScript
+- [ ] Add appropriate styling in CSS
+- [ ] Add event handling
+- [ ] Test on desktop browsers
+- [ ] Test on mobile browsers
+- [ ] Update user documentation
+```
+
+## 进度可视化
+
+使用进度指示器显示状态：
+
+```markdown
+### Progress
+[###-------] 30% Complete
+```
+
+对于子任务：
+```markdown
+### Subtasks (3/10 Complete)
+- [X] Subtask 1
+- [X] Subtask 2
+- [X] Subtask 3
+- [ ] Subtask 4
+- [ ] Subtask 5
+```
+
+## 跟踪验证清单
+
+```
+✓ TASK TRACKING VERIFICATION
+- Task clearly defined? [YES/NO]
+- Requirements listed? [YES/NO]
+- Subtasks created? [YES/NO]
+- Dependencies identified? [YES/NO]
+- Status up-to-date? [YES/NO]
+
+→ If all YES: Task tracking is adequate
+→ If any NO: Update task tracking
+```
+
+## 精简模式跟踪
+
+对于精简模式，使用以下格式：
+
+```
+✓ TASK: [Enhancement name]
+✓ STATUS: [In Progress/Complete]
+✓ SUBTASKS: [X/Y Complete]
+✓ NEXT: [Next action]
+```
+
+## 与记忆库的集成
+
+任务跟踪与记忆库集成：
+
+```mermaid
+graph TD
+    TasksFile["tasks.md"] --> Active["activeContext.md"]
+    TasksFile --> Progress["progress.md"]
+
+    Active -->|"Current focus"| TasksFile
+    Progress -->|"Completion status"| TasksFile
+```
+
+## TASKS.MD 首要性原则
+
+请记住：
+
+```
+┌─────────────────────────────────────────────────────┐
+│ tasks.md 是所有任务跟踪的唯一真实来源。               │
+│ 所有任务更新必须立即反映在 tasks.md 中。              │
+└─────────────────────────────────────────────────────┘
+```
+
+这确保每个人都能随时了解当前任务状态。

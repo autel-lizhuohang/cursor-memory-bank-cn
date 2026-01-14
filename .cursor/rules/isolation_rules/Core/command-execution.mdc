@@ -1,0 +1,235 @@
+---
+description: 隔离式记忆库的命令执行指南
+globs: command-execution.mdc
+alwaysApply: false
+---
+
+# 命令执行系统
+
+> **摘要:** 本系统提供高效命令执行的指南，通过适当的命令链接在清晰度和令牌优化之间取得平衡，并正确记录命令和结果。
+
+## 命令效率工作流程
+
+```mermaid
+graph TD
+    Start["命令<br>规划"] --> Analyze["分析命令<br>需求"]
+    Analyze --> Balance["平衡清晰度<br>与效率"]
+    Balance --> Complexity{"命令<br>复杂度?"}
+
+    Complexity -->|"简单"| Single["执行<br>单个命令"]
+    Complexity -->|"中等"| Chain["使用高效的<br>命令链接"]
+    Complexity -->|"复杂"| Group["分组为<br>逻辑步骤"]
+
+    Single & Chain & Group --> Verify["验证<br>结果"]
+    Verify --> Document["记录<br>命令和结果"]
+    Document --> Next["下一个<br>命令"]
+```
+
+## 命令链接指南
+
+```mermaid
+graph TD
+    Command["命令<br>执行"] --> ChainApprop{"链接<br>是否适当?"}
+
+    ChainApprop -->|"是"| ChainTypes["链接<br>类型"]
+    ChainApprop -->|"否"| SingleCmd["使用单个<br>命令"]
+
+    ChainTypes --> Sequential["顺序操作<br>cmd1 && cmd2"]
+    ChainTypes --> Conditional["条件操作<br>cmd1 || cmd2"]
+    ChainTypes --> Piping["管道<br>cmd1 | cmd2"]
+    ChainTypes --> Grouping["命令分组<br>(cmd1; cmd2)"]
+
+    Sequential & Conditional & Piping & Grouping --> Doc["记录<br>命令和结果"]
+```
+
+## 目录验证工作流程
+
+```mermaid
+graph TD
+    Command["命令<br>执行"] --> DirCheck["检查当前<br>目录"]
+    DirCheck --> ProjectRoot{"在项目<br>根目录?"}
+
+    ProjectRoot -->|"是"| Execute["执行<br>命令"]
+    ProjectRoot -->|"否"| Locate["定位<br>项目根目录"]
+
+    Locate --> Found{"找到<br>项目根目录?"}
+    Found -->|"是"| Navigate["导航到<br>项目根目录"]
+    Found -->|"否"| Error["错误: 无法<br>找到项目根目录"]
+
+    Navigate --> Execute
+    Execute --> Verify["验证<br>结果"]
+```
+
+## 目录验证检查清单
+
+执行任何 npm 或构建命令之前:
+
+| 步骤 | Windows (PowerShell) | Unix/Linux/Mac | 用途 |
+|------|----------------------|----------------|---------|
+| **检查 package.json** | `Test-Path package.json` | `ls package.json` | 验证当前目录是项目根目录 |
+| **检查父目录** | `Test-Path "*/package.json"` | `find . -maxdepth 2 -name package.json` | 查找潜在的项目目录 |
+| **导航到项目根目录** | `cd [project-dir]` | `cd [project-dir]` | 在执行命令前移动到正确的目录 |
+
+## React 特定命令指南
+
+对于 React 应用程序，请遵循以下严格指南:
+
+| 命令 | 正确用法 | 错误用法 | 备注 |
+|---------|---------------|----------------|-------|
+| **npm start** | `cd [project-root] && npm start` | `npm start` (从父目录) | 必须从包含 package.json 的目录执行 |
+| **npm run build** | `cd [project-root] && npm run build` | `cd [parent-dir] && npm run build` | 必须从包含 package.json 的目录执行 |
+| **npm install** | `cd [project-root] && npm install [pkg]` | `npm install [pkg]` (错误目录) | 依赖项安装到最近的 package.json |
+| **npm create** | `npm create vite@latest my-app -- --template react` | 手动配置 webpack | 使用标准工具创建项目 |
+
+## 命令链接模式
+
+有效的命令链接模式包括:
+
+| 模式 | 格式 | 示例 | 用例 |
+|---------|--------|----------|----------|
+| **顺序** | `cmd1 && cmd2` | `mkdir dir && cd dir` | 应按顺序运行的命令，只有第一个成功时才运行第二个 |
+| **条件** | `cmd1 || cmd2` | `test -f file.txt || touch file.txt` | 备用命令，只有第一个失败时才运行第二个 |
+| **管道** | `cmd1 \| cmd2` | `grep "pattern" file.txt \| wc -l` | 将第一个命令的输出作为第二个命令的输入 |
+| **后台** | `cmd &` | `npm start &` | 在后台运行命令 |
+| **分组** | `(cmd1; cmd2)` | `(echo "Start"; npm test; echo "End")` | 将命令分组作为一个单元运行 |
+
+## 命令文档模板
+
+```
+## 命令执行: [用途]
+
+### 命令
+```
+[实际命令或链接]
+```
+
+### 结果
+```
+[命令输出]
+```
+
+### 效果
+[系统中发生变化的简要描述]
+
+### 后续步骤
+[接下来需要做什么]
+```
+
+## 平台特定考虑
+
+```mermaid
+graph TD
+    Platform["平台<br>检测"] --> Windows["Windows<br>命令"]
+    Platform --> Unix["Unix/Linux/Mac<br>命令"]
+
+    Windows --> WinAdapt["Windows 命令<br>适配"]
+    Unix --> UnixAdapt["Unix 命令<br>适配"]
+
+    WinAdapt --> WinChain["Windows 链接:<br>命令用 & 分隔"]
+    UnixAdapt --> UnixChain["Unix 链接:<br>命令用 ; 分隔"]
+
+    WinChain & UnixChain --> Execute["执行<br>平台特定<br>命令"]
+```
+
+## 命令效率示例
+
+高效命令使用示例:
+
+| 低效 | 高效 | 说明 |
+|-------------|-----------|-------------|
+| `mkdir dir`<br>`cd dir`<br>`npm init -y` | `mkdir dir && cd dir && npm init -y` | 组合相关的顺序操作 |
+| `ls`<br>`grep "\.js$"` | `ls \| grep "\.js$"` | 将第一个命令的输出通过管道传递给第二个 |
+| `test -f file.txt`<br>`if not exists, touch file.txt` | `test -f file.txt \|\| touch file.txt` | 仅当文件不存在时才创建 |
+| `mkdir dir1`<br>`mkdir dir2`<br>`mkdir dir3` | `mkdir dir1 dir2 dir3` | 使用命令的内置多参数功能 |
+| `npm install pkg1`<br>`npm install pkg2` | `npm install pkg1 pkg2` | 一次命令安装多个包 |
+
+## React 项目初始化标准
+
+始终使用这些标准方法创建 React 项目:
+
+| 方法 | 命令 | 优点 | 避免 |
+|----------|---------|----------|--------|
+| **Create React App** | `npx create-react-app my-app` | 预配置的 webpack 和 babel | 手动配置错误 |
+| **Create React App + TypeScript** | `npx create-react-app my-app --template typescript` | 类型安全 + 预配置 | 不一致的模块系统 |
+| **Vite** | `npm create vite@latest my-app -- --template react` | 更快的构建时间 | 复杂的 webpack 设置 |
+| **Next.js** | `npx create-next-app@latest my-app` | SSR 支持 | 模块系统冲突 |
+
+## 错误处理工作流程
+
+```mermaid
+sequenceDiagram
+    participant User as 用户
+    participant AI as AI
+    participant System as 系统
+
+    AI->>System: 执行命令
+    System->>AI: 返回结果
+
+    alt 成功
+        AI->>AI: 验证预期结果
+        AI->>User: 报告成功
+    else 错误
+        AI->>AI: 分析错误消息
+        AI->>AI: 识别可能原因
+        AI->>User: 解释错误和原因
+        AI->>User: 建议纠正措施
+        User->>AI: 批准纠正
+        AI->>System: 执行纠正后的命令
+    end
+```
+
+## 命令结果验证
+
+命令执行后，验证:
+
+```mermaid
+graph TD
+    Execute["执行<br>命令"] --> Check{"检查<br>结果"}
+
+    Check -->|"成功"| Verify["验证预期<br>结果"]
+    Check -->|"错误"| Analyze["分析<br>错误"]
+
+    Verify -->|"预期"| Document["记录<br>成功"]
+    Verify -->|"意外"| Investigate["调查<br>意外结果"]
+
+    Analyze --> Diagnose["诊断<br>错误原因"]
+    Diagnose --> Correct["提出<br>纠正方案"]
+
+    Document & Investigate & Correct --> Next["流程中的<br>下一步"]
+```
+
+## 命令执行检查清单
+
+```
+✓ 命令执行检查清单
+- 命令用途明确识别? [是/否]
+- 清晰度与效率的适当平衡? [是/否]
+- 已处理平台特定考虑? [是/否]
+- 命令已记录结果? [是/否]
+- 结果已验证符合预期? [是/否]
+- 错误已正确处理（如有）? [是/否/不适用]
+- npm/构建命令: 从项目根目录执行? [是/否/不适用]
+- React 项目: 使用标准工具? [是/否/不适用]
+
+→ 如果全部是: 命令执行完成
+→ 如果有否: 处理缺失的元素
+```
+
+## 命令执行警告
+
+避免这些常见的命令问题:
+
+```mermaid
+graph TD
+    Warning["命令<br>警告"] --> W1["过度<br>冗长"]
+    Warning --> W2["错误处理<br>不足"]
+    Warning --> W3["不必要的<br>复杂性"]
+    Warning --> W4["没有确认的<br>破坏性操作"]
+    Warning --> W5["错误目录<br>执行"]
+
+    W1 --> S1["使用标志减少<br>不必要的输出"]
+    W2 --> S2["在命令链中<br>包含错误处理"]
+    W3 --> S3["优先使用内置<br>命令功能"]
+    W4 --> S4["在破坏性操作前<br>显示确认"]
+    W5 --> S5["在 npm/构建命令前<br>验证目录"]
+```

@@ -1,0 +1,147 @@
+---
+description: VAN QA 依赖验证的流程图
+globs: van-qa-checks/dependency-check.mdc
+alwaysApply: false
+---
+# VAN QA：依赖验证
+
+> **简述：** 此组件验证所有必需的依赖项是否已安装并与项目需求兼容。
+
+## 1️⃣ 依赖验证流程
+
+```mermaid
+graph TD
+    Start["依赖验证"] --> ReadDeps["从创意阶段读取<br>所需依赖"]
+    ReadDeps --> CheckInstalled["检查依赖是否<br>已安装"]
+    CheckInstalled --> DepStatus{"所有依赖<br>已安装？"}
+
+    DepStatus -->|"是"| VerifyVersions["验证版本<br>和兼容性"]
+    DepStatus -->|"否"| InstallMissing["安装缺失的<br>依赖"]
+    InstallMissing --> VerifyVersions
+
+    VerifyVersions --> VersionStatus{"版本<br>兼容？"}
+    VersionStatus -->|"是"| DepSuccess["依赖已验证<br>✅ 通过"]
+    VersionStatus -->|"否"| UpgradeVersions["根据需要<br>升级/降级"]
+    UpgradeVersions --> RetryVerify["重试验证"]
+    RetryVerify --> VersionStatus
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style DepSuccess fill:#10b981,stroke:#059669,color:white
+    style DepStatus fill:#f6546a,stroke:#c30052,color:white
+    style VersionStatus fill:#f6546a,stroke:#c30052,color:white
+```
+
+### Windows (PowerShell) 实现：
+```powershell
+# 示例：为 React 项目验证 Node.js 依赖
+function Verify-Dependencies {
+    $requiredDeps = @{ "node" = ">=14.0.0"; "npm" = ">=6.0.0" }
+    $missingDeps = @(); $incompatibleDeps = @()
+
+    # 检查 Node.js 版本
+    try {
+        $nodeVersion = node -v
+        if ($nodeVersion -match "v(\d+)\.(\d+)\.(\d+)") {
+            $major = [int]$Matches[1]
+            if ($major -lt 14) {
+                $incompatibleDeps += "node (发现 $nodeVersion，需要 >=14.0.0)"
+            }
+        }
+    } catch {
+        $missingDeps += "node"
+    }
+
+    # 检查 npm 版本
+    try {
+        $npmVersion = npm -v
+        if ($npmVersion -match "(\d+)\.(\d+)\.(\d+)") {
+            $major = [int]$Matches[1]
+            if ($major -lt 6) {
+                $incompatibleDeps += "npm (发现 $npmVersion，需要 >=6.0.0)"
+            }
+        }
+    } catch {
+        $missingDeps += "npm"
+    }
+
+    # 显示结果
+    if ($missingDeps.Count -eq 0 -and $incompatibleDeps.Count -eq 0) {
+        Write-Output "✅ 所有依赖已验证且兼容"
+        return $true
+    } else {
+        if ($missingDeps.Count -gt 0) {
+            Write-Output "❌ 缺失依赖：$($missingDeps -join ', ')"
+        }
+        if ($incompatibleDeps.Count -gt 0) {
+            Write-Output "❌ 不兼容版本：$($incompatibleDeps -join ', ')"
+        }
+        return $false
+    }
+}
+```
+
+### Mac/Linux (Bash) 实现：
+```bash
+#!/bin/bash
+
+# 示例：为 React 项目验证 Node.js 依赖
+verify_dependencies() {
+    local missing_deps=()
+    local incompatible_deps=()
+
+    # 检查 Node.js 版本
+    if command -v node &> /dev/null; then
+        local node_version=$(node -v)
+        if [[ $node_version =~ v([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
+            local major=${BASH_REMATCH[1]}
+            if (( major < 14 )); then
+                incompatible_deps+=("node (发现 $node_version，需要 >=14.0.0)")
+            fi
+        fi
+    else
+        missing_deps+=("node")
+    fi
+
+    # 检查 npm 版本
+    if command -v npm &> /dev/null; then
+        local npm_version=$(npm -v)
+        if [[ $npm_version =~ ([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
+            local major=${BASH_REMATCH[1]}
+            if (( major < 6 )); then
+                incompatible_deps+=("npm (发现 $npm_version，需要 >=6.0.0)")
+            fi
+        fi
+    else
+        missing_deps+=("npm")
+    fi
+
+    # 显示结果
+    if [ ${#missing_deps[@]} -eq 0 ] && [ ${#incompatible_deps[@]} -eq 0 ]; then
+        echo "✅ 所有依赖已验证且兼容"
+        return 0
+    else
+        if [ ${#missing_deps[@]} -gt 0 ]; then
+            echo "❌ 缺失依赖：${missing_deps[*]}"
+        fi
+        if [ ${#incompatible_deps[@]} -gt 0 ]; then
+            echo "❌ 不兼容版本：${incompatible_deps[*]}"
+        fi
+        return 1
+    fi
+}
+```
+
+## 📋 依赖验证检查点
+
+```
+✓ 检查点：依赖验证
+- 已识别所需依赖？[是/否]
+- 所有依赖已安装？[是/否]
+- 所有版本兼容？[是/否]
+
+→ 如果全部为是：继续配置验证。
+→ 如果有否：继续前请修复依赖问题。
+```
+
+**下一步（通过时）：** 加载 `van-qa-checks/config-check.mdc`。
+**下一步（失败时）：** 查看 `van-qa-utils/common-fixes.mdc` 获取依赖修复方法。

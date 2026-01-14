@@ -1,0 +1,142 @@
+---
+description: VAN QA 模式（技术验证入口点）的可视化流程图
+globs: van-qa-main.mdc
+alwaysApply: false
+---
+# VAN 模式：QA 技术验证（主入口）
+
+> **简述：** 这是 QA 验证流程的入口点，在 CREATIVE 模式之后和 BUILD 模式之前执行。它确保在实现开始之前满足技术要求。
+
+## 📣 如何使用这些 QA 规则
+
+要访问任何 QA 验证规则或组件，请使用 `fetch_rules` 工具并提供确切的规则名称：
+
+```
+// 关键：始终使用 fetch_rules 加载验证组件
+// 有关详细示例和指导，请加载：
+// isolation_rules/visual-maps/van-qa-utils/rule-calling-guide
+```
+
+## 🚀 VAN QA 模式激活
+
+完成 CREATIVE 模式后，当用户输入 "VAN QA" 时，回复：
+
+```mermaid
+graph TD
+    UserQA["用户输入：QA"] --> HighPriority["⚠️ 高优先级命令"]
+    HighPriority --> CurrentTask["暂停当前任务/流程"]
+    CurrentTask --> LoadQA["加载 QA 主流程图（此文件）"]
+    LoadQA --> RunQA["执行 QA 验证流程"]
+    RunQA --> QAResults{"QA 结果"}
+
+    QAResults -->|"通过"| ResumeFlow["恢复之前的流程"]
+    QAResults -->|"失败"| FixIssues["修复已识别的问题"]
+    FixIssues --> ReRunQA["重新运行 QA 验证"]
+    ReRunQA --> QAResults
+
+    style UserQA fill:#f8d486,stroke:#e8b84d,color:black
+    style HighPriority fill:#ff0000,stroke:#cc0000,color:white,stroke-width:3px
+    style LoadQA fill:#4da6ff,stroke:#0066cc,color:white
+    style RunQA fill:#4da6ff,stroke:#0066cc,color:white
+    style QAResults fill:#f6546a,stroke:#c30052,color:white
+```
+
+### QA 中断规则
+
+1. **立即优先**：`QA` 命令中断一切。
+2. **加载并执行**：加载此流程图（`van-qa-main.mdc`）及其组件（见下文）。
+3. **修复优先**：修复优先于待处理的模式切换。
+4. **恢复**：通过后，恢复之前的流程。
+
+```
+⚠️ QA 覆盖已激活
+所有其他流程已暂停
+QA 验证检查正在运行...
+发现的任何问题必须在继续正常流程之前修复
+```
+
+## 🔍 技术验证概述
+
+带有选择性加载的四点验证流程：
+
+```mermaid
+graph TD
+    VANQA["VAN QA 模式"] --> FourChecks["四点验证"]
+
+    FourChecks --> DepCheck["1️⃣ 依赖验证
+    加载：van-qa-checks/dependency-check.mdc"]
+    DepCheck --> ConfigCheck["2️⃣ 配置验证
+    加载：van-qa-checks/config-check.mdc"]
+    ConfigCheck --> EnvCheck["3️⃣ 环境验证
+    加载：van-qa-checks/environment-check.mdc"]
+    EnvCheck --> MinBuildCheck["4️⃣ 最小构建测试
+    加载：van-qa-checks/build-test.mdc"]
+
+    MinBuildCheck --> ValidationResults{"所有检查<br>通过？"}
+    ValidationResults -->|"是"| SuccessReport["生成成功报告
+    加载：van-qa-utils/reports.mdc"]
+    ValidationResults -->|"否"| FailureReport["生成失败报告
+    加载：van-qa-utils/reports.mdc"]
+
+    SuccessReport --> BUILD_Transition["触发 BUILD 模式
+    加载：van-qa-utils/mode-transitions.mdc"]
+    FailureReport --> FixIssues["修复技术问题
+    加载：van-qa-utils/common-fixes.mdc"]
+    FixIssues --> ReValidate["重新验证（重新运行 VAN QA）"]
+    ReValidate --> FourChecks
+
+    style VANQA fill:#4da6ff,stroke:#0066cc,color:white
+    style FourChecks fill:#f6546a,stroke:#c30052,color:white
+    style ValidationResults fill:#f6546a,stroke:#c30052,color:white
+    style BUILD_Transition fill:#10b981,stroke:#059669,color:white
+    style FixIssues fill:#ff5555,stroke:#dd3333,color:white
+```
+
+## 🔄 与设计决策的集成
+
+读取创意阶段输出以指导验证：
+
+```mermaid
+graph TD
+    Start["读取设计决策"] --> ReadCreative["解析创意阶段<br>文档"]
+    ReadCreative --> ExtractTech["提取技术<br>选择"]
+    ExtractTech --> ExtractDeps["提取所需的<br>依赖"]
+    ExtractDeps --> BuildValidationPlan["构建验证<br>计划"]
+    BuildValidationPlan --> StartValidation["开始四点<br>验证流程"]
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style ExtractTech fill:#f6546a,stroke:#c30052,color:white
+    style BuildValidationPlan fill:#10b981,stroke:#059669,color:white
+    style StartValidation fill:#f6546a,stroke:#c30052,color:white
+```
+
+## 📋 组件加载顺序
+
+QA 验证流程遵循以下选择性加载顺序：
+
+1. **主入口（此文件）**：`van-qa-main.mdc`
+2. **验证检查**：
+   - `van-qa-checks/dependency-check.mdc`
+   - `van-qa-checks/config-check.mdc`
+   - `van-qa-checks/environment-check.mdc`
+   - `van-qa-checks/build-test.mdc`
+3. **工具（按需）**：
+   - `van-qa-utils/reports.mdc`
+   - `van-qa-utils/common-fixes.mdc`
+   - `van-qa-utils/mode-transitions.mdc`
+
+## 📋 最终 QA 验证检查点
+
+```
+✓ 章节检查点：QA 验证
+- 依赖验证通过？[是/否]
+- 配置验证通过？[是/否]
+- 环境验证通过？[是/否]
+- 最小构建测试通过？[是/否]
+
+→ 如果全部为是：准备进入 BUILD 模式转换。
+→ 如果有否：修复已识别的问题并重新运行 VAN QA。
+```
+
+**下一步（通过时）**：触发 BUILD 模式（加载 `van-qa-utils/mode-transitions.mdc`）。
+**下一步（失败时）**：解决问题（加载 `van-qa-utils/common-fixes.mdc`）并重新运行 `VAN QA`。

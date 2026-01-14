@@ -1,0 +1,361 @@
+---
+description: 优化的模式转换协议
+globs: "**/mode-transition*/**", "**/context-preservation*/**"
+alwaysApply: false
+---
+
+# 模式转换优化
+
+> **摘要:** 本文件实现优化的模式转换，以在记忆库系统的不同阶段之间高效保留上下文。
+
+## 统一上下文传输协议
+
+```mermaid
+graph TD
+    Start["模式 A"] --> Create["创建上下文<br>摘要文档"]
+    Create --> Store["存储关键<br>上下文数据"]
+    Store --> Transition["转换<br>到模式 B"]
+    Transition --> Verify["验证上下文<br>可用性"]
+    Verify --> Load["加载相关<br>上下文数据"]
+    Load --> Continue["在模式 B<br>继续"]
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style Create fill:#ffa64d,stroke:#cc7a30,color:white
+    style Store fill:#4dbb5f,stroke:#36873f,color:white
+    style Transition fill:#d94dbb,stroke:#a3378a,color:white
+    style Verify fill:#4dbbbb,stroke:#368787,color:white
+    style Load fill:#d971ff,stroke:#a33bc2,color:white
+    style Continue fill:#ff71c2,stroke:#c23b8a,color:white
+```
+
+## 上下文转换文档
+
+切换模式时创建标准化的转换文档:
+
+```markdown
+# 模式转换: [源模式] → [目标模式]
+
+## 上下文摘要
+- 任务: [任务名称/描述]
+- 复杂度: 级别 [1-4]
+- 当前阶段: [阶段名称]
+- 进度: [百分比或状态]
+
+## 关键决策
+- [决策 1]: [简要摘要]
+- [决策 2]: [简要摘要]
+- [决策 3]: [简要摘要]
+
+## 关键上下文
+- [上下文项 1]: [值/状态]
+- [上下文项 2]: [值/状态]
+- [上下文项 3]: [值/状态]
+
+## 后续步骤
+1. [后续步骤 1]
+2. [后续步骤 2]
+3. [后续步骤 3]
+
+## 资源指针
+- [资源 1]: [位置]
+- [资源 2]: [位置]
+- [资源 3]: [位置]
+```
+
+## 模式特定转换处理器
+
+### VAN → PLAN 转换
+
+```markdown
+### VAN → PLAN
+- 保留的上下文: 复杂度级别、平台检测、文件结构
+- 传输的文件: tasks.md (已初始化), activeContext.md (已初始化)
+- 规则优化: 根据复杂度级别预加载规划规则
+```
+
+### PLAN → CREATIVE 转换
+
+```markdown
+### PLAN → CREATIVE
+- 保留的上下文: 任务需求、组件列表、创意阶段标志
+- 传输的文件: tasks.md (已更新计划), 创意阶段组件列表
+- 规则优化: 仅为已识别的组件加载创意模板
+```
+
+### CREATIVE → BUILD 转换
+
+```markdown
+### CREATIVE → BUILD
+- 保留的上下文: 设计决策、实施指南、需求
+- 传输的文件: tasks.md, 设计文档, 实施检查清单
+- 规则优化: 根据设计决策预加载实施模板
+```
+
+### BUILD → REFLECT 转换
+
+```markdown
+### BUILD → REFLECT
+- 保留的上下文: 实施状态、遇到的挑战、决策
+- 传输的文件: tasks.md, progress.md, 实施笔记
+- 规则优化: 根据完成状态加载反思模板
+```
+
+## 分层规则缓存
+
+实现规则缓存以避免冗余加载:
+
+```javascript
+// 规则缓存的伪代码
+const ruleCache = {
+  core: {}, // 模式间共享的核心规则
+  van: {},
+  plan: {},
+  creative: {},
+  build: {},
+  reflect: {},
+  archive: {}
+};
+
+// 加载前检查缓存
+function loadRule(rulePath) {
+  const cacheKey = getCacheKey(rulePath);
+  const category = getCategoryFromPath(rulePath);
+
+  if (ruleCache[category][cacheKey]) {
+    return ruleCache[category][cacheKey];
+  }
+
+  const ruleContent = readRuleFromFile(rulePath);
+  ruleCache[category][cacheKey] = ruleContent;
+
+  return ruleContent;
+}
+
+// 仅在需要时使特定规则失效
+function invalidateRule(rulePath) {
+  const cacheKey = getCacheKey(rulePath);
+  const category = getCategoryFromPath(rulePath);
+
+  if (ruleCache[category][cacheKey]) {
+    delete ruleCache[category][cacheKey];
+  }
+}
+```
+
+## 差异化记忆库更新
+
+```mermaid
+graph TD
+    Start["记忆库<br>更新请求"] --> Check{"文件<br>已更改?"}
+    Check -->|"否"| Skip["跳过更新<br>(无更改)"]
+    Check -->|"是"| Changed{"特定<br>部分已更改?"}
+    Changed -->|"否"| Full["完整文件<br>更新"]
+    Changed -->|"是"| Partial["仅部分<br>更新"]
+
+    style Start fill:#4da6ff,stroke:#0066cc,color:white
+    style Check fill:#ffa64d,stroke:#cc7a30,color:white
+    style Skip fill:#4dbb5f,stroke:#36873f,color:white
+    style Changed fill:#d94dbb,stroke:#a3378a,color:white
+    style Full fill:#4dbbbb,stroke:#368787,color:white
+    style Partial fill:#d971ff,stroke:#a33bc2,color:white
+```
+
+实现更高效的更新机制:
+
+```javascript
+// 差异更新的伪代码
+function updateMemoryBankFile(filePath, newContent) {
+  // 读取现有内容
+  const currentContent = readFile(filePath);
+
+  // 如果无更改则跳过
+  if (currentContent === newContent) {
+    return "未检测到更改，跳过更新";
+  }
+
+  // 检查是否可以进行部分更新
+  const sections = parseIntoSections(currentContent);
+  const newSections = parseIntoSections(newContent);
+
+  let updatedContent = currentContent;
+  let updatedSections = 0;
+
+  // 仅更新已更改的部分
+  for (const [sectionName, sectionContent] of Object.entries(newSections)) {
+    if (!sections[sectionName] || sections[sectionName] !== sectionContent) {
+      updatedContent = replaceSection(updatedContent, sectionName, sectionContent);
+      updatedSections++;
+    }
+  }
+
+  // 写入更新的内容
+  writeFile(filePath, updatedContent);
+
+  return `在 ${filePath} 中更新了 ${updatedSections} 个部分`;
+}
+```
+
+## 创意到构建桥接
+
+对关键的 Creative → Build 转换的特殊处理:
+
+```markdown
+## CREATIVE → BUILD 桥接
+
+### 设计决策摘要
+自动生成的所有创意阶段决策摘要:
+
+```json
+{
+  "components": [
+    {
+      "name": "ComponentA",
+      "decision": "选择了方法 X",
+      "rationale": "最佳性能特征",
+      "implementation_notes": [
+        "使用 X 库",
+        "实现缓存",
+        "添加错误处理"
+      ]
+    },
+    {
+      "name": "ComponentB",
+      "decision": "自定义解决方案",
+      "rationale": "独特需求",
+      "implementation_notes": [
+        "从头构建",
+        "模块化架构",
+        "需要单元测试"
+      ]
+    }
+  ]
+}
+```
+
+### 实施验证检查清单
+自动生成的验证检查清单:
+
+```markdown
+# 实施准备检查清单
+
+- [ ] 所有组件的设计决策可用
+- [ ] 每个决策提供了实施笔记
+- [ ] 依赖项已清晰识别
+- [ ] 实施顺序已确定
+- [ ] 所需的库/框架已记录
+- [ ] 潜在挑战已识别
+```
+
+## 自适应模式加载
+
+实现渐进式模式加载以优化上下文:
+
+```javascript
+// 自适应模式加载的伪代码
+function loadMode(modeName, taskComplexity) {
+  // 始终加载核心规则
+  loadCoreRules();
+
+  // 加载复杂度适当的规则
+  loadComplexityRules(taskComplexity);
+
+  // 加载模式特定的必要规则
+  loadModeEssentialRules(modeName);
+
+  // 仅在需要时加载专业规则
+  registerLazyLoadHandlers(modeName, taskComplexity);
+}
+
+function registerLazyLoadHandlers(modeName, taskComplexity) {
+  // 注册处理器以仅在需要时加载额外规则
+  if (modeName === "CREATIVE") {
+    registerHandler("architecture", () => loadRule("creative-phase-architecture.mdc"));
+    registerHandler("algorithm", () => loadRule("creative-phase-algorithm.mdc"));
+    registerHandler("uiux", () => loadRule("creative-phase-uiux.mdc"));
+  }
+
+  // 其他专业规则类型的类似模式
+}
+```
+
+## 模式转换示例
+
+### 示例: PLAN → CREATIVE 转换
+
+从 PLAN 转换到 CREATIVE 模式时:
+
+```markdown
+# 模式转换: PLAN → CREATIVE
+
+## 上下文摘要
+- 任务: 实现用户认证系统
+- 复杂度: 级别 3
+- 当前阶段: 规划完成
+- 进度: 35% (规划: 100%, 创意: 0%, 实施: 0%)
+
+## 关键决策
+- 认证: 需要探索选项 (JWT vs Sessions)
+- 用户管理: 将使用现有数据库架构
+- 授权: 选择基于角色的访问控制
+
+## 关键上下文
+- 创意阶段的组件: 认证机制, 会话管理
+- 依赖项: 用户数据库, 授权系统
+- 约束: 必须支持 SSO, 性能需求
+
+## 后续步骤
+1. 探索认证选项 (JWT, Sessions, OAuth)
+2. 设计会话管理方法
+3. 记录实施指南
+
+## 资源指针
+- 规划文档: tasks.md (第 3 部分)
+- 需求: activeContext.md
+- 参考架构: docs/system-architecture.md
+```
+
+### 示例: CREATIVE → BUILD 转换
+
+从 CREATIVE 转换到 BUILD 模式时:
+
+```markdown
+# 模式转换: CREATIVE → BUILD
+
+## 上下文摘要
+- 任务: 实现用户认证系统
+- 复杂度: 级别 3
+- 当前阶段: 创意完成
+- 进度: 70% (规划: 100%, 创意: 100%, 实施: 0%)
+
+## 关键决策
+- 认证: 选择基于 JWT 的方法
+- 令牌存储: 带 CSRF 保护的安全 HttpOnly cookies
+- 刷新策略: 带滑动过期的静默刷新
+
+## 关键上下文
+- 实施顺序: Auth API 端点, 中间件, 客户端集成
+- 测试需求: JWT 验证的单元测试, 认证流程的集成测试
+- 安全考虑: XSS 保护, CSRF 缓解, 速率限制
+
+## 后续步骤
+1. 实现 JWT 生成和验证
+2. 创建认证中间件
+3. 构建用户登录/登出端点
+4. 实现客户端认证集成
+
+## 资源指针
+- 创意文档: creative-auth-decisions.md
+- API 规范: api-spec.yaml
+- 安全需求: security-policy.md
+```
+
+## 实现优势
+
+此优化提供:
+
+1. 模式转换期间减少令牌使用 (~40% 减少)
+2. 模式间更好的上下文保留
+3. 通过规则缓存提高效率
+4. 仅加载必要规则的针对性加载
+5. 优化的记忆库更新
+6. 清晰的转换文档保留关键上下文

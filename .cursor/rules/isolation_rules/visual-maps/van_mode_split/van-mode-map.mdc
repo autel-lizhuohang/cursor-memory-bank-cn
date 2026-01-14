@@ -1,0 +1,338 @@
+---
+description: VAN 模式（索引/入口点）的可视化流程图
+globs: van-mode-map.mdc
+alwaysApply: false
+---
+# VAN 模式：初始化流程图
+
+🚨 强制首要步骤：记忆库创建 🚨
+未创建记忆库结构时任何操作都无法进行
+
+> **简述：** 此可视化流程图定义了 VAN 模式的项目初始化、任务分析和技术验证流程。它引导用户通过平台检测、文件验证、复杂度判定和技术验证，以确保在实现前正确设置。
+
+## 🧭 VAN 模式流程
+
+```mermaid
+graph TD
+    Start["开始 VAN 模式"] --> PlatformDetect["平台检测"]
+    PlatformDetect --> DetectOS["检测操作系统"]
+    DetectOS --> CheckPath["检查路径分隔符格式"]
+    CheckPath --> AdaptCmds["按需适配命令"]
+    AdaptCmds --> PlatformCP["⛔ 平台检查点"]
+
+    %% 添加关键记忆库检查点
+    PlatformCP --> MemoryBankCheck{"记忆库<br>存在？"}
+    MemoryBankCheck -->|"否"| CreateMemoryBank["创建记忆库<br>[关键步骤]"]
+    MemoryBankCheck -->|"是"| BasicFileVerify["基本文件验证"]
+    CreateMemoryBank --> MemoryBankCP["⛔ 记忆库验证 [必需]"]
+    MemoryBankCP --> BasicFileVerify
+
+    %% 基本文件验证及检查点
+    BasicFileVerify --> BatchCheck["批量检查必要组件"]
+    BatchCheck --> BatchCreate["批量创建必要结构"]
+    BatchCreate --> BasicFileCP["⛔ 基本文件检查点"]
+
+    %% 早期复杂度判定
+    BasicFileCP --> EarlyComplexity["早期复杂度判定"]
+    EarlyComplexity --> AnalyzeTask["分析任务需求"]
+    AnalyzeTask --> EarlyLevelCheck{"复杂度级别？"}
+
+    %% 级别处理路径
+    EarlyLevelCheck -->|"级别 1"| ComplexityCP["⛔ 复杂度检查点"]
+    EarlyLevelCheck -->|"级别 2-4"| CRITICALGATE["🚫 关键关卡：强制模式切换"]
+    CRITICALGATE --> ForceExit["退出到 PLAN 模式"]
+
+    %% 级别 1 正常继续
+    ComplexityCP --> InitSystem["初始化记忆库"]
+    InitSystem --> Complete1["级别 1 初始化完成"]
+
+    %% 级别 2+ 任务在 PLAN 和 CREATIVE 模式后
+    ForceExit -.-> OtherModes["PLAN → CREATIVE 模式"]
+    OtherModes -.-> VANQA["VAN QA 模式"]
+    VANQA --> QAProcess["技术验证流程"]
+    QAProcess --> QACheck{"所有检查<br>通过？"}
+    QACheck -->|"是"| BUILD["进入 BUILD 模式"]
+    QACheck -->|"否"| FixIssues["修复技术问题"]
+    FixIssues --> QAProcess
+
+    %% 节点样式
+    style PlatformCP fill:#f55,stroke:#d44,color:white
+    style MemoryBankCP fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style MemoryBankCheck fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style CreateMemoryBank fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style BasicFileCP fill:#f55,stroke:#d44,color:white
+    style ComplexityCP fill:#f55,stroke:#d44,color:white
+    style CRITICALGATE fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style ForceExit fill:#ff0000,stroke:#990000,color:white,stroke-width:2px
+    style VANQA fill:#4da6ff,stroke:#0066cc,color:white,stroke-width:3px
+    style QAProcess fill:#4da6ff,stroke:#0066cc,color:white
+    style QACheck fill:#4da6ff,stroke:#0066cc,color:white
+    style FixIssues fill:#ff5555,stroke:#dd3333,color:white
+```
+
+## 🌐 平台检测流程
+
+```mermaid
+graph TD
+    PD["平台检测"] --> CheckOS["检测操作系统"]
+    CheckOS --> Win["Windows"]
+    CheckOS --> Mac["macOS"]
+    CheckOS --> Lin["Linux"]
+
+    Win & Mac & Lin --> Adapt["为平台<br>适配命令"]
+
+    Win --> WinPath["路径：反斜杠 (\\)"]
+    Mac --> MacPath["路径：正斜杠 (/)"]
+    Lin --> LinPath["路径：正斜杠 (/)"]
+
+    Win --> WinCmd["命令适配：<br>dir, icacls 等"]
+    Mac --> MacCmd["命令适配：<br>ls, chmod 等"]
+    Lin --> LinCmd["命令适配：<br>ls, chmod 等"]
+
+    WinPath & MacPath & LinPath --> PathCP["路径分隔符<br>检查点"]
+    WinCmd & MacCmd & LinCmd --> CmdCP["命令<br>检查点"]
+
+    PathCP & CmdCP --> PlatformComplete["平台检测<br>完成"]
+
+    style PD fill:#4da6ff,stroke:#0066cc,color:white
+    style PlatformComplete fill:#10b981,stroke:#059669,color:white
+```
+
+## 📁 文件验证流程
+
+```mermaid
+graph TD
+    FV["文件验证"] --> CheckFiles["检查必要文件"]
+    CheckFiles --> CheckMB["检查记忆库<br>结构"]
+    CheckMB --> MBExists{"记忆库<br>存在？"}
+
+    MBExists -->|"是"| VerifyMB["验证记忆库<br>内容"]
+    MBExists -->|"否"| CreateMB["创建记忆库<br>结构"]
+
+    CheckFiles --> CheckDocs["检查文档<br>文件"]
+    CheckDocs --> DocsExist{"文档<br>存在？"}
+
+    DocsExist -->|"是"| VerifyDocs["验证文档<br>结构"]
+    DocsExist -->|"否"| CreateDocs["创建文档<br>结构"]
+
+    VerifyMB & CreateMB --> MBCP["记忆库<br>检查点"]
+    VerifyDocs & CreateDocs --> DocsCP["文档<br>检查点"]
+
+    MBCP & DocsCP --> FileComplete["文件验证<br>完成"]
+
+    style FV fill:#4da6ff,stroke:#0066cc,color:white
+    style FileComplete fill:#10b981,stroke:#059669,color:white
+    style MBCP fill:#f6546a,stroke:#c30052,color:white
+    style DocsCP fill:#f6546a,stroke:#c30052,color:white
+```
+
+## 🧩 复杂度判定流程
+
+```mermaid
+graph TD
+    CD["复杂度<br>判定"] --> AnalyzeTask["分析任务<br>需求"]
+
+    AnalyzeTask --> CheckKeywords["检查任务<br>关键词"]
+    CheckKeywords --> ScopeCheck["评估<br>范围影响"]
+    ScopeCheck --> RiskCheck["评估<br>风险级别"]
+    RiskCheck --> EffortCheck["估算<br>实施工作量"]
+
+    EffortCheck --> DetermineLevel{"确定<br>复杂度级别"}
+    DetermineLevel -->|"级别 1"| L1["级别 1：<br>快速 Bug 修复"]
+    DetermineLevel -->|"级别 2"| L2["级别 2：<br>简单增强"]
+    DetermineLevel -->|"级别 3"| L3["级别 3：<br>中等功能"]
+    DetermineLevel -->|"级别 4"| L4["级别 4：<br>复杂系统"]
+
+    L1 --> CDComplete["复杂度判定<br>完成"]
+    L2 & L3 & L4 --> ModeSwitch["强制模式切换<br>到 PLAN"]
+
+    style CD fill:#4da6ff,stroke:#0066cc,color:white
+    style CDComplete fill:#10b981,stroke:#059669,color:white
+    style ModeSwitch fill:#ff0000,stroke:#990000,color:white
+    style DetermineLevel fill:#f6546a,stroke:#c30052,color:white
+```
+
+## 🔄 包含 QA 验证的完整工作流程
+
+完整工作流程包括实现前的技术验证：
+
+```mermaid
+flowchart LR
+    VAN1["VAN 模式
+    (初始分析)"] --> PLAN["PLAN 模式
+    (任务规划)"]
+    PLAN --> CREATIVE["CREATIVE 模式
+    (设计决策)"]
+    CREATIVE --> VANQA["VAN QA 模式
+    (技术验证)"]
+    VANQA --> BUILD["BUILD 模式
+    (实现)"]
+```
+
+## 🔍 技术验证概述
+
+VAN QA 技术验证流程包含四个关键验证点：
+
+```mermaid
+graph TD
+    VANQA["VAN QA 模式"] --> FourChecks["四点验证"]
+
+    FourChecks --> DepCheck["1️⃣ 依赖验证<br>检查所有必需的包"]
+    DepCheck --> ConfigCheck["2️⃣ 配置验证<br>验证格式和兼容性"]
+    ConfigCheck --> EnvCheck["3️⃣ 环境验证<br>检查构建环境"]
+    EnvCheck --> MinBuildCheck["4️⃣ 最小构建测试<br>测试核心功能"]
+
+    MinBuildCheck --> ValidationResults{"所有检查<br>通过？"}
+    ValidationResults -->|"是"| SuccessReport["生成成功报告"]
+    ValidationResults -->|"否"| FailureReport["生成失败报告"]
+
+    SuccessReport --> BUILD["进入 BUILD 模式"]
+    FailureReport --> FixIssues["修复技术问题"]
+    FixIssues --> ReValidate["重新验证"]
+    ReValidate --> ValidationResults
+
+    style VANQA fill:#4da6ff,stroke:#0066cc,color:white
+    style FourChecks fill:#f6546a,stroke:#c30052,color:white
+    style ValidationResults fill:#f6546a,stroke:#c30052,color:white
+    style BUILD fill:#10b981,stroke:#059669,color:white
+    style FixIssues fill:#ff5555,stroke:#dd3333,color:white
+```
+
+## 📝 验证状态格式
+
+QA 验证步骤包含清晰的状态指示器：
+
+```
+╔═════════════════ 🔍 QA 验证状态 ═════════════════╗
+│ ✓ 设计决策       │ 已验证可实现                    │
+│ ✓ 依赖           │ 所有必需的包已安装              │
+│ ✓ 配置           │ 格式已针对平台验证              │
+│ ✓ 环境           │ 适合实现                        │
+╚════════════════════════════════════════════════════╝
+✅ 已验证 - 可以进入 BUILD 模式
+```
+
+## 🚨 模式转换触发器
+
+### VAN 到 PLAN 转换
+对于复杂度级别 2-4：
+```
+🚫 检测到级别 [2-4] 任务
+在 VAN 模式中的实现已被阻止
+此任务需要 PLAN 模式
+您必须切换到 PLAN 模式以进行适当的文档记录和规划
+输入 'PLAN' 以切换到规划模式
+```
+
+### CREATIVE 到 VAN QA 转换
+完成 CREATIVE 模式后：
+```
+⏭️ 下一模式：VAN QA
+要在实现前验证技术需求，请输入 'VAN QA'
+```
+
+### VAN QA 到 BUILD 转换
+验证成功后：
+```
+✅ 技术验证完成
+所有先决条件已成功验证
+您现在可以进入 BUILD 模式
+输入 'BUILD' 开始实现
+```
+
+## 🔒 BUILD 模式阻止机制
+
+系统阻止在未通过 QA 验证的情况下进入 BUILD 模式：
+
+```mermaid
+graph TD
+    Start["用户输入：BUILD"] --> CheckQA{"QA 验证<br>已完成？"}
+    CheckQA -->|"是且通过"| AllowBuild["允许 BUILD 模式"]
+    CheckQA -->|"否或失败"| BlockBuild["阻止 BUILD 模式"]
+    BlockBuild --> Message["显示：<br>⚠️ 需要 QA 验证"]
+    Message --> ReturnToVANQA["提示：输入 VAN QA"]
+
+    style CheckQA fill:#f6546a,stroke:#c30052,color:white
+    style BlockBuild fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style Message fill:#ff5555,stroke:#dd3333,color:white
+    style ReturnToVANQA fill:#4da6ff,stroke:#0066cc,color:white
+```
+
+## 🔄 QA 命令优先级
+
+QA 验证可以在流程的任何点调用，并立即优先于任何其他当前步骤，包括强制模式切换：
+
+```mermaid
+graph TD
+    UserQA["用户输入：QA"] --> HighPriority["⚠️ 高优先级命令"]
+    HighPriority --> CurrentTask["暂停当前任务/流程"]
+    CurrentTask --> LoadQA["加载 QA 模式流程图"]
+    LoadQA --> RunQA["执行 QA 验证流程"]
+    RunQA --> QAResults{"QA 结果"}
+
+    QAResults -->|"通过"| ResumeFlow["恢复之前的流程"]
+    QAResults -->|"失败"| FixIssues["修复已识别的问题"]
+    FixIssues --> ReRunQA["重新运行 QA 验证"]
+    ReRunQA --> QAResults
+
+    style UserQA fill:#f8d486,stroke:#e8b84d,color:black
+    style HighPriority fill:#ff0000,stroke:#cc0000,color:white,stroke-width:3px
+    style LoadQA fill:#4da6ff,stroke:#0066cc,color:white
+    style RunQA fill:#4da6ff,stroke:#0066cc,color:white
+    style QAResults fill:#f6546a,stroke:#c30052,color:white
+```
+
+### QA 中断规则
+
+当用户在任何时候输入 **QA** 时：
+
+1. **QA 命令必须立即优先** 于任何当前操作，包括复杂度评估触发的"强制模式切换"。
+2. 系统必须：
+   - 立即加载 QA 模式流程图
+   - 执行完整的 QA 验证流程
+   - 在继续之前处理任何失败
+3. **所需的修复步骤优先于** 任何待处理的模式切换或复杂度规则
+4. QA 验证完成并通过后：
+   - 恢复之前确定的流程
+   - 继续任何所需的模式切换
+
+```
+⚠️ QA 覆盖已激活
+所有其他流程已暂停
+QA 验证检查正在运行...
+发现的任何问题必须在继续正常流程之前修复
+```
+
+## 📋 检查点验证模板
+
+VAN 模式中的每个主要检查点使用此格式：
+
+```
+✓ 章节检查点：[章节名称]
+- 需求 1？[是/否]
+- 需求 2？[是/否]
+- 需求 3？[是/否]
+
+→ 如果全部为是：准备进入下一章节
+→ 如果有否：在继续之前修复缺失的项目
+```
+
+## 🚀 VAN 模式激活
+
+当用户输入 "VAN" 时，回复确认并开始流程：
+
+```
+用户：VAN
+
+回复：OK VAN - 开始初始化流程
+```
+
+完成 CREATIVE 模式后，当用户输入 "VAN QA" 时，回复：
+
+```
+用户：VAN QA
+
+回复：OK VAN QA - 开始技术验证
+```
+
+这确保了关于 VAN 模式哪个阶段处于活动状态的清晰沟通。
