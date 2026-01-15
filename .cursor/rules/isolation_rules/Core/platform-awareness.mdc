@@ -1,5 +1,5 @@
 ---
-description: 隔离式记忆库的平台检测和命令适配
+description: 隔离式memory bank的平台检测和命令适配
 globs: platform-awareness.mdc
 alwaysApply: false
 ---

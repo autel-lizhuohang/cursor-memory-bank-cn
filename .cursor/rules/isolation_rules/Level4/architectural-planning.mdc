@@ -658,7 +658,7 @@ flowchart TD
 [如何收集和整合反馈的描述]
 ```
 
-## 📋 记忆库集成
+## 📋 memory bank集成
 
 ```mermaid
 flowchart TD
@@ -670,16 +670,16 @@ flowchart TD
     Architecture --> SP[systemPatterns.md]
     Architecture --> TC[techContext.md]
 
-    PB & PC & SP & TC --> MBI[记忆库<br>集成]
+    PB & PC & SP & TC --> MBI[memory bank<br>集成]
     MBI --> Next[实施<br>阶段]
 
     class PB,PC,SP,TC memfile
     class Architecture,MBI,Next process
 ```
 
-### 记忆库更新
+### memory bank更新
 
-在架构规划期间更新以下记忆库文件：
+在架构规划期间更新以下memory bank文件：
 
 1. **projectbrief.md**
    - 更新架构愿景
@@ -756,7 +756,7 @@ flowchart TD
 - 质量属性场景已评估? [是/否]
 - 架构评审已进行? [是/否]
 
-记忆库集成
+memory bank集成
 - projectbrief.md 已更新? [是/否]
 - productContext.md 已更新? [是/否]
 - systemPatterns.md 已更新? [是/否]
@@ -794,7 +794,7 @@ flowchart TD
 - **风险 1**: [简要描述] - **缓解措施**: [简要方法]
 - **风险 2**: [简要描述] - **缓解措施**: [简要方法]
 
-### 记忆库更新
+### memory bank更新
 - [需要更新的简要描述]
 ```
 

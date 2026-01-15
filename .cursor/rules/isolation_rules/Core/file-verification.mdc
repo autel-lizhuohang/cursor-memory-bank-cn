@@ -5,7 +5,7 @@ alwaysApply: false
 ---
 # 优化文件验证系统
 
-> **摘要:** 本系统使用批量操作和平台优化命令高效验证和创建所需的记忆库文件结构。
+> **摘要:** 本系统使用批量操作和平台优化命令高效验证和创建所需的memory bank文件结构。
 
 ## 优化文件验证工作流程
 
@@ -106,7 +106,7 @@ if ($missingDirs.Count -eq 0 -and $missingFiles.Count -eq 0 -and $missingMBFiles
 # Windows - PowerShell
 $templates = @{
     "tasks.md" = @"
-# 记忆库: 任务
+# memory bank: 任务
 
 ## 当前任务
 [任务尚未定义]
@@ -122,7 +122,7 @@ $templates = @{
 "@
 
     "memory-bank\activeContext.md" = @"
-# 记忆库: 活动上下文
+# memory bank: 活动上下文
 
 ## 当前焦点
 [未定义活动焦点]
@@ -194,5 +194,5 @@ foreach ($file in $templates.Keys) {
 - 创建的文件: [列表]
 - 所有组件已验证
 
-记忆库系统已准备就绪。
+memory bank系统已准备就绪。
 ```

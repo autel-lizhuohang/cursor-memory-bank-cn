@@ -160,9 +160,9 @@ Level 2 任务需要比 Level 1 更结构化的跟踪方法，但不需要更高
 ✓ NEXT: [Next action]
 ```
 
-## 与记忆库的集成
+## 与memory bank的集成
 
-任务跟踪与记忆库集成：
+任务跟踪与memory bank集成：
 
 ```mermaid
 graph TD

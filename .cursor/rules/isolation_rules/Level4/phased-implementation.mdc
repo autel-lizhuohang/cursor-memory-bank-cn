@@ -513,7 +513,7 @@ flowchart TD
 ...
 ```
 
-## 📋 记忆库集成
+## 📋 memory bank集成
 
 ```mermaid
 flowchart TD
@@ -527,16 +527,16 @@ flowchart TD
     Implementation --> TC[techContext.md]
     Implementation --> P[progress.md]
 
-    PB & PC & AC & SP & TC & P --> MBI[记忆库<br>集成]
+    PB & PC & AC & SP & TC & P --> MBI[memory bank<br>集成]
     MBI --> Implementation
 
     class PB,PC,AC,SP,TC,P memfile
     class Implementation,MBI process
 ```
 
-### 记忆库更新
+### memory bank更新
 
-在分阶段实施期间更新以下记忆库文件：
+在分阶段实施期间更新以下memory bank文件：
 
 1. **projectbrief.md**
    - 更新实施方法
@@ -610,8 +610,8 @@ flowchart TD
 - 生产部署计划就绪? [是/否]
 - 最终系统审查已完成? [是/否]
 
-记忆库集成
-- 所有记忆库文件已更新? [是/否]
+memory bank集成
+- 所有memory bank文件已更新? [是/否]
 - 实施状态已反映? [是/否]
 - 技术决策已记录? [是/否]
 - 进度跟踪是最新的? [是/否]
@@ -639,8 +639,8 @@ flowchart TD
 ### 验证状态
 - [验证步骤及其状态列表]
 
-### 记忆库更新
-- [需要更新的记忆库文件列表]
+### memory bank更新
+- [需要更新的memory bank文件列表]
 ```
 
 ## 🚨 实施验证原则

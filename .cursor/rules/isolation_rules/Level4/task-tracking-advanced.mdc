@@ -396,9 +396,9 @@ gantt
 - 架构决策已记录? [是/否]
 ```
 
-## 📋 与记忆库集成
+## 📋 与memory bank集成
 
-Level 4 任务跟踪与记忆库紧密集成：
+Level 4 任务跟踪与memory bank紧密集成：
 
 1. **projectbrief.md**: 系统级任务从项目简报派生并链接
 2. **productContext.md**: 任务与业务上下文和目标对齐

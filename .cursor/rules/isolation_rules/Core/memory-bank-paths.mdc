@@ -1,12 +1,12 @@
 ---
-description: 定义核心记忆库文件的规范路径。
+description: 定义核心memory bank文件的规范路径。
 globs: memory-bank-paths.mdc
 alwaysApply: true
 ---
 
-# 核心记忆库文件位置
+# 核心memory bank文件位置
 
-**关键:** 所有核心记忆库文件位于项目根目录的 `memory-bank/` 目录中。除非明确指示用于归档目的，否则不要在此目录外创建或修改这些文件。
+**关键:** 所有核心memory bank文件位于项目根目录的 `memory-bank/` 目录中。除非明确指示用于归档目的，否则不要在此目录外创建或修改这些文件。
 
 * **任务文件:** `memory-bank/tasks.md` - 此文件用于活动的、进行中的任务跟踪，详细说明步骤、检查清单和组件列表。其内容，特别是详细的检查清单，在任务完成时合并到任务的主归档文档中。归档后，`tasks.md` 被清空以准备下一个任务。它是任务生命周期中的临时工作文档，其持久记录保存在任务的归档文件中。
 * **活动上下文文件:** `memory-bank/activeContext.md`

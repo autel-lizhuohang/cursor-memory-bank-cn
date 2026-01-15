@@ -162,7 +162,7 @@ graph LR
     style Doc fill:#4dbbbb,stroke:#368787,color:white
 ```
 
-## 与记忆库集成
+## 与memory bank集成
 
 ```mermaid
 graph TD

@@ -491,12 +491,12 @@ flowchart TD
 2. 创建链接所有文档的交叉引用索引
 3. 适当地版本化所有文档
 4. 归档到指定的仓库
-5. 用相关信息更新记忆库
+5. 用相关信息更新memory bank
 6. 建立适当的访问控制
 7. 向相关干系人宣布可用性
 8. 验证归档的完整性和可访问性
 
-## 📋 记忆库集成
+## 📋 memory bank集成
 
 ```mermaid
 flowchart TD
@@ -510,16 +510,16 @@ flowchart TD
     Archiving --> TC[techContext.md]
     Archiving --> P[progress.md]
 
-    PB & PC & AC & SP & TC & P --> MBI[记忆库<br>集成]
+    PB & PC & AC & SP & TC & P --> MBI[memory bank<br>集成]
     MBI --> Next[知识<br>仓库]
 
     class PB,PC,AC,SP,TC,P memfile
     class Archiving,MBI,Next process
 ```
 
-### 记忆库更新
+### memory bank更新
 
-需要对记忆库文件进行的具体更新：
+需要对memory bank文件进行的具体更新：
 
 1. **projectbrief.md**
    - 更新最终系统描述
@@ -622,8 +622,8 @@ API 文档
 - 经验教训已记录? [是/否]
 - 建议了未来增强? [是/否]
 
-记忆库集成
-- 所有记忆库文件已更新? [是/否]
+memory bank集成
+- 所有memory bank文件已更新? [是/否]
 - 交叉引用已创建? [是/否]
 - 文档已正确版本化? [是/否]
 - 归档仓库已建立? [是/否]
@@ -668,8 +668,8 @@ API 文档
 - **关键知识领域**: [需要特殊专业知识的领域]
 - **培训资源**: [培训材料链接]
 
-### 记忆库链接
-- [更新的记忆库文件链接]
+### memory bank链接
+- [更新的memory bank文件链接]
 ```
 
 ## 🚨 归档强制原则

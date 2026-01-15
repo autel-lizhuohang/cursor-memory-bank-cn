@@ -152,9 +152,9 @@ docs/
 ✓ REFS: [tasks.md, progress.md, activeContext.md]
 ```
 
-## 与记忆库的集成
+## 与memory bank的集成
 
-归档与记忆库集成：
+归档与memory bank集成：
 
 ```mermaid
 graph TD

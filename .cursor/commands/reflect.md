@@ -2,7 +2,7 @@
 
 此命令促进对已完成实施的结构化反思，记录经验教训和流程改进。
 
-## 记忆库集成
+## memory bank集成
 
 读取来源:
 - `memory-bank/tasks.md` - 已完成的实施详情
@@ -87,7 +87,7 @@ Load: .cursor/rules/isolation_rules/Level4/reflection-comprehensive.mdc
    - 创建 `memory-bank/reflection/reflection-[task_id].md`
    - 结构: 摘要、进展顺利的方面、挑战、经验教训、流程改进、技术改进、后续步骤
 
-5. **更新记忆库**
+5. **更新memory bank**
    - 在 `memory-bank/tasks.md` 中更新反思状态
    - 标记反思阶段为完成
 

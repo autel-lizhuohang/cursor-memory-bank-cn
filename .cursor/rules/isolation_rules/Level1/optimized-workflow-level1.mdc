@@ -58,9 +58,9 @@ graph TD
 - [x] 文档已更新
 ```
 
-## 🔄 记忆库更新
+## 🔄 memory bank更新
 
-一级任务使用简化的记忆库更新，开销最小：
+一级任务使用简化的memory bank更新，开销最小：
 
 ```markdown
 ## tasks.md 更新 (一级)
@@ -136,12 +136,12 @@ function generateLevel1Documentation(issue, rootCause, solution, verification) {
 [x] 文档已更新
 ```
 
-## 🚀 整合式记忆库更新
+## 🚀 整合式memory bank更新
 
-通过单次操作优化一级任务的记忆库更新：
+通过单次操作优化一级任务的memory bank更新：
 
 ```javascript
-// 优化一级记忆库更新的伪代码
+// 优化一级memory bank更新的伪代码
 function updateLevel1MemoryBank(taskInfo) {
   // 读取当前 tasks.md
   const tasksContent = readFile("tasks.md");
@@ -160,7 +160,7 @@ function updateLevel1MemoryBank(taskInfo) {
   // 单次写入操作
   writeFile("tasks.md", updatedContent);
 
-  return "记忆库已更新";
+  return "memory bank已更新";
 }
 ```
 
@@ -197,7 +197,7 @@ loginButton.addEventListener('touchstart', handleLogin);
 这个优化的一级工作流程提供：
 
 1. 减少文档开销（减少70%）
-2. 整合记忆库更新（单次操作 vs 多次操作）
+2. 整合memory bank更新（单次操作 vs 多次操作）
 3. 聚焦验证流程（仅必要检查）
 4. 基于模板的常见场景处理方法
 5. 精简的工作流程，步骤更少

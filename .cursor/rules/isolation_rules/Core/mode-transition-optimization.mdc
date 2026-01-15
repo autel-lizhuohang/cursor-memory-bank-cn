@@ -6,7 +6,7 @@ alwaysApply: false
 
 # 模式转换优化
 
-> **摘要:** 本文件实现优化的模式转换，以在记忆库系统的不同阶段之间高效保留上下文。
+> **摘要:** 本文件实现优化的模式转换，以在memory bank系统的不同阶段之间高效保留上下文。
 
 ## 统一上下文传输协议
 
@@ -142,11 +142,11 @@ function invalidateRule(rulePath) {
 }
 ```
 
-## 差异化记忆库更新
+## 差异化memory bank更新
 
 ```mermaid
 graph TD
-    Start["记忆库<br>更新请求"] --> Check{"文件<br>已更改?"}
+    Start["memory bank<br>更新请求"] --> Check{"文件<br>已更改?"}
     Check -->|"否"| Skip["跳过更新<br>(无更改)"]
     Check -->|"是"| Changed{"特定<br>部分已更改?"}
     Changed -->|"否"| Full["完整文件<br>更新"]
@@ -357,5 +357,5 @@ function registerLazyLoadHandlers(modeName, taskComplexity) {
 2. 模式间更好的上下文保留
 3. 通过规则缓存提高效率
 4. 仅加载必要规则的针对性加载
-5. 优化的记忆库更新
+5. 优化的memory bank更新
 6. 清晰的转换文档保留关键上下文

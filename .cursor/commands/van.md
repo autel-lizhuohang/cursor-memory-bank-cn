@@ -1,10 +1,10 @@
 # VAN 命令 - 初始化与入口点
 
-此命令初始化记忆库系统，执行平台检测，确定任务复杂度，并路由到适当的工作流程。
+此命令初始化memory bank系统，执行平台检测，确定任务复杂度，并路由到适当的工作流程。
 
-## 记忆库集成
+## memory bank集成
 
-**关键:** 所有记忆库文件位于 `memory-bank/` 目录:
+**关键:** 所有memory bank文件位于 `memory-bank/` 目录:
 - `memory-bank/tasks.md` - 任务跟踪的真实来源
 - `memory-bank/activeContext.md` - 当前焦点
 - `memory-bank/progress.md` - 实施状态
@@ -39,9 +39,9 @@ Load: .cursor/rules/isolation_rules/visual-maps/van_mode_split/van-mode-map.mdc
    - 根据平台调整命令
    - 设置路径分隔符
 
-2. **记忆库验证**
+2. **memory bank验证**
    - 检查 `memory-bank/` 目录是否存在
-   - 如不存在，创建记忆库结构
+   - 如不存在，创建memory bank结构
    - 验证必要文件存在
 
 3. **任务分析**
@@ -53,7 +53,7 @@ Load: .cursor/rules/isolation_rules/visual-maps/van_mode_split/van-mode-map.mdc
    - **级别 1:** 继续在 VAN 模式，进入实施
    - **级别 2-4:** 转换到 `/plan` 命令
 
-5. **更新记忆库**
+5. **更新memory bank**
    - 在 `memory-bank/tasks.md` 中更新复杂度确定
    - 在 `memory-bank/activeContext.md` 中更新当前焦点
 

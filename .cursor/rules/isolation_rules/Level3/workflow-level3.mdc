@@ -77,12 +77,12 @@ graph TD
       * 相关核心规则已加载（例如，`Core/memory-bank-paths.mdc`、`main.mdc`）。
   * **此工作流程文件中的步骤（确认）：**
     1.  通过检查 `memory-bank/tasks.md` 确认任务为 Level 3。
-    2.  确保核心记忆库结构和路径已知（AI 应已从 `main` 规则内化）。
+    2.  确保核心memory bank结构和路径已知（AI 应已从 `main` 规则内化）。
   * **里程碑检查点：**
     ```
     ✓ 初始化已确认（L3）
     - 任务在 tasks.md 中正确识别为 Level 3？[是/否]
-    - 核心记忆库文件（tasks.md、activeContext.md）可通过规范路径访问？[是/否]
+    - 核心memory bank文件（tasks.md、activeContext.md）可通过规范路径访问？[是/否]
 
     → 如果全部为是：继续进行 L3 的文档设置。
     → 如果有否：重新访问 VAN 模式或核心文件设置。
@@ -90,7 +90,7 @@ graph TD
 
 ### 阶段 2：文档设置（L3 特定）
 
-为 Level 3 功能准备记忆库。
+为 Level 3 功能准备memory bank。
 
 ```mermaid
 graph TD

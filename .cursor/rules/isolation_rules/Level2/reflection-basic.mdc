@@ -150,9 +150,9 @@ Level 2 任务的高质量复盘应该：
 ✓ TIME: Est [X] vs. Actual [Y] ([Z%] variance)
 ```
 
-## 与记忆库的集成
+## 与memory bank的集成
 
-复盘与记忆库集成：
+复盘与memory bank集成：
 
 ```mermaid
 graph TD

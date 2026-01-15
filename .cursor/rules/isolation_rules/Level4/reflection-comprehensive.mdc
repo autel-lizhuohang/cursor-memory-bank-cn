@@ -30,7 +30,7 @@ flowchart TD
     Business --> Strategic[定义战略<br>行动]
     Strategic --> Timeline[分析时间线<br>绩效]
     Timeline --> Documentation[完成反思<br>文档]
-    Documentation --> Integration[集成到<br>记忆库]
+    Documentation --> Integration[集成到<br>memory bank]
     Integration --> Verification{反思<br>验证}
     Verification -->|通过| Complete([反思<br>完成])
     Verification -->|失败| Revise[修订<br>反思]
@@ -502,7 +502,7 @@ flowchart TD
 1. 使用模板起草全面反思文档
 2. 与关键干系人和参与者审查草稿
 3. 整合反馈并完成文档
-4. 用关键洞察和经验更新记忆库
+4. 用关键洞察和经验更新memory bank
 5. 创建行动登记册以跟踪改进行动
 6. 将项目文档与反思文档一起归档
 7. 验证文档的完整性和质量
@@ -569,7 +569,7 @@ flowchart TD
     class Observe,Question,Connect,Contrast,Hypothesize,Test,Refine,Apply step
 ```
 
-## 📋 记忆库集成
+## 📋 memory bank集成
 
 ```mermaid
 flowchart TD
@@ -583,16 +583,16 @@ flowchart TD
     Reflection --> TC[techContext.md]
     Reflection --> P[progress.md]
 
-    PB & PC & AC & SP & TC & P --> MBI[记忆库<br>集成]
+    PB & PC & AC & SP & TC & P --> MBI[memory bank<br>集成]
     MBI --> Next[增强的未来<br>项目]
 
     class PB,PC,AC,SP,TC,P memfile
     class Reflection,MBI,Next process
 ```
 
-### 记忆库更新
+### memory bank更新
 
-需要对记忆库文件进行的具体更新：
+需要对memory bank文件进行的具体更新：
 
 1. **projectbrief.md**
    - 更新战略洞察
@@ -658,7 +658,7 @@ flowchart TD
 - 流程知识转移已规划? [是/否]
 - 文档更新已识别? [是/否]
 
-记忆库集成
+memory bank集成
 - projectbrief.md 已用洞察更新? [是/否]
 - productContext.md 已用洞察更新? [是/否]
 - activeContext.md 已用洞察更新? [是/否]
@@ -704,8 +704,8 @@ flowchart TD
 2. [短期改进及负责人和时间线]
 3. [中期计划及负责人和时间线]
 
-### 记忆库更新
-- [需要的具体记忆库更新列表]
+### memory bank更新
+- [需要的具体memory bank更新列表]
 ```
 
 ## 🚨 反思强制原则

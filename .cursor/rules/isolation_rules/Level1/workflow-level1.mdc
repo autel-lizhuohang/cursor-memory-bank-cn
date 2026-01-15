@@ -124,9 +124,9 @@ graph TD
   - 更改的文件: [文件路径]
 ```
 
-## 📋 记忆库更新
+## 📋 memory bank更新
 
-对于一级任务，进行最小化记忆库更新：
+对于一级任务，进行最小化memory bank更新：
 
 1. **tasks.md**: 更新修复详情
 2. **activeContext.md**: 简要提及修复（如相关）
@@ -140,7 +140,7 @@ graph TD
 - 修复已实现和验证？ [是/否]
 - tasks.md 已更新？ [是/否]
 - 方案已记录？ [是/否]
-- 记忆库已最小化更新？ [是/否]
+- memory bank已最小化更新？ [是/否]
 
 → 如果全是"是": 一级任务成功完成
 → 如果有"否": 处理未完成项
@@ -165,7 +165,7 @@ graph TD
 3. 测试揭示更广泛的问题
 4. 修复影响核心功能
 
-## 🔄 与记忆库集成
+## 🔄 与memory bank集成
 
 ```mermaid
 graph TD
@@ -173,7 +173,7 @@ graph TD
     Workflow --> AC["最小更新<br>activeContext.md"]
     Workflow --> PM["简要更新<br>progress.md"]
 
-    TM & AC & PM --> MB["记忆库<br>集成"]
+    TM & AC & PM --> MB["memory bank<br>集成"]
     MB --> NextTask["过渡到<br>下一任务"]
 ```
 

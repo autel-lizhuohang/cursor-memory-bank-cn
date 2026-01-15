@@ -1,18 +1,18 @@
 ---
-description: 记忆库优化的集成中心
+description: memory bank优化的集成中心
 globs: "**/optimization*/**", "**/integration*/**"
 alwaysApply: false
 ---
 
-# 记忆库优化集成
+# memory bank优化集成
 
-> **摘要:** 本文件作为所有记忆库优化的集成点，协调各种优化组件无缝协作。
+> **摘要:** 本文件作为所有memory bank优化的集成点，协调各种优化组件无缝协作。
 
 ## 优化集成流程
 
 ```mermaid
 graph TD
-    Start["记忆库<br>初始化"] --> HRL["分层<br>规则加载"]
+    Start["memory bank<br>初始化"] --> HRL["分层<br>规则加载"]
     HRL --> ACM["自适应<br>复杂度模型"]
     ACM --> DCM["动态<br>上下文管理"]
     DCM --> TMO["转换<br>优化"]
@@ -31,7 +31,7 @@ graph TD
     CPO --> PDO["渐进式<br>文档"]
     TMO --> PDO
 
-    PDO --> MBO["记忆库<br>优化"]
+    PDO --> MBO["memory bank<br>优化"]
 
     style Start fill:#4da6ff,stroke:#0066cc,color:white
     style HRL fill:#ffa64d,stroke:#cc7a30,color:white
@@ -85,7 +85,7 @@ const optimizationRegistry = {
 
 ```mermaid
 sequenceDiagram
-    participant MB as 记忆库
+    participant MB as memory bank
     participant Reg as 优化注册表
     participant HRL as 分层规则加载
     participant ACM as 自适应复杂度
@@ -226,7 +226,7 @@ function initializeMemoryBankOptimizations() {
   // 开始监控
   initializeOptimizationMonitoring();
 
-  return "记忆库优化已初始化";
+  return "memory bank优化已初始化";
 }
 ```
 
@@ -318,4 +318,4 @@ const architectureRule = loadSpecializedRule("architecture");
 // 架构规则现在仅在需要时加载
 ```
 
-这些集成的优化无缝协作，提供显著更高效的记忆库系统，同时保持所有功能。
+这些集成的优化无缝协作，提供显著更高效的memory bank系统，同时保持所有功能。

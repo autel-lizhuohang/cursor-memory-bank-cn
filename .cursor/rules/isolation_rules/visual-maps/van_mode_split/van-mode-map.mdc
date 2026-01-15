@@ -5,8 +5,8 @@ alwaysApply: false
 ---
 # VAN 模式：初始化流程图
 
-🚨 强制首要步骤：记忆库创建 🚨
-未创建记忆库结构时任何操作都无法进行
+🚨 强制首要步骤：memory bank创建 🚨
+未创建memory bank结构时任何操作都无法进行
 
 > **简述：** 此可视化流程图定义了 VAN 模式的项目初始化、任务分析和技术验证流程。它引导用户通过平台检测、文件验证、复杂度判定和技术验证，以确保在实现前正确设置。
 
@@ -20,11 +20,11 @@ graph TD
     CheckPath --> AdaptCmds["按需适配命令"]
     AdaptCmds --> PlatformCP["⛔ 平台检查点"]
 
-    %% 添加关键记忆库检查点
-    PlatformCP --> MemoryBankCheck{"记忆库<br>存在？"}
-    MemoryBankCheck -->|"否"| CreateMemoryBank["创建记忆库<br>[关键步骤]"]
+    %% 添加关键memory bank检查点
+    PlatformCP --> MemoryBankCheck{"memory bank<br>存在？"}
+    MemoryBankCheck -->|"否"| CreateMemoryBank["创建memory bank<br>[关键步骤]"]
     MemoryBankCheck -->|"是"| BasicFileVerify["基本文件验证"]
-    CreateMemoryBank --> MemoryBankCP["⛔ 记忆库验证 [必需]"]
+    CreateMemoryBank --> MemoryBankCP["⛔ memory bank验证 [必需]"]
     MemoryBankCP --> BasicFileVerify
 
     %% 基本文件验证及检查点
@@ -43,7 +43,7 @@ graph TD
     CRITICALGATE --> ForceExit["退出到 PLAN 模式"]
 
     %% 级别 1 正常继续
-    ComplexityCP --> InitSystem["初始化记忆库"]
+    ComplexityCP --> InitSystem["初始化memory bank"]
     InitSystem --> Complete1["级别 1 初始化完成"]
 
     %% 级别 2+ 任务在 PLAN 和 CREATIVE 模式后
@@ -103,11 +103,11 @@ graph TD
 ```mermaid
 graph TD
     FV["文件验证"] --> CheckFiles["检查必要文件"]
-    CheckFiles --> CheckMB["检查记忆库<br>结构"]
-    CheckMB --> MBExists{"记忆库<br>存在？"}
+    CheckFiles --> CheckMB["检查memory bank<br>结构"]
+    CheckMB --> MBExists{"memory bank<br>存在？"}
 
-    MBExists -->|"是"| VerifyMB["验证记忆库<br>内容"]
-    MBExists -->|"否"| CreateMB["创建记忆库<br>结构"]
+    MBExists -->|"是"| VerifyMB["验证memory bank<br>内容"]
+    MBExists -->|"否"| CreateMB["创建memory bank<br>结构"]
 
     CheckFiles --> CheckDocs["检查文档<br>文件"]
     CheckDocs --> DocsExist{"文档<br>存在？"}
@@ -115,7 +115,7 @@ graph TD
     DocsExist -->|"是"| VerifyDocs["验证文档<br>结构"]
     DocsExist -->|"否"| CreateDocs["创建文档<br>结构"]
 
-    VerifyMB & CreateMB --> MBCP["记忆库<br>检查点"]
+    VerifyMB & CreateMB --> MBCP["memory bank<br>检查点"]
     VerifyDocs & CreateDocs --> DocsCP["文档<br>检查点"]
 
     MBCP & DocsCP --> FileComplete["文件验证<br>完成"]

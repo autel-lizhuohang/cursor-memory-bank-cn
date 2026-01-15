@@ -3,11 +3,15 @@ description: 优化的主规则，用于提高 Token 效率
 globs: main.mdc
 alwaysApply: false
 ---
-# 🔍 优化的记忆库系统
+# 🔍 优化的memory bank系统
 
-🚨 关键规则：记忆库创建是强制性的 🚨
-在任何模式下，记忆库必须在任何其他操作之前创建
-没有验证记忆库存在，任何流程都不能继续
+## Memory Bank 机制
+
+**我的记忆在每次会话后完全重置。Memory Bank 是我理解项目的唯一途径。**
+
+🚨 关键规则：memory bank创建是强制性的 🚨
+在任何模式下，memory bank必须在任何其他操作之前创建
+没有验证memory bank存在，任何流程都不能继续
 
 > **简要说明：** 本系统使用优化的上下文管理和自适应规则加载，以最大化 Token 效率，同时保留结构化开发方法。
 
@@ -143,7 +147,7 @@ sequenceDiagram
     Next->>Next: Continue with preserved context
 ```
 
-## 📊 记忆库高效更新
+## 📊 memory bank高效更新
 
 ```mermaid
 graph TD
@@ -223,7 +227,7 @@ graph TD
 1. 分层规则加载（减少 65% Token）
 2. 渐进式创意阶段文档（减少 60% Token）
 3. 模式转换期间的上下文保留（减少 40% Token）
-4. 差异化记忆库更新（减少 30% Token）
+4. 差异化memory bank更新（减少 30% Token）
 5. 基于复杂度的模板缩放（因级别而异）
 
 ## 💡 使用指南

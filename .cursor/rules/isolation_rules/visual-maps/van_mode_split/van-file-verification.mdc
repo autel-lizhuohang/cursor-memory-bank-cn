@@ -5,8 +5,8 @@ alwaysApply: false
 ---
 # 优化的文件验证系统
 
-🚨 关键：必须进行记忆库验证 🚨
-在任何文件操作之前，记忆库结构必须存在
+🚨 关键：必须进行memory bank验证 🚨
+在任何文件操作之前，memory bank结构必须存在
 此检查必须在所有验证过程中首先执行
 
 > **简述：** 此系统提供了一种结构化方法，用于在任务实施之前验证文件结构完整性，重点关注高效检查和清晰的状态报告。
@@ -15,14 +15,14 @@ alwaysApply: false
 
 ```mermaid
 graph TD
-    %% 关键记忆库验证 - 必须首先执行
-    Start["开始文件验证"] --> MemBankCheck{"记忆库<br>存在？"}
-    MemBankCheck -->|"否"| CreateMemBank["创建记忆库<br>[关键]"]
-    MemBankCheck -->|"是"| VerifyMemBankComplete["验证记忆库<br>结构完整"]
+    %% 关键memory bank验证 - 必须首先执行
+    Start["开始文件验证"] --> MemBankCheck{"memory bank<br>存在？"}
+    MemBankCheck -->|"否"| CreateMemBank["创建memory bank<br>[关键]"]
+    MemBankCheck -->|"是"| VerifyMemBankComplete["验证memory bank<br>结构完整"]
     CreateMemBank --> VerifyMemBankComplete
 
     VerifyMemBankComplete --> PassCheck{"所有关键<br>检查通过？"}
-    PassCheck -->|"否"| AbortAll["⛔ 中止所有操作<br>先修复记忆库"]
+    PassCheck -->|"否"| AbortAll["⛔ 中止所有操作<br>先修复memory bank"]
     PassCheck -->|"是"| MainVerification
 
     %% 常规验证流程从这里继续
@@ -56,16 +56,16 @@ graph TD
     style Complete fill:#10b981,stroke:#059669,color:white
 ```
 
-## 🧩 记忆库验证 - 关键组件
+## 🧩 memory bank验证 - 关键组件
 
-记忆库验证必须在任何文件验证过程中首先执行：
+memory bank验证必须在任何文件验证过程中首先执行：
 
 ```javascript
 function verifyMemoryBank() {
-  // 检查记忆库是否存在
+  // 检查memory bank是否存在
   const memoryBankExists = checkDirectoryExists("memory-bank");
   if (!memoryBankExists) {
-    console.error("⛔ 关键错误：记忆库不存在");
+    console.error("⛔ 关键错误：memory bank不存在");
     createMemoryBankStructure();
     return verifyMemoryBankCreation();
   }
@@ -80,7 +80,7 @@ function verifyMemoryBank() {
 
   const missingDirs = requiredDirs.filter(dir => !checkDirectoryExists(dir));
   if (missingDirs.length > 0) {
-    console.error(`⛔ 关键错误：缺少记忆库目录：${missingDirs.join(", ")}`);
+    console.error(`⛔ 关键错误：缺少memory bank目录：${missingDirs.join(", ")}`);
     createMissingDirectories(missingDirs);
     return verifyMemoryBankCreation();
   }
@@ -98,27 +98,27 @@ function verifyMemoryBank() {
     return verifyMemoryBankCreation();
   }
 
-  return true; // 记忆库验证成功
+  return true; // memory bank验证成功
 }
 
 // 强制：必须在任何其他验证之前调用此函数
 const memoryBankVerified = verifyMemoryBank();
 if (!memoryBankVerified) {
-  throw new Error("⛔ 记忆库验证失败 - 无法继续");
+  throw new Error("⛔ memory bank验证失败 - 无法继续");
 }
 ```
 
-## 📋 记忆库验证检查清单
+## 📋 memory bank验证检查清单
 
 ```
-✓ 记忆库验证检查清单
-- 记忆库目录存在？[是/否]
+✓ memory bank验证检查清单
+- memory bank目录存在？[是/否]
 - 必需的子目录存在？[是/否]
 - 关键文件存在？[是/否]
 - 文件内容有效？[是/否]
 
-→ 如果全部为是：记忆库验证通过 - 继续文件验证
-→ 如果有否：停止所有处理并修复记忆库
+→ 如果全部为是：memory bank验证通过 - 继续文件验证
+→ 如果有否：停止所有处理并修复memory bank
 ```
 
 ## 🔍 批量验证工作流程
@@ -210,7 +210,7 @@ if ($missingDirs.Count -eq 0 -and $missingFiles.Count -eq 0 -and $missingMBFiles
 # Windows - PowerShell
 $templates = @{
     "tasks.md" = @"
-# 记忆库：任务
+# memory bank：任务
 
 ## 当前任务
 [任务尚未定义]
@@ -226,7 +226,7 @@ $templates = @{
 "@
 
     "memory-bank\activeContext.md" = @"
-# 记忆库：活动上下文
+# memory bank：活动上下文
 
 ## 当前焦点
 [未定义活动焦点]
@@ -298,5 +298,5 @@ foreach ($file in $templates.Keys) {
 - 已创建文件：[列表]
 - 所有组件已验证
 
-记忆库系统已准备就绪。
+memory bank系统已准备就绪。
 ```

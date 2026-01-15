@@ -1,5 +1,5 @@
 ---
-description: 隔离式记忆库的命令执行指南
+description: 隔离式memory bank的命令执行指南
 globs: command-execution.mdc
 alwaysApply: false
 ---

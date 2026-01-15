@@ -2,7 +2,7 @@
 
 此命令根据 VAN 模式中确定的复杂度级别创建详细的实施计划。
 
-## 记忆库集成
+## memory bank集成
 
 读取来源:
 - `memory-bank/tasks.md` - 任务需求和复杂度级别
@@ -69,7 +69,7 @@ Load: .cursor/rules/isolation_rules/Level4/workflow-level4.mdc
    - 标记需要设计决策的组件
    - 记录哪些组件需要创意探索
 
-5. **更新记忆库**
+5. **更新memory bank**
    - 在 `memory-bank/tasks.md` 中更新完整计划
    - 标记规划阶段为完成
 

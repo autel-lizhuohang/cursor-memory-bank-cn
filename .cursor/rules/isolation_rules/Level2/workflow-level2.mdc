@@ -44,7 +44,7 @@ graph TD
 **步骤:**
 1. 平台检测
 2. 关键文件验证
-3. 加载记忆库结构
+3. 加载memory bank结构
 4. 在 tasks.md 中创建任务
 5. 初始任务范围定义
 
@@ -202,7 +202,7 @@ graph TD
 2. 收集实现细节
 3. 创建归档文档
 4. 创建交叉引用
-5. 更新记忆库文件
+5. 更新memory bank文件
 
 **里程碑检查点:**
 ```
@@ -262,7 +262,7 @@ graph TD
     L34Trigger --> L34Switch["Switch to<br>Level 3/4 Workflow"]
 ```
 
-## 与记忆库的集成
+## 与memory bank的集成
 
 ```mermaid
 graph TD

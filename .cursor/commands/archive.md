@@ -1,8 +1,8 @@
 # ARCHIVE 命令 - 任务归档
 
-此命令创建全面的归档文档并更新记忆库以供将来参考。
+此命令创建全面的归档文档并更新memory bank以供将来参考。
 
-## 记忆库集成
+## memory bank集成
 
 读取来源:
 - `memory-bank/tasks.md` - 完整的任务详情和检查清单
@@ -79,7 +79,7 @@ Load: .cursor/rules/isolation_rules/Level4/archive-comprehensive.mdc
    - 记录代码更改
    - 记录测试方法
    - 总结经验教训
-   - 更新所有记忆库文件
+   - 更新所有memory bank文件
 
 3. **归档文档结构**
    ```
@@ -107,7 +107,7 @@ Load: .cursor/rules/isolation_rules/Level4/archive-comprehensive.mdc
    相关文档链接（反思、创意阶段等）
    ```
 
-4. **更新记忆库**
+4. **更新memory bank**
    - 创建 `memory-bank/archive/archive-[task_id].md`
    - 在 `memory-bank/tasks.md` 中标记任务为完成
    - 在 `memory-bank/progress.md` 中更新归档引用
