@@ -1,0 +1,14 @@
+# MQTT Mock Service Dependencies
+
+# MQTT Client
+paho-mqtt>=2.0.0
+
+# Scheduler for OSD reporting
+APScheduler>=3.10.0
+
+# Optional: Observability
+# langfuse>=2.0.0
+
+# Development & Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
