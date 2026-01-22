@@ -61,7 +61,10 @@
 │   └── rules/
 │       └── isolation_rules/   # 分层规则系统
 │           ├── Core/          # 核心规则
-│           ├── Level1-4/      # 复杂度级别规则
+│           ├── Level1/        # 第1级 - 快速修复
+│           ├── Level2/        # 第2级 - 简单增强
+│           ├── Level3/        # 第3级 - 中等功能
+│           ├── Level4/        # 第4级 - 复杂系统
 │           ├── Phases/        # 阶段规则
 │           └── visual-maps/   # 可视化流程图
 ├── snake-game/
@@ -74,6 +77,10 @@
 1. **使用 Memory Bank 系统**：在 Cursor 聊天中输入 `/van` 开始初始化项目
 2. **玩贪吃蛇游戏**：打开 `snake-game/index.html`
 
+## 许可证
+
+本项目仅供学习和参考使用。
+
 ---
 
-*此工作区用于演示 Memory Bank 系统的使用和简单的 Web 项目开发。*
+*此工作区用于演示 Memory Bank 系统的使用和简单的 Web 项目开发。最后更新：2026 年 1 月*
